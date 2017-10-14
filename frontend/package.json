@@ -1,8 +1,7 @@
 {
-  "name": "meili",
+  "name": "meili_frontend",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "some students",
+  "description": "",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

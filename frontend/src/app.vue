@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-<!--     <img src="./assets/logo.png">
- -->    <router-view/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!--     <img src="./assets/logo.png"> -->
+    <router-view/>
   </div>
 </template>
 

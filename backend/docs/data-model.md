@@ -24,23 +24,33 @@ Creator: User UUID
 ID: String
 Resolved: Boolean
 Start Message: Conversation Item UUID
-Messages: List<Message UUID>
+Messages: List<Message UUID>?
 
 ### Conversation Item
 ID: UUID
 Owner: User UUID
-
-### Message: Conversation Item
 Content: String
 
+### Message: Conversation Item
+
 ### Poll: Conversation Item
-Question: String
 Options: List<String>
 Answers: List<Int>
 
 
 ## Tables
 - User
+    - Columns are properties above
 - Card
+    - Columns are properties above
 - Thread
+    - Columns are properties above
 - Messages
+    - Columns: 
+        ID: UUID
+        Owner: User UUID
+        Question: String
+        Type: Enum [MESSAGE | POLL]
+        Options: List<String>?
+        Answers: List<Int>?
+        Content: String?

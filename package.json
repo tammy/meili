@@ -1,0 +1,32 @@
+{
+  "name": "meili",
+  "version": "1.0.0",
+  "description": "Travel planning app, to travel with friends without the headache of planning with them.",
+  "main": "server.js",
+  "dependencies": {
+    "auth0-js": "^8.10.1",
+    "axios": "^0.16.2",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "express-jwt": "^3.4.0",
+    "jwks-rsa": "^1.1.1",
+    "jwt-decode": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aneedalie/meili.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aneedalie/meili/issues"
+  },
+  "homepage": "https://github.com/aneedalie/meili#readme"
+}

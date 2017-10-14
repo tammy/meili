@@ -6,7 +6,7 @@ Travel planning app, to travel with friends without the headache of planning wit
 2. In the home directory, run `npm install`.
 3. Run `npm run dev` in order to get the backend running.
 4. In the `frontend` directory, also run `npm install`.
-5. Run `npm run dev` in this directory to get the frontend working
+5. Run `npm run dev` in the `frontend` directory to get the frontend running.
 6. Connect to `localhost:8080` on your browser to see the application running.
 
 ## Footnotes

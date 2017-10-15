@@ -25,6 +25,15 @@ module.exports.User = sequelize.define('user', {
   profile_picture: { type: DataTypes.STRING }
 })
 
+
+// Trip
+module.exports.Trip = sequelize.define('trip', {
+  id: { type: DataTypes.UUID, primaryKey: true  },
+  owner: { type: DataTypes.UUID, primaryKey: true  },
+  name: { type: DataTypes.STRING },
+  description: { type: DataTypes.STRING },
+})
+
 // Unsure if we need this. It seems silly that the ORM layer doesn't handle this for you.
 // module.exports.userToJSON = function(user) {
 //   return {
@@ -39,6 +48,7 @@ module.exports.User = sequelize.define('user', {
 // Card
 module.exports.Card = sequelize.define('card', {
   id: { type: DataTypes.UUID, primaryKey: true },
+  trip: { type: DataTypes.UUID, primaryKey: true },
   title: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
   location: { type: DataTypes.STRING },

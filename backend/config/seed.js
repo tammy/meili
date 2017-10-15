@@ -4,13 +4,23 @@ var models = require('../models');
 models.sequelize.sync({force: true}).then(function() {
   // Seed User
   models.User.create({
-    id: "a1d2753b-2964-4944-ab03-e6e5c2d6e336", name: "Paul", email: "pbardea@gmail.com",
+    id: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    name: "Paul",
+    email: "pbardea@gmail.com",
     profile_picture: "http://www.example.com"
+  });
+
+  models.Trip.create({
+    id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    name: "Paris vacay",
+    description: "La vie est belle."
   });
 
   // Seed card
   models.Card.create({
     id: "3176daf7-ea72-4444-b2be-7d2f466af8d0",
+	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Card title",
     description: "Card description.",
     location: "Paris, France", 

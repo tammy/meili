@@ -11,7 +11,9 @@
     "express": "^4.14.0",
     "express-jwt": "^3.4.0",
     "jwks-rsa": "^1.1.1",
-    "jwt-decode": "^2.2.0"
+    "jwt-decode": "^2.2.0",
+    "sequelize": "^4.13.17",
+    "sequelize-cockroachdb": "^1.0.2"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"

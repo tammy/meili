@@ -2,14 +2,13 @@
 <template>
   <div>
     <app-nav></app-nav>
-    <h3 class="text-center">Your Trip Name Here</h3>
+    <h3 class="text-center"> {{ tripName }} </h3>
     <hr/>
-
     <div class="col-sm-4" v-for="event in plan">
       <div class="panel panel-event">
         <div class="panel-heading">
           <h3 class="panel-title"> 
-            <input class="textbox text-center" v-model="event.name" placeholder="Event" @click.self="event.focused = true" @blur="event.focused = false">
+            <input type="text" class="textbox text-center" v-model="event.name" placeholder="Event" @click.self="event.focused = true" @blur="event.focused = false">
             <button class="glyphicon glyphicon-search search" 
               v-show="event.focused && event.name"
               v-on:click="search()"
@@ -20,7 +19,7 @@
         <div class="panel-body text-left">
           <p class="field">
             <div class="glyphicon glyphicon-pushpin"></div>
-            <input class="textbox" v-model="event.sponsor" placeholder="Location"/>
+            <input type="text" class="textbox" v-model="event.sponsor" placeholder="Location"/>
           </p>
           <p class="field">
             <div class="glyphicon glyphicon-time"></div>
@@ -28,10 +27,21 @@
           </p>
           <p class="field"> 
             <div class="glyphicon glyphicon-pencil"></div>
-            <input class="textbox" placeholder="Notes"></input>
+            <input type="text" class="textbox" placeholder="Notes"></input>
           </p>
         </div>
       </div>
+    </div>
+    <!-- Event Details -->
+    <div class="panel panel-event">
+        <div class="panel-heading"> 
+          <div class="panel-title">
+            {{ event.name }} 
+          </div>
+          <div class="panel-body text-left">
+
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -43,13 +53,20 @@ import AppNav from './appNav';
 import { getPublicStartupBattles } from '../../utils/api';
 
 export default {
-  name: 'plan',
+  name: 'cards',
   components: {
     AppNav,
   },
   data() {
     return {
       plan: '',
+      tripName: 'The best trip ever',
+      event: {
+        name: 'Eiffel Tower',
+        location: '',
+        time: Date.now(),
+        notes: '',
+      },
     };
   },
   methods: {
@@ -74,13 +91,17 @@ export default {
 
 <!-- CSS -->
 <style scoped>
+.panel {
+  border-radius: 0;
+}
+
 .panel-event {
   border-color: #bce8f1;
 }
 
 .panel-event .panel-heading {
   color: #31708f;
-  background-color: #d9edf7;
+  background-color: transparent;
   border-color: #bce8f1;
 }
 

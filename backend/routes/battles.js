@@ -17,7 +17,7 @@ const authCheck = jwt({
 });
 
 
-router.get('/api/battles/public', (req, res) => {
+router.get('/public', (req, res) => {
   let publicBattles = [
   {
     id: 1111,
@@ -77,7 +77,7 @@ router.get('/api/battles/public', (req, res) => {
   res.json(publicBattles);
 })
 
-router.get('/api/battles/private', authCheck, (req,res) => {
+router.get('/private', authCheck, (req,res) => {
   let privateBattles = [
   {
     id: 2111,

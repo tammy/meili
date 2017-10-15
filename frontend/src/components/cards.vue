@@ -89,7 +89,7 @@ export default {
       return true;
       // return isLoggedIn();
     },
-    getItinierary() {
+    getItinerary() {
       getPublicStartupBattles().then((battles) => {
         this.plan = battles;
       });
@@ -99,7 +99,7 @@ export default {
     },
   },
   mounted() {
-    this.getItinierary();
+    this.getItinerary();
   },
 };
 </script>

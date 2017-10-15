@@ -11,7 +11,7 @@ models.sequelize.sync({force: true}).then(function() {
   });
 
   models.Trip.create({
-	id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
     name: "Paris vacay",
     description: "La vie est belle."

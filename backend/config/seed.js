@@ -25,6 +25,7 @@ models.sequelize.sync({force: true}).then(function() {
     description: "Card description.",
     location: "Paris, France", 
     duration: 20.0,
+    order: 0,
     creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
   })
 

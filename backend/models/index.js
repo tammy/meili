@@ -56,6 +56,7 @@ module.exports.Card = sequelize.define('card', {
   coordinate_lon: { type: DataTypes.DOUBLE },
   start_time: { type: DataTypes.DATE },
   duration: { type: DataTypes.DOUBLE },
+  order: { type: DataTypes.INTEGER },
   creator: { type: DataTypes.UUID }
 })
 

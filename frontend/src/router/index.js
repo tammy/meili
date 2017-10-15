@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Cards from '@/components/cards';
+import CardDetailView from '@/components/cardDetailView';
 import Callback from '@/components/callback';
 // import { requireAuth } from '../../utils/auth';
 import Timeline from '@/components/Timeline';
@@ -12,8 +12,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Cards',
-      component: Cards,
+      component: CardDetailView,
     },
     {
       path: '/callback',

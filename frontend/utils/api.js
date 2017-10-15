@@ -4,9 +4,9 @@ import { getAccessToken } from './auth';
 const BASE_URL = 'http://localhost:3333';
 
 export {
-	getPublicStartupBattles,
-	getPrivateStartupBattles,
-	getItineraryData,
+    getPublicStartupBattles,
+    getPrivateStartupBattles,
+    getItineraryData,
 };
 
 function getPublicStartupBattles() {
@@ -21,21 +21,21 @@ function getPrivateStartupBattles() {
 
 // NOTE: This is a placeholder before the API is settled
 function getItineraryData(itineraryId) {
-	// TODO: Implement me
-	const url = `${BASE_URL}/api/itinerary/${itineraryId}`;
+    // TODO: Implement me
+    const url = `${BASE_URL}/api/itinerary/${itineraryId}`;
 
-	console.log('Fetching itinerary data');
-	return [
-		{
-			type: 'flight',
-			time: '12:30',
-		}, {
-			type: 'food',
-			time: '18:20',
-		}, {
-			type: 'lodging',
-			time: '22:00',
-		},
+    console.log('Fetching itinerary data');
+    return [
+        {
+            type: 'flight',
+            time: '12:30',
+        }, {
+            type: 'food',
+            time: '18:20',
+        }, {
+            type: 'lodging',
+            time: '22:00',
+        },
 
-	];
+    ];
 }

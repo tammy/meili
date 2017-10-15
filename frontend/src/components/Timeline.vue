@@ -5,9 +5,7 @@
         <draggable v-model="itineraryItems">
   	      <li v-for="item in itineraryItems"><span></span>
             <div>
-              <div class="title">{{item.type}}</div>
-              <div class="info">{{item.time}}</div>
-              <div class="type">Presentation</div>
+              <card></card>
             </div> <span class="number"><span>10:00</span> <span>12:00</span></span>
           </li>
         </draggable>
@@ -19,14 +17,14 @@
 <script>
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
-import TimelineItem from './TimelineItem';
+import Card from './card';
 import { getItineraryData } from '../../utils/api';
 
 export default {
   name: 'timeline',
   components: {
     AppNav,
-    TimelineItem,
+    Card,
     draggable,
   },
   data() {
@@ -51,8 +49,6 @@ export default {
 	.timeline {
 		text-align: left;
 	}
-
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
 body {
   height: 100vh;
@@ -79,10 +75,8 @@ body {
   position: relative;
   margin-left: 30px;
   background-color: rgba(255, 255, 255, 0.2);
-  padding: 14px;
+  padding: 1px;
   border-radius: 6px;
-  width: 250px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.08);
 }
 .timeline-container ul li:not(:first-child) {
   margin-top: 60px;

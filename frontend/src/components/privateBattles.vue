@@ -4,54 +4,56 @@
     <h3 class="text-center">Secret Startup Battles</h3>
     <hr/>
 
-    <div class="col-sm-4" v-for="battle in privateBattles">
+    <div class="col-sm-4" v-for="event in plan">
       <div class="panel panel-danger">
         <div class="panel-heading">
-          <h3 class="panel-title"> {{ battle.name }} </h3>
+          <h3 class="panel-title"> {{ event.name }} </h3>
         </div>
-        <div class="panel-body">
-          <p><span class="badge alert-info"> Sponsor: </span> {{ battle.sponsor }} </p>
-          <p><span class="badge alert-danger"> SeedFund: </span><strong> ${{ battle.seedFund }} </strong></p>
+        <div class="panel-body text-left">
+          <p><span class="badge alert-info"> Location: </span> 
+            {{ event.sponsor }} 
+          </p>
+          <p><span class="badge alert-danger"> Time: </span>
+            <strong> {{ event.seedFund }} </strong>
+          </p>
+          <p>
+            <span class="badge"> Description </span>
+            Lorem ipsum
+          </p>
         </div>
-      </div>
-    </div>
-
-    <div class="col-sm-12">
-      <div class="jumbotron text-center">
-        <h2>View Public Startup Battles</h2>
-        <router-link class="btn btn-lg btn-success" to="/"> Public Startup Battles </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AppNav from './AppNav';
-import { isLoggedIn } from '../../utils/auth';
+import AppNav from './appNav';
+// import { isLoggedIn } from '../../utils/auth';
 import { getPrivateStartupBattles } from '../../utils/api';
 
 export default {
-  name: 'privateBattles',
+  name: 'plan',
   components: {
     AppNav,
   },
   data() {
     return {
-      privateBattles: '',
+      plan: '',
     };
   },
   methods: {
     isLoggedIn() {
-      return isLoggedIn();
+      return true;
+      // return isLoggedIn();
     },
-    getPrivateStartupBattles() {
+    getItinierary() {
       getPrivateStartupBattles().then((battles) => {
-        this.privateBattles = battles;
+        this.plan = battles;
       });
     },
   },
   mounted() {
-    this.getPrivateStartupBattles();
+    this.getItinierary();
   },
 };
 </script>

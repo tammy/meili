@@ -2,46 +2,61 @@
 <template>
   <div>
     <app-nav></app-nav>
-    <h3 class="text-center"> {{ tripName }} </h3>
+    <input type="text" class="textbox h3 title text-center" v-model="tripName" placeholder="Best trip ever">
     <hr/>
-    <div class="col-sm-4" v-for="event in plan">
-      <div class="panel panel-event">
-        <div class="panel-heading">
+    <div class="col-sm-4">
+      <div class="col-sm-12" v-for="event in plan">
+        <div class="panel panel-event">
+          <div class="panel-heading">
+            <h3 class="panel-title"> 
+              <input type="text" class="textbox text-center" v-model="event.name" placeholder="Event">
+              </input>
+            </h3>
+          </div>
+          <div class="panel-body text-left">
+            <p class="field">
+              <div class="glyphicon glyphicon-pushpin"></div>
+              <input type="text" class="textbox" v-model="event.sponsor" placeholder="Location"/>
+            </p>
+            <p class="field">
+              <div class="glyphicon glyphicon-time"></div>
+              <input class="textbox" v-model="event.seedFund" placeholder="Time"/>
+            </p>
+            <p class="field" v-if="event.notes"> 
+              <input type="text" class="textbox" placeholder="Notes"></input>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Event Details -->
+    <div class="col-sm-6">
+      <div class="panel panel-detailed">
+        <div class="panel-heading"> 
           <h3 class="panel-title"> 
             <input type="text" class="textbox text-center" v-model="event.name" placeholder="Event" @click.self="event.focused = true" @blur="event.focused = false">
-            <button class="glyphicon glyphicon-search search" 
-              v-show="event.focused && event.name"
-              v-on:click="search()"
-              ></button>
-            </input>
+              <button class="glyphicon glyphicon-search search" 
+                v-show="event.focused && event.name"
+                v-on:click="search()"
+                ></button>
+              </input>
           </h3>
         </div>
         <div class="panel-body text-left">
           <p class="field">
             <div class="glyphicon glyphicon-pushpin"></div>
-            <input type="text" class="textbox" v-model="event.sponsor" placeholder="Location"/>
+            <input type="text" class="textbox" v-model="event.location" placeholder="Location"/>
           </p>
           <p class="field">
             <div class="glyphicon glyphicon-time"></div>
-            <input class="textbox" v-model="event.seedFund" placeholder="Time"/>
+            <input class="textbox" v-model="event.time" placeholder="Time"/>
           </p>
           <p class="field"> 
             <div class="glyphicon glyphicon-pencil"></div>
-            <input type="text" class="textbox" placeholder="Notes"></input>
+            <input type="text" class="textbox" v-model="event.notes" placeholder="Notes"></input>
           </p>
         </div>
       </div>
-    </div>
-    <!-- Event Details -->
-    <div class="panel panel-event">
-        <div class="panel-heading"> 
-          <div class="panel-title">
-            {{ event.name }} 
-          </div>
-          <div class="panel-body text-left">
-
-          </div>
-        </div>
     </div>
   </div>
 </template>
@@ -60,12 +75,12 @@ export default {
   data() {
     return {
       plan: '',
-      tripName: 'The best trip ever',
+      tripName: 'Paris, France - Graduation Trip',
       event: {
         name: 'Eiffel Tower',
-        location: '',
+        location: 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France',
         time: Date.now(),
-        notes: '',
+        notes: 'This is a note',
       },
     };
   },
@@ -93,13 +108,16 @@ export default {
 <style scoped>
 .panel {
   border-radius: 0;
-}
-
-.panel-event {
   border-color: #bce8f1;
+  max-width: 350px;
 }
 
-.panel-event .panel-heading {
+.panel-detailed {
+  border-radius: 0;
+  max-width: 100%;
+}
+
+.panel-heading {
   color: #31708f;
   background-color: transparent;
   border-color: #bce8f1;
@@ -129,9 +147,17 @@ input:focus {
 }
 
 .textbox {
-  margin-left: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+  width: calc(100% - 40px);
   border: none;
   font-size: 18px;
+}
+
+.title {
+  width: 100%;
+  font-size: 24px;
 }
 
 .search {

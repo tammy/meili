@@ -7,13 +7,13 @@ router.get('/', (req, res) => {
     res.status(200).send('NOM NOM CARDS');
 })
 
-router.get('/:trip_id', function (req, res) {
+router.get('/:trip_id', (req, res) => {
     models.Card.findAll({
         where: {
             trip: req.params.trip_id
         }, 
         raw: true
-    }).then(function(cards) {
+    }).then((cards) => {
         res.status(200).send(cards);
     });
 })

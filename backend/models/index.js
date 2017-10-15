@@ -54,10 +54,10 @@ module.exports.Card = sequelize.define('card', {
 module.exports.Thread = sequelize.define('thread', {
   id: { type: DataTypes.UUID, primaryKey: true },
   resolved: { type: DataTypes.BOOLEAN },
-  topic: { type: DataTypes.TEXT }
-  // options: { type: DataTypes.ARRAY(DataTypes.STRING) },
-  // answers: { type: DataTypes.ARRAY(DataTypes.INTEGER) },
-  // replies: { type: DataTypes.ARRAY(DataTypes.UUID) }
+  topic: { type: DataTypes.TEXT },
+  options: { type: DataTypes.TEXT },
+  answers: { type: DataTypes.TEXT },
+  replies: { type: DataTypes.TEXT }
 })
 
 

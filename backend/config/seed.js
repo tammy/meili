@@ -23,15 +23,15 @@ models.sequelize.sync({force: true}).then(function() {
     id: "5b2ab182-cf6a-4f97-ba81-630f29df375d",
     resolved: false,
     topic: "I AM ALERGIC TO FISH!",
-    // options: ["Go somewhere else", "Sucks. Guess you starve now."],
-    // answers: [2, 24],
-    // replies: []
+    options: "['Go somewhere else', 'Sucks. You gonna starve.']",
+    answers: "[2, 34]",
+    replies: "['d3f82eb4-44f5-4969-9319-029eb6444e82']"
   });
   models.Thread.create({
     id: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
     resolved: false,
     topic: "I WANT TO BE HEARD! THAT IS ALL!",
-    /* replies: [] */
+    replies: "[4ae498bb-fd2a-4e45-acfe-d22bfee7c415]"
   });
 
   // Seed message

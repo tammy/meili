@@ -33,7 +33,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.navbar-right { margin-right: 0px !important}
+.navbar-right { 
+  margin-right: 0px !important
+}
 
 .log {
   margin: 5px 10px 0 0;

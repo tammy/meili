@@ -8,14 +8,14 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:trip_id', function (req, res) {
-	models.Card.findAll({
-      where: {
-        trip: req.params.trip_id
-      }, 
-      raw: true
+    models.Card.findAll({
+        where: {
+            trip: req.params.trip_id
+        }, 
+        raw: true
     }).then(function(cards) {
-		res.status(200).send(cards);
-	});
+        res.status(200).send(cards);
+    });
 })
 
 module.exports = router;

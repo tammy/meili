@@ -2,17 +2,17 @@
   "name": "meili",
   "version": "1.0.0",
   "description": "Travel planning app, to travel with friends without the headache of planning with them.",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "concurrently": "^3.5.0"
   },
-  "devDependencies": {},
   "scripts": {
     "frontend": "cd frontend/ && npm run start",
     "backend": "cd backend/ && npm run start",
     "dev": "concurrently --kill-others \"npm run frontend\" \"npm run backend\" ",
     "start": "npm run dev",
     "setup-frontend": "cd frontend/ && npm install",
-    "setup-backend": "cd backend/ && npm install",
+    "setup-backend": "cd backend/ && npm run setup",
     "setup": "npm install && npm run setup-frontend && npm run setup-backend"
   },
   "repository": {

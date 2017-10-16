@@ -7,7 +7,7 @@ models.sequelize.sync({force: true}).then(function() {
     id: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
     name: "Paul",
     email: "pbardea@gmail.com",
-    profile_picture: "http://www.example.com"
+    profilePicture: "http://www.example.com"
   });
 
   models.Trip.create({
@@ -21,11 +21,23 @@ models.sequelize.sync({force: true}).then(function() {
   models.Card.create({
     id: "3176daf7-ea72-4444-b2be-7d2f466af8d0",
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
-    title: "Card title",
-    description: "Card description.",
-    location: "Paris, France", 
+    title: "Eiffel Tower",
+    description: "The brilliant tower!",
+    location: "Place Charles de Gaulle, 75008 Paris, France", 
     duration: 20.0,
     order: 0,
+    startTime: Date.now(),
+    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+  })
+  models.Card.create({
+    id: "48df18dc-c32d-4db0-827c-608dc42c22ea",
+	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    title: "Arc de Triomphe",
+    description: "Beautiful arch in the middle of a great roundabout. About 400 steps to the top.",
+    location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", 
+    duration: 20.0,
+    order: 0,
+    startTime: Date.now(),
     creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
   })
 

@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:3333';
 export {
     getPublicStartupBattles,
     getPrivateStartupBattles,
-    getItineraryData,
+    getCards,
 };
 
 function getPublicStartupBattles() {
@@ -19,23 +19,7 @@ function getPrivateStartupBattles() {
   return axios.get(url, { headers: { Authorization: `Bearer ${getAccessToken()}` } }).then(response => response.data);
 }
 
-// NOTE: This is a placeholder before the API is settled
-function getItineraryData(itineraryId) {
-    // TODO: Implement me
-    const url = `${BASE_URL}/api/itinerary/${itineraryId}`;
-
-    console.log('Fetching itinerary data');
-    return [
-        {
-            type: 'flight',
-            time: '12:30',
-        }, {
-            type: 'food',
-            time: '18:20',
-        }, {
-            type: 'lodging',
-            time: '22:00',
-        },
-
-    ];
+function getCards(tripId) {
+  const url = `${BASE_URL}/api/cards/${tripId}`;
+  return axios.get(url).then(response => response.data);
 }

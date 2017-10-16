@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-default">
     <div class="navbar-header">
-      <router-link to="/" class="navbar-brand"> The Ultimate Startup Battle Ground</router-link>
+      <router-link to="/" class="navbar-brand"> Welcome {{ name }} </router-link>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li>
@@ -13,10 +13,15 @@
 </template>
 
 <script>
-import { isLoggedIn, login, logout } from '../../utils/auth';
+import { isLoggedIn, login, logout, getUserName } from '../../utils/auth';
 
 export default {
   name: 'app-nav',
+  data() {
+    return {
+      name: getUserName(),
+    }
+  },
   methods: {
     handleLogin() {
       login();

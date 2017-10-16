@@ -1,50 +1,72 @@
-import decode from 'jwt-decode';
-import axios from 'axios';
-import auth0 from 'auth0-js';
 import Router from 'vue-router';
-import Auth0Lock from 'auth0-lock';
+
+window.fbAsyncInit = function() {
+  FB.init({
+    appId            : '138446110126260',
+    autoLogAppEvents : true,
+    xfbml            : true,
+    version          : 'v2.10'
+  });
+  FB.AppEvents.logPageView();
+};
+
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+
+
 const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
-
-const CLIENT_ID = 'S3yvl4ClD1EJPIuJ4fX04pUsT1xV1p6P';
-const CLIENT_DOMAIN = 'aneedalie.auth0.com';
-const REDIRECT = 'http://localhost:8080/callback';
-const SCOPE = 'full_access';
-const AUDIENCE = 'AUDIENCE_ATTRIBUTE';
-
-var auth = new auth0.WebAuth({
-  clientID: CLIENT_ID,
-  domain: CLIENT_DOMAIN
-});
-
-export function login() {
-  auth.authorize({
-    responseType: 'token id_token',
-    redirectUri: REDIRECT,
-    audience: AUDIENCE,
-    scope: SCOPE
-  });
-}
+const TOKEN_EXPIRE = 'token_expire';
+const USER_NAME = 'user_name';
 
 var router = new Router({
    mode: 'history',
 });
 
-export function logout() {
-  clearIdToken();
-  clearAccessToken();
-  router.go('/');
+export function login() {
+  FB.login();
+  checkLoginState();
 }
 
-export function requireAuth(to, from, next) {
-  if (!isLoggedIn()) {
-    next({
-      path: '/',
-      query: { redirect: to.fullPath }
+export function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+function statusChangeCallback(response) {
+  console.log("statusChangeCallback");
+  if (response.status == 'connected') {
+    setTokens(response.authResponse);
+    FB.api('/me', function(response) {
+      setUserName(response);
     });
+    router.go('/cards');
   } else {
-    next();
+    FB.login();
   }
+}
+
+function setTokens(authResponse) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, authResponse.accessToken);
+  localStorage.setItem(ID_TOKEN_KEY, authResponse.userID);
+  localStorage.setItem(TOKEN_EXPIRE, authResponse.expiresIn);
+}
+
+function setUserName(response) {
+  console.log('Successful login for: ' + response.name);
+  localStorage.setItem(USER_NAME, response.name);
+}
+
+export function logout() {
+  clearTokens();
+  FB.logout();
+  router.go('/');
 }
 
 export function getIdToken() {
@@ -55,48 +77,32 @@ export function getAccessToken() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
-function clearIdToken() {
-  localStorage.removeItem(ID_TOKEN_KEY);
+export function getUserName() {
+  return localStorage.getItem(USER_NAME);
 }
 
-function clearAccessToken() {
+function getTokenExpirationDate() {
+  return localStorage.getItem(TOKEN_EXPIRE);
+}
+
+function clearTokens() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
-}
-
-// Helper function that will allow us to extract the access_token and id_token
-function getParameterByName(name) {
-  let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
-  return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
-
-// Get and store access_token in local storage
-export function setAccessToken() {
-  let accessToken = getParameterByName('access_token');
-  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-}
-
-// Get and store id_token in local storage
-export function setIdToken() {
-  let idToken = getParameterByName('id_token');
-  localStorage.setItem(ID_TOKEN_KEY, idToken);
+  localStorage.removeItem(ID_TOKEN_KEY);
+  localStorage.removeItem(TOKEN_EXPIRE);
+  localStorage.removeItem(USER_NAME);
 }
 
 export function isLoggedIn() {
-  const idToken = getIdToken();
-  return !!idToken && !isTokenExpired(idToken);
+  const accessToken = getAccessToken();
+  // TODO: check isTokenExpired()
+  return !!accessToken;
 }
 
-function getTokenExpirationDate(encodedToken) {
-  const token = decode(encodedToken);
-  if (!token.exp) { return null; }
+// TODO: bugged
+function isTokenExpired() {
+  const date = getTokenExpirationDate();
+  const now = new Date();
 
-  const date = new Date(0);
-  date.setUTCSeconds(token.exp);
-
-  return date;
-}
-
-function isTokenExpired(token) {
-  const expirationDate = getTokenExpirationDate(token);
-  return expirationDate < new Date();
+  console.log(date + " now: " + now);
+  return getTokenExpirationDate() < new Date();
 }

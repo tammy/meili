@@ -64,10 +64,9 @@ body {
 
 .timeline-container ul {
   margin: 0;
-  margin-top: 100px;
   list-style: none;
   position: relative;
-  padding: 1px 100px;
+  padding: 1px 50px;
   color: #111;
   font-size: 13px;
 }

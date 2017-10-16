@@ -22,7 +22,7 @@ module.exports.User = sequelize.define('user', {
   id: { type: DataTypes.UUID, primaryKey: true  },
   name: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING },
-  profile_picture: { type: DataTypes.STRING }
+  profilePicture: { type: DataTypes.STRING }
 })
 
 
@@ -52,9 +52,9 @@ module.exports.Card = sequelize.define('card', {
   title: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
   location: { type: DataTypes.STRING },
-  coordinate_lat: { type: DataTypes.DOUBLE },
-  coordinate_lon: { type: DataTypes.DOUBLE },
-  start_time: { type: DataTypes.DATE },
+  coordinateLat: { type: DataTypes.DOUBLE },
+  coordinateLon: { type: DataTypes.DOUBLE },
+  startTime: { type: DataTypes.DATE },
   duration: { type: DataTypes.DOUBLE },
   order: { type: DataTypes.INTEGER },
   creator: { type: DataTypes.UUID }

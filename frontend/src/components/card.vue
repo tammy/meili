@@ -3,10 +3,10 @@
   <div>
       <div class="panel panel-event">
         <div class="panel-heading">
-          <h3 class="panel-title"> 
-            <input type="text" class="textbox text-center" v-model="event.name" placeholder="Event" @click.self="event.focused = true" @blur="event.focused = false">
-              <button class="glyphicon glyphicon-search search" 
-                v-show="event.focused && event.name"
+          <h3 class="panel-title">
+            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event" @click.self="tripEvent.focused = true" @blur="tripEvent.focused = false">
+              <button class="glyphicon glyphicon-search search"
+                v-show="tripEvent.focused && tripEvent.title"
                 v-on:click="search()"
                 ></button>
             </input>
@@ -15,14 +15,14 @@
         <div class="panel-body text-left">
           <p class="field">
             <div class="glyphicon glyphicon-pushpin"></div>
-            <input type="text" class="textbox" v-model="event.location" placeholder="Location"/>
+            <input type="text" class="textbox" v-model="tripEvent.location" placeholder="Location"/>
           </p>
           <p class="field">
             <div class="glyphicon glyphicon-time"></div>
-            <input class="textbox" v-model="event.time" placeholder="Time"/>
+            <input class="textbox" v-model="tripEvent.startTime" placeholder="Time"/>
           </p>
-          <p class="field" v-if="event.notes"> 
-            <input type="text" class="textbox" placeholder="Notes"/>
+          <p class="field">
+            <input type="text" class="textbox" v-model="tripEvent.description" placeholder="Notes"/>
           </p>
         </div>
       </div>
@@ -34,35 +34,16 @@
 // import { isLoggedIn } from '../../utils/auth';
 
 export default {
-  name: 'cards',
-  data() {
-    return {
-      plan: [],
-      tripName: 'Paris, France - Graduation Trip',
-      event: {
-        name: 'Eiffel Tower',
-        location: 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France',
-        time: Date.now(),
-        notes: 'This is a note',
-      },
-    };
-  },
+  name: 'card',
+  props: ['tripEvent'],
   methods: {
     isLoggedIn() {
       return true;
       // return isLoggedIn();
     },
-    getItinerary() {
-      // getPublicStartupBattles().then((battles) => {
-      //   this.plan = battles;
-      // });
-    },
     search() {
       console.log('Searching...');
     },
-  },
-  mounted() {
-    this.getItinerary();
   },
 };
 </script>
@@ -126,8 +107,8 @@ input:focus {
 
 .search {
   padding: 0;
-  display: inline-block; 
-  float: right; 
+  display: inline-block;
+  float: right;
   margin: 0;
   border-width: 0;
   background-color: transparent;

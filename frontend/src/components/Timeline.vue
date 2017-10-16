@@ -107,7 +107,6 @@ body {
   list-style: none;
   position: relative;
   padding: 1px 10px;
-  color: #111;
   font-size: 13px;
 }
 .timeline-container ul:before {
@@ -115,7 +114,7 @@ body {
   width: 1px;
   height: 100%;
   position: absolute;
-  border-left: 2px dashed #111;
+  border-left: 2px dashed #31708f;
 }
 .timeline-container ul li {
   position: relative;
@@ -130,19 +129,19 @@ body {
 .timeline-container ul li > span {
   width: 2px;
   height: 100%;
-  background: #000;
+  background: #31708f;
   left: -30px;
   top: 0;
   position: absolute;
 }
 .timeline-container ul li > span:before, .timeline-container ul li > span:after {
   content: "";
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  border: 2px solid #eee;
+  border: 2px solid #31708f;
   position: absolute;
-  background: #86b7e7;
+  background: #bce8f1;
   left: -4px;
   top: 0;
 }

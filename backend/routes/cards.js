@@ -23,7 +23,7 @@ router.get('/:trip_id', (req, res) => {
     });
 });
 
-router.put('/:trip_id/:card_id', (req, res) => {
+router.put('/', (req, res) => {
         var card = JSON.parse(req.body.card);
         models.Card.update(card, { where: {id: card.id}  });
         res.status(200).send();

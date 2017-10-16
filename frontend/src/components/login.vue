@@ -36,17 +36,25 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #d63865;
+    width: 100%;
 }
 
 #title {
   margin-bottom: 50px;
   font-size: 145px;
+  color: white;
 }
 
 .btn-login {
   padding: 15px 40px;
   font-size: 25px;
-  background-color: gray;
+  background-color: white;
+  color: grey;
+}
+
+.btn-login:hover {
+  background-color: darkgrey;
   color: white;
 }
 </style>

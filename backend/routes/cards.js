@@ -6,6 +6,7 @@ var uuidv4 = require('uuid/v4');
 
 router.get('/', (req, res) => {
     models.Card.findAll({
+        order: ['order'],
         raw: true
     }).then((cards) => {
         res.status(200).send(cards);
@@ -17,6 +18,7 @@ router.get('/:trip_id', (req, res) => {
         where: {
             trip: req.params.trip_id
         }, 
+        order: ['order'],
         raw: true
     }).then((cards) => {
         res.status(200).send(cards);
@@ -24,16 +26,26 @@ router.get('/:trip_id', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-        var card = JSON.parse(req.body.card);
-        models.Card.update(card, { where: {id: card.id}  });
-        res.status(200).send();
+        var card = req.body.card;
+        models.Card.update(card, { where: {id: card.id}  }).then(() => {
+            res.status(200).send(card);
+        });
 });
 
-router.post('/', (req, res) => {
-        var card = JSON.parse(req.body.card);
-        card.id = uuidv4();
-        models.Card.create(card);
-        res.status(200).send();
+router.post('/:trip_id', (req, res) => {
+        var cardId = uuidv4();
+        var tripId = req.params.trip_id;
+
+        models.Card.create({ id: cardId, trip: tripId }).then(() => {
+            models.Card.findAll({
+                where: {
+                    id: cardId
+                }, 
+                raw: true
+            }).then((cards) => {
+                res.status(200).send(cards);
+            });
+        });
 });
 
 module.exports = router;

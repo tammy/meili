@@ -19,7 +19,7 @@ export default new Router({
       component: Callback,
     },
     {
-      path: '/itinerary',
+      path: '/trips',
       // TODO: Should link to an itinerary edit page, not directly to the timeline component
       component: Timeline,
     },

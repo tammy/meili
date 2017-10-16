@@ -7,6 +7,7 @@ export {
     getPublicStartupBattles,
     getPrivateStartupBattles,
     getItineraryData,
+    getCards,
 };
 
 function getPublicStartupBattles() {
@@ -17,6 +18,11 @@ function getPublicStartupBattles() {
 function getPrivateStartupBattles() {
   const url = `${BASE_URL}/api/battles/private`;
   return axios.get(url, { headers: { Authorization: `Bearer ${getAccessToken()}` } }).then(response => response.data);
+}
+
+function getCards(tripId) {
+  const url = `${BASE_URL}/api/cards/${tripId}`;
+  return axios.get(url).then(response => response.data);
 }
 
 // NOTE: This is a placeholder before the API is settled

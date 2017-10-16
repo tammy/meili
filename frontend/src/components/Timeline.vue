@@ -1,12 +1,12 @@
 <template>
-	<div class="timeline timeline-container">
+  <div class="timeline timeline-container">
     <div class="timeline-container">
       <ul>
-        <draggable v-model="itineraryItems">
-  	      <li v-for="item in itineraryItems"><span></span>
+        <draggable v-model="tripEvents">
+  	      <li v-for="tripEvent in tripEvents"><span></span>
             <div>
-              <card></card>
-            </div> <span class="number"><span>10:00</span> <span>12:00</span></span>
+              <card :tripEvent='tripEvent'></card>
+            </div> <span class="number"><span>{{ formatDate(tripEvent.start_time) }}</span> <span></span></span>
           </li>
         </draggable>
       </ul>
@@ -18,7 +18,7 @@
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
 import Card from './card';
-import { getItineraryData } from '../../utils/api';
+import { getCards } from '../../utils/api';
 
 export default {
   name: 'timeline',
@@ -29,26 +29,33 @@ export default {
   },
   data() {
     return {
-      itineraryItems: [],
+      tripEvents: [],
     };
   },
   methods: {
-    getItineraryData() {
-      const dummyId = 12345;
-      this.itineraryItems = getItineraryData(dummyId);
+    formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const strDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
+      return strDate;
+    },
+    getTripEvents() {
+      const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
+      getCards(tripId).then((cards) => {
+        this.tripEvents = cards;
+      });
     },
   },
   mounted() {
-    this.getItineraryData();
+    this.getTripEvents();
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-	.timeline {
-		text-align: left;
-	}
+  .timeline {
+  text-align: left;
+  }
 
 body {
   height: 100vh;

@@ -7,7 +7,7 @@ models.sequelize.sync({force: true}).then(function() {
     id: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
     name: "Paul",
     email: "pbardea@gmail.com",
-    profile_picture: "http://www.example.com"
+    profilePicture: "http://www.example.com"
   });
 
   models.Trip.create({
@@ -26,7 +26,7 @@ models.sequelize.sync({force: true}).then(function() {
     location: "Place Charles de Gaulle, 75008 Paris, France", 
     duration: 20.0,
     order: 0,
-    start_time: Date.now(),
+    startTime: Date.now(),
     creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
   })
   models.Card.create({
@@ -37,7 +37,7 @@ models.sequelize.sync({force: true}).then(function() {
     location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", 
     duration: 20.0,
     order: 0,
-    start_time: Date.now(),
+    startTime: Date.now(),
     creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
   })
 

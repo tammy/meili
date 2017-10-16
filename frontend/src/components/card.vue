@@ -19,10 +19,10 @@
           </p>
           <p class="field">
             <div class="glyphicon glyphicon-time"></div>
-            <input class="textbox" v-model="tripEvent.start_time" placeholder="Time"/>
+            <input class="textbox" v-model="tripEvent.startTime" placeholder="Time"/>
           </p>
-          <p class="field" v-if="tripEvent.notes">
-            <input type="text" class="textbox" placeholder="Notes"/>
+          <p class="field">
+            <input type="text" class="textbox" v-model="tripEvent.description" placeholder="Notes"/>
           </p>
         </div>
       </div>
@@ -34,10 +34,7 @@
 // import { isLoggedIn } from '../../utils/auth';
 
 export default {
-  name: 'cards',
-  data() {
-    return {};
-  },
+  name: 'card',
   props: ['tripEvent'],
   methods: {
     isLoggedIn() {
@@ -48,7 +45,6 @@ export default {
       console.log('Searching...');
     },
   },
-  mounted() {},
 };
 </script>
 

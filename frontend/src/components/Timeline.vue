@@ -14,7 +14,7 @@
               </div>
               <span class="number">
                 <span v-if="tripEvent.startTime"> {{ formatDate(tripEvent.startTime) }}</span> <span></span>
-            </span>
+              </span>
             </li>
           </draggable>
         </ul>

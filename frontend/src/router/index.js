@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import CardDetailView from '@/components/cardDetailView';
-import Callback from '@/components/callback';
 import Login from '@/components/login';
 // import { requireAuth } from '../../utils/auth';
 import Trip from '@/components/trip';

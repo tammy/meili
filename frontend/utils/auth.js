@@ -46,7 +46,7 @@ function statusChangeCallback(response) {
     FB.api('/me', function(response) {
       setUserName(response);
     });
-    router.go('/cards');
+    router.go('/trip');
   } else {
     FB.login();
   }

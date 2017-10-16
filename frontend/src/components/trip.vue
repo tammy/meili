@@ -1,9 +1,6 @@
 <template>
   <div class="full-width">
     <app-nav></app-nav>
-    <div class="container align-left">
-      <button type="button" class="btn btn-add" v-on:click="addEvent()">Add Event</button>
-    </div>
     <div class="whitespace-top">
       <timeline class="col-sm-4"></timeline>
       <card-detail-view class="col-sm-8"></card-detail-view>
@@ -43,20 +40,5 @@ export default {
 
 .whitespace-top {
   margin-top: 50px;
-}
-
-.align-left {
-  margin: 10px 100px;
-  text-align: left;
-}
-
-.btn-add {
-  color: #31708f;
-  background-color: transparent;
-  border-color: #bce8f1;
-}
-
-.btn-add:hover {
-  background-color: #bce8f1;
 }
 </style>

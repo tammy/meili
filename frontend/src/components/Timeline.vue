@@ -1,15 +1,24 @@
 <template>
-  <div class="timeline timeline-container">
-    <div class="timeline-container">
-      <ul>
-        <draggable v-model="tripEvents">
-  	      <li v-for="tripEvent in tripEvents"><span></span>
-            <div>
-              <card :tripEvent="tripEvent"></card>
-            </div> <span class="number"><span>{{ formatDate(tripEvent.startTime) }}</span> <span></span></span>
-          </li>
-        </draggable>
-      </ul>
+  <div>
+    <div class="align-left">
+      <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
+      <button type="button" class="btn btn-add" v-on:click="addEvent()">Add Event</button>
+    </div>
+    <div class="timeline timeline-container">
+      <div class="timeline-container">
+        <ul>
+          <draggable v-model="tripEvents">
+    	      <li v-for="tripEvent in tripEvents"><span></span>
+              <div>
+                <card :tripEvent="tripEvent"></card>
+              </div>
+              <span class="number">
+                <span v-if="tripEvent.startTime"> {{ formatDate(tripEvent.startTime) }}</span> <span></span>
+            </span>
+            </li>
+          </draggable>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +53,18 @@ export default {
         this.tripEvents = cards;
       });
     },
+    addEvent() {
+      const event = {
+        title: 'New event',
+        location: '',
+        notes: '',
+      };
+
+      this.tripEvents.unshift(event);
+    },
+    save() {
+
+    },
   },
   mounted() {
     this.getTripEvents();
@@ -60,6 +81,25 @@ export default {
 body {
   height: 100vh;
   font-family: "Open Sans", sans-serif;
+}
+
+.align-left {
+  margin: 10px 50px;
+  text-align: left;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+.btn-add {
+  color: #31708f;
+  background-color: transparent;
+  border-color: #bce8f1;
+}
+
+.btn-add:hover {
+  background-color: #bce8f1;
 }
 
 .timeline-container ul {

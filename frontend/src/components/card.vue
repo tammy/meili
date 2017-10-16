@@ -4,11 +4,7 @@
       <div class="panel panel-event">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event" @click.self="tripEvent.focused = true" @blur="tripEvent.focused = false">
-              <button class="glyphicon glyphicon-search search"
-                v-show="tripEvent.focused && tripEvent.title"
-                v-on:click="search()"
-                ></button>
+            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event">
             </input>
           </h3>
         </div>

@@ -4,8 +4,12 @@ var Sequelize = require('sequelize-cockroachdb');
 var models = require('../models');
 
 router.get('/', (req, res) => {
-    res.status(200).send('NOM NOM CARDS');
-})
+    models.Card.findAll({
+        raw: true
+    }).then((cards) => {
+        res.status(200).send(cards);
+    });
+});
 
 router.get('/:trip_id', (req, res) => {
     models.Card.findAll({
@@ -16,6 +20,12 @@ router.get('/:trip_id', (req, res) => {
     }).then((cards) => {
         res.status(200).send(cards);
     });
-})
+});
+
+router.put('/:trip_id/:card_id', (req, res) => {
+        var card = JSON.parse(req.body.card);
+        models.Card.update(card, { where: {id: card.id}  });
+        res.status(200).send();
+});
 
 module.exports = router;

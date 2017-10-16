@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import CardDetailView from '@/components/cardDetailView';
 import Callback from '@/components/callback';
 // import { requireAuth } from '../../utils/auth';
-import Timeline from '@/components/Timeline';
+import Trip from '@/components/trip';
 
 Vue.use(Router);
 
@@ -19,9 +19,9 @@ export default new Router({
       component: Callback,
     },
     {
-      path: '/trips',
+      path: '/trip',
       // TODO: Should link to an itinerary edit page, not directly to the timeline component
-      component: Timeline,
+      component: Trip,
     },
   ],
 });

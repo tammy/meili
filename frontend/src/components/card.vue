@@ -36,9 +36,6 @@ export default {
       return true;
       // return isLoggedIn();
     },
-    search() {
-      // TODO: search the card something
-    },
   },
 };
 </script>
@@ -50,11 +47,6 @@ export default {
   border-color: #bce8f1;
   max-width: 350px;
   margin-bottom: 0px;
-}
-
-.panel-detailed {
-  border-radius: 0;
-  max-width: 100%;
 }
 
 .panel-heading {
@@ -87,7 +79,7 @@ input:focus {
 }
 
 .panel-title .textbox {
-  margin-right: 10px;
+  width: 100%;
 }
 
 .textbox {
@@ -102,14 +94,5 @@ input:focus {
 
 .full-width {
   width: 100%;
-}
-
-.search {
-  padding: 0;
-  display: inline-block;
-  float: right;
-  margin: 0;
-  border-width: 0;
-  background-color: transparent;
 }
 </style>

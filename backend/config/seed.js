@@ -28,7 +28,7 @@ models.sequelize.sync({force: true}).then(function() {
     order: 0,
     startTime: Date.now(),
     creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
-  })
+  });
   models.Card.create({
     id: "48df18dc-c32d-4db0-827c-608dc42c22ea",
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",

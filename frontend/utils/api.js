@@ -7,6 +7,8 @@ export {
     getPublicStartupBattles,
     getPrivateStartupBattles,
     getCards,
+    updateCard,
+    createCard,
 };
 
 function getPublicStartupBattles() {
@@ -22,4 +24,17 @@ function getPrivateStartupBattles() {
 function getCards(tripId) {
   const url = `${BASE_URL}/api/cards/${tripId}`;
   return axios.get(url).then(response => response.data);
+}
+
+function createCard(tripId) {
+  const url = `${BASE_URL}/api/cards/${tripId}`;
+  return axios.post(url).then(response => response.data);
+}
+
+function updateCard(card) {
+  const cardId = card.id;
+  const url = `${BASE_URL}/api/cards/`;
+  return axios.put(url, {'card': card}).then((response) => {
+    response.data;
+  });
 }

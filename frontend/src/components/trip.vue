@@ -3,8 +3,8 @@
     <app-nav></app-nav>
     <input type="text" class="text-center title textbox" v-model="tripName" placeholder="The best trip ever!s"/>
     <div class="whitespace-top">
-      <timeline class="col-sm-4"></timeline>
-      <card-detail-view class="col-sm-8"></card-detail-view>
+      <timeline class="col-sm-5"></timeline>
+      <card-detail-view class="col-sm-7"></card-detail-view>
     </div>
   </div>
 </template>

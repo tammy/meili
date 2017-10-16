@@ -5,7 +5,7 @@
         <draggable v-model="tripEvents">
   	      <li v-for="tripEvent in tripEvents"><span></span>
             <div>
-              <card :tripEvent='tripEvent'></card>
+              <card :tripEvent="tripEvent"></card>
             </div> <span class="number"><span>{{ formatDate(tripEvent.start_time) }}</span> <span></span></span>
           </li>
         </draggable>

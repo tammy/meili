@@ -3,7 +3,7 @@
   <div>
       <div class="panel panel-event">
         <div class="panel-heading">
-          <h3 class="panel-title handle">
+          <h3 class="panel-title">
             <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event"/>
             <div class="glyphicon glyphicon-resize-vertical handle"></div>
           </h3>

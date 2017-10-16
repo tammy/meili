@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       name: getUserName(),
-    }
+    };
   },
   methods: {
     handleLogin() {
@@ -38,7 +38,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.navbar-right { 
+.navbar-right {
   margin-right: 0px !important
 }
 

@@ -15,7 +15,7 @@ import { isLoggedIn, login } from '../../utils/auth';
 
 export default {
   name: 'login',
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     if (isLoggedIn()) {
       next('/trip');
     } else {

@@ -9,13 +9,13 @@ Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
   const authed = isLoggedIn();
-  const authRequired = !(to.path == "/");
+  const authRequired = !(to.path === '/');
   if (authRequired && !authed) {
     next('/');
   } else {
     next();
   }
-})
+});
 
 /* eslint-disable no-new */
 new Vue({

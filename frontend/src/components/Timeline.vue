@@ -27,7 +27,7 @@
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
 import Card from './card';
-import { getCards } from '../../utils/api';
+import { getCards, createCard, updateCard } from '../../utils/api';
 
 export default {
   name: 'timeline',
@@ -54,16 +54,21 @@ export default {
       });
     },
     addEvent() {
-      const event = {
-        title: 'New event',
-        location: '',
-        notes: '',
-      };
-
-      this.tripEvents.unshift(event);
+      const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
+      const newTripEvent = createCard(tripId);
+      this.tripEvents.unshift(newTripEvent);
+      this.save();
+    },
+    updateOrders() {
+      for (let i = 0; i < this.tripEvents.length; i += 1) {
+        this.tripEvents[i].order = i;
+      }
     },
     save() {
-
+      this.updateOrders();
+      for (let i = 0; i < this.tripEvents.length; i += 1) {
+        updateCard(this.tripEvents[i]);
+      }
     },
   },
   mounted() {

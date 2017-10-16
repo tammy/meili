@@ -13,10 +13,10 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:trip_id', (req, res) => {
+router.get('/:tripId', (req, res) => {
     models.Card.findAll({
         where: {
-            trip: req.params.trip_id
+            trip: req.params.tripId
         }, 
         order: ['order'],
         raw: true
@@ -32,9 +32,9 @@ router.put('/', (req, res) => {
         });
 });
 
-router.post('/:trip_id', (req, res) => {
+router.post('/:tripId', (req, res) => {
         var cardId = uuidv4();
-        var tripId = req.params.trip_id;
+        var tripId = req.params.tripId;
 
         models.Card.create({ id: cardId, trip: tripId }).then(() => {
             models.Card.findAll({

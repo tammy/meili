@@ -53,9 +53,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .timeline {
+.timeline {
   text-align: left;
-  }
+}
 
 body {
   height: 100vh;

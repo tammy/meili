@@ -3,9 +3,9 @@
   <div>
       <div class="panel panel-event">
         <div class="panel-heading">
-          <h3 class="panel-title">
-            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event">
-            </input>
+          <h3 class="panel-title handle">
+            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event"/>
+            <div class="glyphicon glyphicon-resize-vertical handle"></div>
           </h3>
         </div>
         <div class="panel-body text-left">
@@ -76,10 +76,6 @@ input {
 
 input:focus {
   outline: none;
-}
-
-.panel-title .textbox {
-  width: 100%;
 }
 
 .textbox {

@@ -7,7 +7,7 @@
     <div class="timeline timeline-container">
       <div class="timeline-container">
         <ul>
-          <draggable v-model="tripEvents">
+          <draggable v-model="tripEvents" :options="{handle:'.handle'}">
     	      <li v-for="tripEvent in tripEvents"><span></span>
               <div>
                 <card :tripEvent="tripEvent"></card>

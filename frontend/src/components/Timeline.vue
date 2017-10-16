@@ -84,7 +84,7 @@ body {
 }
 
 .align-left {
-  margin: 10px 50px;
+  margin: 10px 10px;
   text-align: left;
 }
 
@@ -106,7 +106,7 @@ body {
   margin: 0;
   list-style: none;
   position: relative;
-  padding: 1px 50px;
+  padding: 1px 10px;
   color: #111;
   font-size: 13px;
 }

@@ -45,7 +45,7 @@ export default {
 .panel {
   border-radius: 0;
   border-color: #bce8f1;
-  max-width: 350px;
+  max-width: 400px;
   margin-bottom: 0px;
 }
 

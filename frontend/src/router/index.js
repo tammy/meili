@@ -20,7 +20,6 @@ export default new Router({
     },
     {
       path: '/trip',
-      // TODO: Should link to an itinerary edit page, not directly to the timeline component
       component: Trip,
     },
   ],

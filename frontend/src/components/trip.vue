@@ -1,6 +1,7 @@
 <template>
   <div class="full-width">
     <app-nav></app-nav>
+    <input type="text" class="text-center title textbox" v-model="tripName" placeholder="The best trip ever!s"/>
     <div class="whitespace-top">
       <timeline class="col-sm-4"></timeline>
       <card-detail-view class="col-sm-8"></card-detail-view>
@@ -21,10 +22,11 @@ export default {
     CardDetailView,
   },
   data() {
+    return {
+      tripName: 'Graduation - Paris, France',
+    };
   },
   methods: {
-    addEvent() {
-    },
   },
   mounted() {
   },
@@ -40,5 +42,21 @@ export default {
 
 .whitespace-top {
   margin-top: 50px;
+}
+
+.textbox {
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+  width: calc(100% - 25px);
+  border: none;
+  font-size: 18px;
+  min-height: 20px;
+}
+
+.title {
+  width: 100%;
+  font-size: 24px;
+  font-weight: 600;
 }
 </style>

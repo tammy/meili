@@ -104,11 +104,6 @@ input:focus {
   width: 100%;
 }
 
-.title {
-  width: 100%;
-  font-size: 24px;
-}
-
 .search {
   padding: 0;
   display: inline-block;

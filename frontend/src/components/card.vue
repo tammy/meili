@@ -1,27 +1,20 @@
 <!-- HTML -->
 <template>
   <div>
-      <div class="panel panel-event">
+      <div class="panel panel-event" v-on:click="focusEvent()">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event"/>
+            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event Name"/>
             <div class="glyphicon glyphicon-resize-vertical handle"></div>
           </h3>
         </div>
-        <div class="panel-body text-left">
-          <div class="field">
-            <div class="glyphicon glyphicon-pushpin"></div>
-            <input type="text" class="textbox" v-model="tripEvent.location" placeholder="Location"/>
-          </div>
-          <div class="field">
-            <div class="glyphicon glyphicon-time"></div>
-            <input class="textbox" v-model="tripEvent.startTime" placeholder="Time"/>
-          </div>
-          <p class="field">
-            <input type="text" class="textbox full-width" v-model="tripEvent.description" placeholder="Notes"/>
-          </p>
+        <div class="panel-body text-left" v-show="showDetails">
+          <p v-show="tripEvent.location">{{ tripEvent.location }}</p>
+          <p v-show="tripEvent.startTime">{{ tripEvent.startTime }}</p>
+          <p v-show="tripEvent.description">{{ tripEvent.description }}</p>
         </div>
       </div>
+      <div class="glyphicon glyphicon-remove" v-on:click="remove()"></div>
   </div>
 </template>
 
@@ -31,10 +24,17 @@
 export default {
   name: 'card',
   props: ['tripEvent'],
+  computed: {
+    showDetails() {
+      return this.tripEvent.location || this.tripEvent.startTime || this.tripEvent.description;
+    },
+  },
   methods: {
-    isLoggedIn() {
-      return true;
-      // return isLoggedIn();
+    remove() {
+      this.$store.commit('removeEvent', this.tripEvent);
+    },
+    focusEvent() {
+      this.$store.commit('setFocusedEvent', this.tripEvent);
     },
   },
 };
@@ -45,8 +45,15 @@ export default {
 .panel {
   border-radius: 0;
   border-color: #bce8f1;
-  max-width: 400px;
+  width: 400px;
   margin-bottom: 0px;
+  display: inline-block;
+  transition: box-shadow .3s;
+  cursor: pointer;
+}
+
+.panel:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 
 .panel-heading {
@@ -55,40 +62,41 @@ export default {
   border-color: #bce8f1;
 }
 
-.field {
-  display: inline-block;
-  min-width: 10px;
-  padding: 0 7px 10px 7px;
+p {
   font-size: 16px;
-  text-align: left;
   vertical-align: middle;
-  background-color: #FFF;
-  color: #000;
-  width: 100%;
+  padding-left: 5px;
 }
 
 input {
   background-color: transparent;
-  /*text-overflow: ;
-  white-space: nowrap;
-  overflow: hidden;*/
+  padding-left: 5px;
+  border: none;
 }
 
 input:focus {
+  background-color: #fff;
   outline: none;
+  border: none;
 }
 
 .textbox {
   padding-left: 5px;
   padding-right: 5px;
-  position: relative;
   width: calc(100% - 25px);
-  border: none;
   font-size: 18px;
   min-height: 20px;
+  outline: none;
 }
 
-.full-width {
-  width: 100%;
+.glyphicon-remove {
+  position: absolute;
+  top: 10px;
+  padding-left: 10px;
+  color: transparent;
+}
+
+.glyphicon-remove:hover {
+  color: red;
 }
 </style>

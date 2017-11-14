@@ -31,15 +31,11 @@ import { getCards, createCard, updateCard } from '../../utils/api';
 
 export default {
   name: 'timeline',
-  components: {
-    AppNav,
-    Card,
-    draggable,
-  },
-  data() {
-    return {
-      tripEvents: [],
-    };
+  components: { AppNav, Card, draggable },
+  computed: {
+    tripEvents() {
+      return this.$store.state.tripEvents;
+    },
   },
   methods: {
     formatDate(dateStr) {
@@ -47,32 +43,30 @@ export default {
       const strDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
       return strDate;
     },
-    getTripEvents() {
-      const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
-      getCards(tripId).then((cards) => {
-        this.tripEvents = cards;
-      });
-    },
     addEvent() {
+      // TODO: switch over to use veux
       const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
       const newTripEvent = createCard(tripId);
       this.tripEvents.unshift(newTripEvent);
-      this.save();
+      // this.save();
     },
     updateOrders() {
-      for (let i = 0; i < this.tripEvents.length; i += 1) {
-        this.tripEvents[i].order = i;
-      }
+      // TODO: switch over to use veux
+      // for (let i = 0; i < this.tripEvents.length; i += 1) {
+      //   this.tripEvents[i].order = i;
+      // }
     },
     save() {
-      this.updateOrders();
-      for (let i = 0; i < this.tripEvents.length; i += 1) {
-        updateCard(this.tripEvents[i]);
-      }
+      // TODO: switch over to use veux
+      // this.updateOrders();
+      // for (let i = 0; i < this.tripEvents.length; i += 1) {
+      //   updateCard(this.tripEvents[i]);
+      // }
     },
   },
-  mounted() {
-    this.getTripEvents();
+  created() {
+    const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
+    this.$store.dispatch('getTripEvents', tripId);
   },
 };
 </script>

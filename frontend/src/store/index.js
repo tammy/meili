@@ -87,7 +87,6 @@ export function createStore() {
             });
         },
         socket_newUser: (state, data) => {
-            console.log(data);
             state.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_userDisconnected: (state, data) => {

@@ -13,6 +13,33 @@ app.use(cors());
 app.use('/api/battles/', require('./routes/battles'));
 app.use('/api/cards/', require('./routes/cards'));
 
-app.listen(PORT, () => {
+var pubSubReg = {};
+
+const server = app.listen(PORT, () => {
     console.log('Starting on localhost:', PORT);    
 });
+
+const io = require('socket.io')(server);
+
+io.on('connection', (socket) => {
+    var user = 'unpopulated_user';
+    socket.emit('new_connection', { hello: 'world'});
+    socket.on('sub_trip', (data) => {
+        console.log(data); 
+        var userID = data['user_id'];
+        var tripID = data['trip_id'];
+        user = userID;
+        socket.broadcast.emit('update_state', { state: 'NEW STATE HERE'});
+
+    });
+
+    socket.on('state_change', (data) => {
+        console.log('STATE CHANGE!'); 
+    })
+
+    socket.on('disconnect', () => {
+        console.log('Disconnect user from pubsub ' + user);
+    })
+});
+
+

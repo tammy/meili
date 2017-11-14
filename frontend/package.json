@@ -13,6 +13,7 @@
     "auth0-lock": "^10.23.1",
     "axios": "^0.16.2",
     "jwt-decode": "^2.2.0",
+    "socket.io-client": "^2.0.4",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
     "vuedraggable": "^2.14.1",

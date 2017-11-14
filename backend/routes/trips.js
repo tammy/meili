@@ -21,9 +21,13 @@ router.get('/:tripId', (req, res) => {
 });
 
 // Update a trip
-router.put('/', (req, res) => {
-        var trip = req.body.trip;
-        models.Trip.update(trip, { where: {id: trip.id}  }).then(() => {
+router.put('/:tripId', (req, res) => {
+        var tripId = req.params.tripId;
+        var updatedTrip = req.body.trip;
+        if (tripId != updatedTrip.id) {
+            res.status(400).send("Trip ID in params does not match ID in object beign updated.");
+        }
+        models.Trip.update(trip, { where: {id: tripId}  }).then(() => {
             res.status(200).send(trip);
         });
 });

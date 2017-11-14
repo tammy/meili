@@ -1,11 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import io from 'socket.io-client';
-import Vue from 'vue';
-import Vuex from 'vuex';
-import VueSocketio from 'vue-socket.io';
 import App from './app';
+import io from 'socket.io-client';
 import router from './router';
+import Vue from 'vue';
+import VueSocketio from 'vue-socket.io';
+import Vuex from 'vuex';
 import { isLoggedIn } from '../utils/auth';
 import { createStore } from './store';
 

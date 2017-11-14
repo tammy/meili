@@ -12,8 +12,8 @@ export function createStore() {
         user: {},
         trip: {
           /* TODO: put all of the trip information in here: title, users, etc */
-            users: [],
         },
+        collaborators: [],
         tripEvents: [],
         focusedEvent: {}
       },
@@ -50,8 +50,8 @@ export function createStore() {
         },
         addEvent: (state) => {    // TODO: WIP
         },
-        updateUsers: (state, newUsers) => {
-            state.trip.users = newUsers;
+        updateUsers: (state, allUsers) => {
+            state.collaborators = allUsers;
         },
       },
       getters: {

@@ -35,9 +35,6 @@ export default {
   computed: {
     tripEvents() {
       return this.$store.state.tripEvents;
-    },
-    users() {
-        return this.$store.state.trip.users;
     }
   },
   methods: {

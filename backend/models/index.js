@@ -19,7 +19,7 @@ if (!Sequelize.supportsCockroachDB) {
 
 // User
 module.exports.User = sequelize.define('user', {
-  id: { type: DataTypes.UUID, primaryKey: true  },
+  id: { type: DataTypes.STRING  },
   name: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING },
   profilePicture: { type: DataTypes.STRING }
@@ -29,7 +29,7 @@ module.exports.User = sequelize.define('user', {
 // Trip
 module.exports.Trip = sequelize.define('trip', {
   id: { type: DataTypes.UUID, primaryKey: true  },
-  owner: { type: DataTypes.UUID, primaryKey: true  },
+  owner: { type: DataTypes.STRING  },
   name: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
 })

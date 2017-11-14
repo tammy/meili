@@ -2,6 +2,8 @@ import axios from 'axios';
 // import { getAccessToken } from './auth';
 
 const BASE_URL = 'http://localhost:3333';
+const VERSION = 'v1';
+const API_URL = `${BASE_URL}/api/${VERSION}`;
 
 /**
  * User
@@ -23,7 +25,7 @@ export function getTripList(userId) { /* TODO */ }
 
 export function getTrip(tripId) {
   // TODO: add more details of a trip
-  const url = `${BASE_URL}/api/cards/${tripId}`;
+  const url = `${API_URL}/cards/${tripId}`;
   return axios.get(url).then(response => response.data);
 }
 
@@ -38,13 +40,13 @@ export function deleteTrip(tripId) { /* TODO */ }
  */
 
 export function createEvent(tripId) {
-  const url = `${BASE_URL}/api/cards/${tripId}`;
+  const url = `${API_URL}/cards/${tripId}`;
   return axios.post(url).then(response => response.data);
 }
 
 export function updateEvent(card) {
   const cardId = card.id;
-  const url = `${BASE_URL}/api/cards/`;
+  const url = `${API_URL}/cards/`;
   return axios.put(url, {'card': card}).then((response) => {
     response.data;
   });

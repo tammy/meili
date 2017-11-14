@@ -1,19 +1,18 @@
 <template>
   <div>
     <div class="align-left">
-      <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
-      <button type="button" class="btn btn-add" v-on:click="addEvent()">Add Event</button>
+      <button type="button" class="btn btn-add" v-on:click="add()">Add Event</button>
     </div>
     <div class="timeline timeline-container">
       <div class="timeline-container">
         <ul>
-          <draggable v-model="tripEvents" :options="{handle:'.handle'}">
-    	      <li v-for="tripEvent in tripEvents"><span></span>
+          <draggable v-model="trip.events" :options="{handle:'.handle'}">
+    	      <li v-for="event in trip.events"><span></span>
               <div>
-                <card :tripEvent="tripEvent"></card>
+                <card :tripEvent="event"></card>
               </div>
               <span class="number">
-                <span v-if="tripEvent.startTime"> {{ formatDate(tripEvent.startTime) }}</span> <span></span>
+                <span v-if="event.startTime"> {{ formatDate(event.startTime) }}</span> <span></span>
               </span>
             </li>
           </draggable>
@@ -27,15 +26,14 @@
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
 import Card from './card';
-import { getCards, createCard, updateCard } from '../../utils/api';
 
 export default {
   name: 'timeline',
   components: { AppNav, Card, draggable },
   computed: {
-    tripEvents() {
-      return this.$store.state.tripEvents;
-    }
+    trip() {
+      return this.$store.state.trip;
+    },
   },
   methods: {
     formatDate(dateStr) {
@@ -43,30 +41,18 @@ export default {
       const strDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
       return strDate;
     },
-    addEvent() {
-      // TODO: switch over to use veux
-      const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
-      const newTripEvent = createCard(tripId);
-      this.tripEvents.unshift(newTripEvent);
-      // this.save();
+    reorder() {
+      this.$store.commit('saveTrip');
     },
-    updateOrders() {
-      // TODO: switch over to use veux
-      // for (let i = 0; i < this.tripEvents.length; i += 1) {
-      //   this.tripEvents[i].order = i;
-      // }
-    },
-    save() {
-      // TODO: switch over to use veux
-      // this.updateOrders();
-      // for (let i = 0; i < this.tripEvents.length; i += 1) {
-      //   updateCard(this.tripEvents[i]);
-      // }
+    add() {
+      this.$store.commit('addEvent');
     },
   },
-  created() {
+  mounted() {
     const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
-    this.$store.dispatch('getTripEvents', tripId);
+    // TODO: figure out why getTripEvents with mapActions doesn't work
+    this.$store.dispatch('getTrip', tripId);
+    // this.getTripEvents(tripId);
   },
 };
 </script>
@@ -75,6 +61,10 @@ export default {
 <style scoped>
 .timeline {
   text-align: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 0 10px 30px;
+  max-height: calc(100vh - 250px);
 }
 
 body {

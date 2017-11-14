@@ -1,7 +1,7 @@
 <template>
   <div class="full-width">
     <app-nav></app-nav>
-    <input type="text" class="text-center title textbox" v-model="tripName" placeholder="The best trip ever!s"/>
+    <input type="text" class="text-center title textbox" v-model="tripName" placeholder="The best trip ever!"/>
     <div class="whitespace-top">
       <timeline class="col-sm-5"></timeline>
       <card-detail-view class="col-sm-7"></card-detail-view>
@@ -21,23 +21,23 @@ export default {
     Timeline,
     CardDetailView,
   },
-  data() {
-    return {
-      tripName: 'Graduation - Paris, France',
-    };
+  computed: {
+    tripName() {
+      return this.$store.state.trip.name;
+    },
   },
-  methods: {
-  },
-  mounted() {
-  },
+  // data() {
+  //   return {
+  //   };
+  // },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .full-width {
-  margin: 0 100px;
-  width: calc(100% - 200px);
+  padding: 0 30px;
+  width: 100%;
 }
 
 .whitespace-top {

@@ -1,9 +1,10 @@
 <!-- HTML -->
 <template>
+  <div>
     <div class="panel panel-detailed">
       <div class="panel-heading"> 
         <h3 class="panel-title"> 
-          <input type="text" class="textbox text-center" v-model="event.name" placeholder="Event" @click.self="event.focused = true" @blur="event.focused = false">
+          <input type="text" class="textbox text-center" v-model="event.title" placeholder="Event">
             <button class="glyphicon glyphicon-search search" 
               v-show="event.focused && event.name"
               v-on:click="search()"
@@ -18,14 +19,16 @@
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-time"></div>
-          <input class="textbox" v-model="event.time" placeholder="Time"/>
+          <input class="textbox" v-model="event.startTime" placeholder="Time"/>
         </p>
         <p class="field"> 
           <div class="glyphicon glyphicon-pencil"></div>
-          <input type="text" class="textbox" v-model="event.notes" placeholder="Notes"></input>
+          <input type="text" class="textbox" v-model="event.description" placeholder="Notes"></input>
         </p>
       </div>
     </div>
+    <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
+  </div>
 </template>
 
 <!-- JavaScript -->
@@ -35,20 +38,17 @@ export default {
   name: 'card-detail-view',
   components: {
   },
-  data() {
-    return {
-      event: {
-        name: 'Eiffel Tower',
-        location: 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France',
-        time: Date.now(),
-        notes: 'This is a note',
-      },
-    };
+  computed: {
+    event() {
+      return this.$store.state.focusedEvent;
+    },
   },
   methods: {
     search() {},
-  },
-  mounted() {
+    save() {
+      // TODO: make this periodically save automatically
+      this.$store.dispatch('saveEvent', event);
+    },
   },
 };
 </script>

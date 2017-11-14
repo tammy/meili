@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import AppNav from './appNav';
-import Timeline from './Timeline';
-import CardDetailView from './cardDetailView';
+import Timeline from '../components/Timeline';
+import AppNav from '../components/AppNav';
+import CardDetailView from '../components/CardDetailView';
 
 export default {
   name: 'trip',
@@ -26,10 +26,6 @@ export default {
       return this.$store.state.trip.name;
     },
   },
-  // data() {
-  //   return {
-  //   };
-  // },
 };
 </script>
 

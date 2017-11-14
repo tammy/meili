@@ -3,7 +3,7 @@
 import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import App from './app';
+import App from './App';
 import router from './router';
 import { isLoggedIn } from '../utils/auth';
 import { createStore } from './store';

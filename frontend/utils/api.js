@@ -2,38 +2,27 @@ import axios from 'axios';
 import { getAccessToken } from './auth';
 
 const BASE_URL = 'http://localhost:3333';
+const API_URL = `${BASE_URL}/api/v1`;
 
 export {
-    getPublicStartupBattles,
-    getPrivateStartupBattles,
     getCards,
     updateCard,
     createCard,
 };
 
-function getPublicStartupBattles() {
-  const url = `${BASE_URL}/api/battles/public`;
-  return axios.get(url).then(response => response.data);
-}
-
-function getPrivateStartupBattles() {
-  const url = `${BASE_URL}/api/battles/private`;
-  return axios.get(url, { headers: { Authorization: `Bearer ${getAccessToken()}` } }).then(response => response.data);
-}
-
 function getCards(tripId) {
-  const url = `${BASE_URL}/api/cards/${tripId}`;
+  const url = `${API_URL}/cards/${tripId}`;
   return axios.get(url).then(response => response.data);
 }
 
 function createCard(tripId) {
-  const url = `${BASE_URL}/api/cards/${tripId}`;
+  const url = `${API_URL}/cards/${tripId}`;
   return axios.post(url).then(response => response.data);
 }
 
 function updateCard(card) {
   const cardId = card.id;
-  const url = `${BASE_URL}/api/cards/`;
+  const url = `${API_URL}/cards/`;
   return axios.put(url, {'card': card}).then((response) => {
     response.data;
   });

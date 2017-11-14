@@ -23,19 +23,19 @@ const server = app.listen(PORT, () => {
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-    var user = 'unpopulated_user';
-    socket.emit('new connection', { users_here: users});
-    socket.on('sub_trip', (data) => {
+    var user = 'unpopulatedUser';
+    socket.emit('newConnection', { usersConneted: users});
+    socket.on('subTrip', (data) => {
         console.log(data); 
-        var userID = data['user_id'];
-        var tripID = data['trip_id'];
+        var userID = data['userID'];
+        var tripID = data['tripID'];
         user = userID;
         users.push(userID);
         console.log(users);
-        io.sockets.emit('new user', { users_here: users });
+        io.sockets.emit('newUser', { usersConnected: users });
     });
 
-    socket.on('state_change', (data) => {
+    socket.on('stateChange', (data) => {
         console.log('STATE CHANGE!'); 
     })
 
@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
         if (index > -1) {
             users.splice(index, 1);
         }
-        socket.broadcast.emit('user disconnected', { users_here: users});
+        socket.broadcast.emit('userDisconnected', { usersConnected: users});
     })
 });
 

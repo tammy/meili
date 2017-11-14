@@ -3,7 +3,6 @@
     <div class="align-left">
       <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
       <button type="button" class="btn btn-add" v-on:click="addEvent()">Add Event</button>
-      {{ users }}
     </div>
     <div class="timeline timeline-container">
       <div class="timeline-container">

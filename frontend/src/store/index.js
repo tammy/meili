@@ -18,24 +18,24 @@ export function createStore() {
         focusedEvent: {}
       },
       actions: {
-        getTripEvents: (state, tripId) => {
-          getCards(tripId).then((events) => {
+        getTripEvents: (state, tripID) => {
+          getCards(tripID).then((events) => {
             state.commit('setTripEvents', events);
           });
         },
-        socket_newConnection: (context, data) => {
-            context.commit('UPDATE_USERS', data['users_here']);
+        socket_newConnection: (state, data) => {
+            state.commit('updateUsers', data['usersConnected']);
             var tok = localStorage.getItem('id_token');
-            (new Vue()).$socket.emit('sub_trip', {
-                user_id: tok,
-                trip_id: 'tripabc'
+            (new Vue()).$socket.emit('subTrip', {
+                userID: tok,
+                tripID: 'tripabc'
             });
         },
-        socket_newUser: (context, data) => {
-            context.commit('UPDATE_USERS', data['users_here']);
+        socket_newUser: (state, data) => {
+            state.commit('updateUsers', data['usersConnected']);
         },
-        socket_userDisconnected: (context, data) => {
-            context.commit('UPDATE_USERS', data['users_here']);
+        socket_userDisconnected: (state, data) => {
+            state.commit('updateUsers', data['usersConnected']);
         }
       },
       mutations: {
@@ -50,8 +50,8 @@ export function createStore() {
         },
         addEvent: (state) => {    // TODO: WIP
         },
-        UPDATE_USERS: (state, new_users) => {
-            state.trip.users = new_users;
+        updateUsers: (state, newUsers) => {
+            state.trip.users = newUsers;
         },
       },
       getters: {

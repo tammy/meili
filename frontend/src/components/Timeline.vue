@@ -2,6 +2,7 @@
   <div>
     <div class="align-left">
       <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
+      {{count}}
       <button type="button" class="btn btn-add" v-on:click="addEvent()">Add Event</button>
     </div>
     <div class="timeline timeline-container">
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
 import Card from './card';
@@ -41,6 +43,9 @@ export default {
       tripEvents: [],
     };
   },
+  computed: mapState([
+    'count',
+  ]),
   methods: {
     formatDate(dateStr) {
       const date = new Date(dateStr);

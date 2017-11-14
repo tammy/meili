@@ -24,7 +24,6 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex';
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
 import Card from './card';
@@ -36,11 +35,8 @@ export default {
   computed: {
     tripEvents() {
       return this.$store.state.tripEvents;
-    }
+    },
   },
-  // asyncData({ store }) {
-  //   return store.dispatch('FETCH_TRIP_EVENTS', {});
-  // },
   methods: {
     formatDate(dateStr) {
       const date = new Date(dateStr);
@@ -48,17 +44,20 @@ export default {
       return strDate;
     },
     addEvent() {
+      // TODO: switch over to use veux
       const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
       const newTripEvent = createCard(tripId);
       this.tripEvents.unshift(newTripEvent);
       // this.save();
     },
     updateOrders() {
+      // TODO: switch over to use veux
       // for (let i = 0; i < this.tripEvents.length; i += 1) {
       //   this.tripEvents[i].order = i;
       // }
     },
     save() {
+      // TODO: switch over to use veux
       // this.updateOrders();
       // for (let i = 0; i < this.tripEvents.length; i += 1) {
       //   updateCard(this.tripEvents[i]);
@@ -67,8 +66,8 @@ export default {
   },
   created() {
     const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
-    this.$store.dispatch('FETCH_TRIP_EVENTS', tripId);
-  }
+    this.$store.dispatch('getTripEvents', tripId);
+  },
 };
 </script>
 

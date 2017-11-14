@@ -9,39 +9,35 @@ export function createStore() {
     return new Vuex.Store({
       state: {
         user: {},
+        trip: {
+          /* TODO: put all of the trip information in here: title, users, etc */
+        },
         tripEvents: [],
         focusedEvent: {}
       },
       actions: {
-        FETCH_TRIP_EVENTS: (state, tripId) => {
-          getCards(tripId).then((cards) => {
-            state.commit('SET_TRIP_EVENTS', cards);
+        getTripEvents: (state, tripId) => {
+          getCards(tripId).then((events) => {
+            state.commit('setTripEvents', events);
           });
         },
-
-        // FETCH_USER: ({ commit, state }, { id }) => {
-        //   return state.users[id]
-        //     ? Promise.resolve(state.users[id])
-        //     : fetchUser(id).then(user => commit('SET_USER', { id, user }))
-        // }
       },
       mutations: {
-        SET_TRIP_EVENTS: (state, cards) => {
-          state.tripEvents = cards;
+        setTripEvents: (state, events) => {
+          state.tripEvents = events;
         },
-        UPDATE_ORDER: (state, tripEvents) => {
+        setFocusedEvent: (state, event) => {    // TODO: WIP
+          state.focusedEvent = event;
+        },
+        updateTrip: (state, tripEvents) => {    // TODO: WIP
           state.tripEvents = tripEvents;
         },
-        ADD_EVENT: (state, id) => {
-
+        addEvent: (state) => {    // TODO: WIP
         }
       },
       getters: {
-        // getTripEvents: (state) => {
-        //   return state.tripEvents;
-        // }
-        tripEventsCount: state => {
-          return state.tripEvents.length
+        eventAt: (state, index) => {      // TODO: WIP
+          return state.tripEvents[index];
         }
       }
     });

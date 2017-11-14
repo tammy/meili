@@ -3,26 +3,16 @@
 import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueSocketio from 'vue-socket.io';
 import App from './app';
 import router from './router';
 import { isLoggedIn } from '../utils/auth';
 import { createStore } from './store';
 
+const socket = io('http://localhost:3333');
+
 Vue.config.productionTip = false;
 Vue.use(Vuex);
-
-const socket = io('http://localhost:3333');
-socket.on('new_connection', (data) => {
-  console.log(data);
-  var time = Date();
-  const userID = 'paul' +  time;
-  const tripID = 'tripabc';
-  socket.emit('sub_trip', { user_id: userID, trip_id: tripID});
-});
-
-socket.on('update_state', (data) => {
-    console.log(data);
-});
 
 router.beforeEach((to, from, next) => {
   const authed = isLoggedIn();
@@ -37,6 +27,7 @@ router.beforeEach((to, from, next) => {
 /* eslint-disable no-new */
 /* eslint-disable no-unused-vars */
 const store = createStore();
+Vue.use(VueSocketio, socket, store);
 const app = new Vue({
   el: '#app',
   router,

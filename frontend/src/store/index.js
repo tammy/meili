@@ -1,3 +1,4 @@
+import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { getCards, createCard, updateCard } from '../../utils/api';
@@ -9,6 +10,7 @@ export function createStore() {
     return new Vuex.Store({
       state: {
         user: {},
+        users: [],
         trip: {
           /* TODO: put all of the trip information in here: title, users, etc */
         },
@@ -21,6 +23,20 @@ export function createStore() {
             state.commit('setTripEvents', events);
           });
         },
+        socket_newConnection: (context, data) => {
+            context.commit('UPDATE_USERS', data['users_here']);
+            var tok = localStorage.getItem('id_token');
+            (new Vue()).$socket.emit('sub_trip', {
+                user_id: tok,
+                trip_id: 'tripabc'
+            });
+        },
+        socket_newUser: (context, data) => {
+            context.commit('UPDATE_USERS', data['users_here']);
+        },
+        socket_userDisconnected: (context, data) => {
+            context.commit('UPDATE_USERS', data['users_here']);
+        }
       },
       mutations: {
         setTripEvents: (state, events) => {
@@ -33,7 +49,10 @@ export function createStore() {
           state.tripEvents = tripEvents;
         },
         addEvent: (state) => {    // TODO: WIP
-        }
+        },
+        UPDATE_USERS: (state, new_users) => {
+            state.users = new_users;
+        },
       },
       getters: {
         eventAt: (state, index) => {      // TODO: WIP

@@ -1,3 +1,4 @@
+import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as api from '../../utils/api';
@@ -15,6 +16,7 @@ export function createStore() {
           events: [],
           collaborators: [],
         },
+        onlineUsers: [],
         focusedEvent: {}
       },
       getters: {},    // currently useless
@@ -25,6 +27,9 @@ export function createStore() {
         },
         addCollaborator: (state, user) => {
           state.trip.collaborators.unshift(user);
+        },
+        updateOnlineUsers: (state, users) => {
+            state.onlineUsers = users;
         },
         /* Trip */
         setTrip: (state, trip) => {
@@ -73,6 +78,20 @@ export function createStore() {
         saveEvent: (state, event) => {
           api.updateEvent(event);
         },
+        socket_newConnection: (state, data) => {
+            state.commit('updateOnlineUsers', data['usersConnected']);
+            var tok = localStorage.getItem('id_token');
+            (new Vue()).$socket.emit('subTrip', {
+                userID: tok,
+                tripID: 'tripabc'
+            });
+        },
+        socket_newUser: (state, data) => {
+            state.commit('updateOnlineUsers', data['usersConnected']);
+        },
+        socket_userDisconnected: (state, data) => {
+            state.commit('updateOnlineUsers', data['usersConnected']);
+        }
       },
     });
 };

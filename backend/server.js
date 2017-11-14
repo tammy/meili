@@ -6,12 +6,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const PORT = 3333;
+const VERSION = 'v1';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use('/api/v1/battles/', require('./routes/battles'));
-app.use('/api/v1/cards/', require('./routes/cards'));
+app.use(`/api/${VERSION}/cards/`, require('./routes/cards'));
 
 var pubSubReg = {};
 var users = [];

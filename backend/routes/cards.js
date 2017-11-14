@@ -48,4 +48,15 @@ router.post('/:tripId', (req, res) => {
         });
 });
 
+router.delete('/:tripId', (req, res) => {
+    const tripId = req.params.tripId;
+    models.Card.destroy({
+        where: {
+            id: tripId
+        }
+    }).then(() => {
+        res.status(200);
+    });
+});
+
 module.exports = router;

@@ -1,6 +1,7 @@
 <template>
   <div class="full-width">
     <app-nav></app-nav>
+    {{tripId}}
     <input type="text" class="text-center title textbox" v-model="tripName" placeholder="The best trip ever!"/>
     <div class="whitespace-top">
       <timeline class="col-sm-5"></timeline>
@@ -15,13 +16,16 @@ import AppNav from '../components/AppNav';
 import CardDetailView from '../components/CardDetailView';
 
 export default {
-  name: 'trip',
+  name: 'trip-detail',
   components: {
     AppNav,
     Timeline,
     CardDetailView,
   },
   computed: {
+    tripID() {
+      return this.$route.params.id;
+    },
     tripName() {
       return this.$store.state.trip.name;
     },

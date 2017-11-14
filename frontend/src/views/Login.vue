@@ -9,15 +9,15 @@
     </div>
   </div>
 </template>
-<script>
 
+<script>
 import { isLoggedIn, login } from '../../utils/auth';
 
 export default {
   name: 'login',
   beforeRouteEnter(to, from, next) {
     if (isLoggedIn()) {
-      next('/trip');
+      next('/trips');
     } else {
       next();
     }

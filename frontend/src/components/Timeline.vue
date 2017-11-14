@@ -12,7 +12,7 @@
                 <card :tripEvent="event"></card>
               </div>
               <span class="number">
-                <span v-if="event.startTime"> {{ formatDate(event.startTime) }}</span> <span></span>
+                <span v-if="event.startTime"> {{ formatDate(event.startTime) }} </span> <span></span>
               </span>
             </li>
           </draggable>

@@ -58,9 +58,10 @@ export function createStore() {
         },
         /* Trip */
         getTripList: (state) => {
-          api.getTripList(userId).then((tripsList) => {
-            return tripsList;   // TODO: determine whether this should be state or local var
-          });
+          return [state.trip];
+          // api.getTripList(user.id).then((tripsList) => {
+          //   return tripsList;   // TODO: determine whether this should be state or local var
+          // });
         },
         getTrip: (state, tripId) => {
           api.getTrip(tripId).then((trip) => {

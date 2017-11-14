@@ -24,7 +24,7 @@ const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
     var user = 'unpopulatedUser';
-    socket.emit('newConnection', { usersConneted: users});
+    socket.emit('newConnection', { usersConnected: users});
     socket.on('subTrip', (data) => {
         console.log(data); 
         var userID = data['userID'];

@@ -80,5 +80,4 @@ export default {
   margin: 20% 0;
   font-size: 20px;
 }
-
 </style>

@@ -10,8 +10,7 @@
 
 <script>
 import Timeline from '../components/Timeline';
-import AppNav from '../components/appNav';
-import CardDetailView from '../components/cardDetailView';
+import CardDetailView from '../components/CardDetailView';
 
 export default {
   name: 'trip-detail',

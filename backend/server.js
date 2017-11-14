@@ -31,8 +31,8 @@ io.on('connection', (socket) => {
         var tripID = data['trip_id'];
         user = userID;
         users.push(userID);
-        socket.broadcast.emit('new user', { users_here: users});
-
+        console.log(users);
+        io.sockets.emit('new user', { users_here: users });
     });
 
     socket.on('state_change', (data) => {

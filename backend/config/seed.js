@@ -20,7 +20,7 @@ models.sequelize.sync({force: true}).then(function() {
   // Seed card
   models.Card.create({
     id: "3176daf7-ea72-4444-b2be-7d2f466af8d0",
-	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Eiffel Tower",
     description: "The brilliant tower!",
     location: "Place Charles de Gaulle, 75008 Paris, France", 
@@ -31,15 +31,37 @@ models.sequelize.sync({force: true}).then(function() {
   });
   models.Card.create({
     id: "48df18dc-c32d-4db0-827c-608dc42c22ea",
-	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Arc de Triomphe",
     description: "Beautiful arch in the middle of a great roundabout. About 400 steps to the top.",
     location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", 
     duration: 20.0,
-    order: 0,
+    order: 1,
     startTime: Date.now(),
     creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
-  })
+  });
+  models.Card.create({
+    id: "0e48795b-104f-4c76-ae5b-45a0c68ac607",
+    trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    title: "The Louvre",
+    description: "Former historic palace housing a huge art collection, from Roman sculptures to da Vinci's \"Mona Lisa.\"",
+    location: "Rue de Rivoli, 75001 Paris, France",
+    duration: 20.0,
+    order: 2,
+    startTime: Date.now(),
+    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+  });
+  models.Card.create({
+    id: "fea686ec-38b1-4266-af91-3a22bec4425f",
+    trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+    title: "Notre-Dame de Paris",
+    description: "Towering, 13th-century cathedral with flying buttresses & gargoyles, setting for Hugo's novel.",
+    location: "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
+    duration: 20.0,
+    order: 3,
+    startTime: Date.now(),
+    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+  });
 
   // Seed thread
   models.Thread.create({

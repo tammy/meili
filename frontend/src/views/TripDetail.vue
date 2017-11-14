@@ -1,6 +1,5 @@
 <template>
   <div class="full-width">
-    <app-nav></app-nav>
     <input type="text" class="text-center title textbox" v-model="trip.name" placeholder="The best trip ever!"/>
     <div class="whitespace-top">
       <timeline :trip="trip" class="col-sm-5"></timeline>

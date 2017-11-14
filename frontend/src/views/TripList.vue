@@ -1,18 +1,17 @@
 <template>
   <div class="full-width">
-    <app-nav></app-nav>
     <!-- Section for all trips -->
     <div class="whitespace-top">
       <div v-for="trip in tripsList">
-        <div class="col-xs-3 box">
-          <div class="item">
-          {{ trip.name }}
+          <div class="col-xs-3 box">
+            <div class="item" v-on:click="goToTrip(trip.id)">
+            {{ trip.name }}
+            </div>
           </div>
-        </div>
       </div>
       <div class="col-xs-3 box">
-        <div class="item  hidden-hover" v-on:click="addTrip()">
-          
+        <div class="item hidden-hover" v-on:click="addTrip()">
+          <div class="glyphicon glyphicon-plus"></div>
         </div>
       </div>
     </div>
@@ -20,47 +19,28 @@
 </template>
 
 <script>
-import AppNav from '../components/AppNav';
-
 export default {
   name: 'trips-list',
-  components: { AppNav },
   data() {
     return {
       tripsList: [
         {
           name: 'Graduation - Paris, France',
           id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
         },
       ],
     };
   },
-  computed: {
-    // tripsList() {
-    //   return this.$store.dispatch('getTripList');
-    // },
-  },
   methods: {
+    goToTrip(tripID) {
+      this.$router.push({
+        name: 'TripDetail',
+        params: { id: tripID },
+      });
+    },
     addTrip() {
-
+      console.log('new trip');
+      // TODO: open modal?
     },
   },
 };
@@ -87,12 +67,18 @@ export default {
   color: transparent;
 }
 
-.glyphicon-remove:hover {
+.hidden-hover:hover {
   color: green;
+  border: 1px solid green;
 }
 
 .item:hover {
   box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.glyphicon-plus {
+  margin: 20% 0;
+  font-size: 20px;
 }
 
 </style>

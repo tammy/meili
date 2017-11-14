@@ -10,9 +10,9 @@ export function createStore() {
     return new Vuex.Store({
       state: {
         user: {},
-        users: [],
         trip: {
           /* TODO: put all of the trip information in here: title, users, etc */
+            users: [],
         },
         tripEvents: [],
         focusedEvent: {}
@@ -51,7 +51,7 @@ export function createStore() {
         addEvent: (state) => {    // TODO: WIP
         },
         UPDATE_USERS: (state, new_users) => {
-            state.users = new_users;
+            state.trip.users = new_users;
         },
       },
       getters: {

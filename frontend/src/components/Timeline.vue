@@ -38,7 +38,7 @@ export default {
       return this.$store.state.tripEvents;
     },
     users() {
-        return this.$store.state.users;
+        return this.$store.state.trip.users;
     }
   },
   methods: {

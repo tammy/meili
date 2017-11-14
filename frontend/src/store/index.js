@@ -28,6 +28,9 @@ export function createStore() {
         addCollaborator: (state, user) => {
           state.trip.collaborators.unshift(user);
         },
+        updateOnlineUsers: (state, users) => {
+            state.onlineUsers = users;
+        },
         /* Trip */
         setTrip: (state, trip) => {
           state.trip.events = trip;   // TODO: set entire trip instead
@@ -75,18 +78,16 @@ export function createStore() {
         saveEvent: (state, event) => {
           api.updateEvent(event);
         },
-        updateOnlineUsers: (state, users) => {
-            state.onlineUsers = users;
-        },
         socket_newConnection: (state, data) => {
             state.commit('updateOnlineUsers', data['usersConnected']);
             var tok = localStorage.getItem('id_token');
             (new Vue()).$socket.emit('subTrip', {
                 userID: tok,
-                tripID: state.trip.id
+                tripID: 'tripabc'
             });
         },
         socket_newUser: (state, data) => {
+            console.log(data);
             state.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_userDisconnected: (state, data) => {

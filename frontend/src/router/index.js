@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from '@/components/login';
+import Login from '@/views/Login';
 // import { requireAuth } from '../../utils/auth';
-import Trip from '@/components/trip';
+import Trip from '@/views/Trip';
 
 Vue.use(Router);
 

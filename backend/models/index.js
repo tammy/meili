@@ -19,7 +19,7 @@ if (!Sequelize.supportsCockroachDB) {
 
 // User
 module.exports.User = sequelize.define('user', {
-  id: { type: DataTypes.STRING  },
+  id: { type: DataTypes.STRING, primaryKey: true  },
   name: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING },
   profilePicture: { type: DataTypes.STRING }

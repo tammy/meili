@@ -2,7 +2,6 @@
   <div>
     <div class="align-left">
       <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
-      {{count}}
       <button type="button" class="btn btn-add" v-on:click="addEvent()">Add Event</button>
     </div>
     <div class="timeline timeline-container">
@@ -25,7 +24,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+// import { mapState } from 'vuex';
 import draggable from 'vuedraggable';
 import AppNav from './appNav';
 import Card from './card';
@@ -33,52 +32,43 @@ import { getCards, createCard, updateCard } from '../../utils/api';
 
 export default {
   name: 'timeline',
-  components: {
-    AppNav,
-    Card,
-    draggable,
+  components: { AppNav, Card, draggable },
+  computed: {
+    tripEvents() {
+      return this.$store.state.tripEvents;
+    }
   },
-  data() {
-    return {
-      tripEvents: [],
-    };
-  },
-  computed: mapState([
-    'count',
-  ]),
+  // asyncData({ store }) {
+  //   return store.dispatch('FETCH_TRIP_EVENTS', {});
+  // },
   methods: {
     formatDate(dateStr) {
       const date = new Date(dateStr);
       const strDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
       return strDate;
     },
-    getTripEvents() {
-      const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
-      getCards(tripId).then((cards) => {
-        this.tripEvents = cards;
-      });
-    },
     addEvent() {
       const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
       const newTripEvent = createCard(tripId);
       this.tripEvents.unshift(newTripEvent);
-      this.save();
+      // this.save();
     },
     updateOrders() {
-      for (let i = 0; i < this.tripEvents.length; i += 1) {
-        this.tripEvents[i].order = i;
-      }
+      // for (let i = 0; i < this.tripEvents.length; i += 1) {
+      //   this.tripEvents[i].order = i;
+      // }
     },
     save() {
-      this.updateOrders();
-      for (let i = 0; i < this.tripEvents.length; i += 1) {
-        updateCard(this.tripEvents[i]);
-      }
+      // this.updateOrders();
+      // for (let i = 0; i < this.tripEvents.length; i += 1) {
+      //   updateCard(this.tripEvents[i]);
+      // }
     },
   },
-  mounted() {
-    this.getTripEvents();
-  },
+  created() {
+    const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
+    this.$store.dispatch('FETCH_TRIP_EVENTS', tripId);
+  }
 };
 </script>
 

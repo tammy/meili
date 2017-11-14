@@ -14,6 +14,7 @@
     "jwt-decode": "^2.2.0",
     "sequelize": "^4.13.17",
     "sequelize-cockroachdb": "^1.0.2",
+    "socket.io": "^2.0.4",
     "uuid": "^3.1.0"
   },
   "devDependencies": {

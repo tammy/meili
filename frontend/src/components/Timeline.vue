@@ -2,7 +2,6 @@
   <div>
     <div class="align-left">
       <button type="button" class="btn btn-add" v-on:click="add()">Add Event</button>
-      {{ users }}
     </div>
     <div class="timeline timeline-container">
       <div class="timeline-container">
@@ -35,9 +34,6 @@ export default {
     trip() {
       return this.$store.state.trip;
     },
-    users() {
-        return this.$store.state.onlineUsers;
-    }
   },
   methods: {
     formatDate(dateStr) {

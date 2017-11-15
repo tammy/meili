@@ -24,8 +24,8 @@
 
 <script>
 import draggable from 'vuedraggable';
-import AppNav from '../components/AppNav';
-import Card from '../components/Card';
+import AppNav from '../components/appNav';
+import Card from '../components/card';
 
 export default {
   name: 'timeline',

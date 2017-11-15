@@ -24,12 +24,11 @@
 
 <script>
 import draggable from 'vuedraggable';
-import AppNav from '../components/appNav';
-import Card from '../components/card';
+import Card from './Card';
 
 export default {
   name: 'timeline',
-  components: { AppNav, Card, draggable },
+  components: { Card, draggable },
   props: ['trip'],
   computed: {
   },

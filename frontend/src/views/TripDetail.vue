@@ -15,7 +15,6 @@ import CardDetailView from '../components/CardDetailView';
 export default {
   name: 'trip-detail',
   components: {
-    AppNav,
     Timeline,
     CardDetailView,
   },

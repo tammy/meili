@@ -1,3 +1,5 @@
+// TODO: This file has inconsistent indenting
+
 import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -51,47 +53,49 @@ export function createStore() {
       },
       actions: {      // run async
         /* User */
-        getUser: (state, userId) => {
+        getUser: (store, userId) => {
           api.getUser(userId).then((user) => {
-            return state.commit('setUser', user);
+            return store.commit('setUser', user);
           });
         },
-        /* Trip */
-        getTripList: (state) => {
-          return [state.trip];
-          // api.getTripList(user.id).then((tripsList) => {
-          //   return tripsList;   // TODO: determine whether this should be state or local var
-          // });
+        getTripList: (store) => {
+          api.getTripList(userId).then((tripsList) => {
+            return tripsList;   // TODO: determine whether this should be state or local var
+          });
         },
-        getTrip: (state, tripId) => {
+        getTrip: (store, tripId) => {
           api.getTrip(tripId).then((trip) => {
-            return state.commit('setTrip', trip);
+            return store.commit('setTrip', trip);
           });
         },
-        saveTrip: (state) => {
-          for ( let i = 0; i < state.trip.events.length; i += 1 ) {
-            state.trip.events[i].order = i;     // TODO: remove this hack
-            
+        saveTrip: (store) => {
+          for ( let i = 0; i < store.state.trip.events.length; i += 1 ) {
+            store.state.trip.events[i].order = i;     // TODO: remove this hack
           }
-          api.updateTrip(state.trip);
+          api.updateTrip(store.state.trip);
         },
         /* Events */
-        saveEvent: (state, event) => {
+        saveEvent: (store, event) => {
           api.updateEvent(event);
         },
-        socket_newConnection: (state, data) => {
-            state.commit('updateOnlineUsers', data['usersConnected']);
-            var tok = localStorage.getItem('id_token');
-            (new Vue()).$socket.emit('subTrip', {
-                userID: tok,
-                tripID: 'tripabc'
-            });
+        socket_connect: (store, data) => {
+          var tok = localStorage.getItem('id_token');
+          if (!tok) {
+            tok = 'Unknown user';
+          }
+          (new Vue()).$socket.emit('newConnection', {
+            userID: tok,
+            tripID: store.state.trip.id,
+          });
         },
-        socket_newUser: (state, data) => {
-            state.commit('updateOnlineUsers', data['usersConnected']);
+        socket_activeUsers: (store, data) => {
+            store.commit('updateOnlineUsers', data['usersConnected']);
         },
-        socket_userDisconnected: (state, data) => {
-            state.commit('updateOnlineUsers', data['usersConnected']);
+        socket_newUser: (store, data) => {
+            store.commit('updateOnlineUsers', data['usersConnected']);
+        },
+        socket_userDisconnected: (store, data) => {
+            store.commit('updateOnlineUsers', data['usersConnected']);
         }
       },
     });

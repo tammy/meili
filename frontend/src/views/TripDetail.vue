@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import Timeline from '../components/Timeline';
-import CardDetailView from '../components/CardDetailView';
+import timeline from '../components/timeline';
+import cardDetailView from '../components/cardDetailView';
 
 export default {
   name: 'trip-detail',
   components: {
-    Timeline,
-    CardDetailView,
+    timeline,
+    cardDetailView,
   },
   computed: {
     trip() {

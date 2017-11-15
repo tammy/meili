@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import AppNav from './components/AppNav';
+import appNav from './components/appNav';
 
 export default {
   name: 'app',
-  components: { AppNav },
+  components: { appNav },
 };
 </script>
 

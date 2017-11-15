@@ -19,48 +19,18 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 export default {
   name: 'trips-list',
-=======
-import AppNav from '../components/AppNav';
-
-export default {
-  name: 'trips-list',
-  components: { AppNav },
->>>>>>> Add a trip list view
   data() {
     return {
       tripsList: [
         {
           name: 'Graduation - Paris, France',
           id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-<<<<<<< HEAD
-=======
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },{
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
->>>>>>> Add a trip list view
         },
       ],
     };
   },
-<<<<<<< HEAD
   methods: {
     goToTrip(tripID) {
       this.$router.push({
@@ -71,16 +41,6 @@ export default {
     addTrip() {
       console.log('new trip');
       // TODO: open modal?
-=======
-  computed: {
-    // tripsList() {
-    //   return this.$store.dispatch('getTripList');
-    // },
-  },
-  methods: {
-    addTrip() {
-
->>>>>>> Add a trip list view
     },
   },
 };
@@ -107,25 +67,17 @@ export default {
   color: transparent;
 }
 
-<<<<<<< HEAD
 .hidden-hover:hover {
   color: green;
   border: 1px solid green;
-=======
-.glyphicon-remove:hover {
-  color: green;
->>>>>>> Add a trip list view
 }
 
 .item:hover {
   box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 
-<<<<<<< HEAD
 .glyphicon-plus {
   margin: 20% 0;
   font-size: 20px;
 }
-=======
->>>>>>> Add a trip list view
 </style>

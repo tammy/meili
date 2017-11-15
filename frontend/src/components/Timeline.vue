@@ -12,7 +12,7 @@
                 <card :tripEvent="event"></card>
               </div>
               <span class="number">
-                <span v-if="event.startTime"> {{ formatDate(event.startTime) }}</span> <span></span>
+                <span v-if="event.startTime"> {{ formatDate(event.startTime) }} </span> <span></span>
               </span>
             </li>
           </draggable>
@@ -24,16 +24,13 @@
 
 <script>
 import draggable from 'vuedraggable';
-import AppNav from '../components/appNav';
-import Card from '../components/card';
+import Card from './Card';
 
 export default {
   name: 'timeline',
-  components: { AppNav, Card, draggable },
+  components: { Card, draggable },
+  props: ['trip'],
   computed: {
-    trip() {
-      return this.$store.state.trip;
-    },
   },
   methods: {
     formatDate(dateStr) {
@@ -47,12 +44,6 @@ export default {
     add() {
       this.$store.commit('addEvent');
     },
-  },
-  mounted() {
-    const tripId = '6347f1fc-64d1-4f8b-ac79-44d59d130b6d';
-    // TODO: figure out why getTripEvents with mapActions doesn't work
-    this.$store.dispatch('getTrip', tripId);
-    // this.getTripEvents(tripId);
   },
 };
 </script>

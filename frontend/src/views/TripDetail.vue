@@ -1,9 +1,8 @@
 <template>
   <div class="full-width">
-    <app-nav></app-nav>
-    <input type="text" class="text-center title textbox" v-model="tripName" placeholder="The best trip ever!"/>
+    <input type="text" class="text-center title textbox" v-model="trip.name" placeholder="The best trip ever!"/>
     <div class="whitespace-top">
-      <timeline class="col-sm-5"></timeline>
+      <timeline :trip="trip" class="col-sm-5"></timeline>
       <card-detail-view class="col-sm-7"></card-detail-view>
     </div>
   </div>
@@ -11,20 +10,24 @@
 
 <script>
 import Timeline from '../components/Timeline';
-import AppNav from '../components/appNav';
-import CardDetailView from '../components/cardDetailView';
+import CardDetailView from '../components/CardDetailView';
 
 export default {
-  name: 'trip',
+  name: 'trip-detail',
   components: {
-    AppNav,
     Timeline,
     CardDetailView,
   },
   computed: {
-    tripName() {
-      return this.$store.state.trip.name;
+    trip() {
+      return this.$store.state.trip;
     },
+    tripID() {
+      return this.$route.params.id;
+    },
+  },
+  mounted() {
+    this.$store.dispatch('getTrip', this.tripID);
   },
 };
 </script>

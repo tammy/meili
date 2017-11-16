@@ -57,7 +57,6 @@ function setTokens(authResponse) {
 function configureUser(response) {
   console.log('Successful login for: ' + response.name);
   localStorage.setItem(USER_NAME, response.name);
-  localStorage.setItem('response', response);
   localStorage.setItem(USER_PICTURE, response.picture.data.url);
 }
 
@@ -80,8 +79,6 @@ export function getUserName() {
 }
 
 export function getUserPicture() {
-  // console.log(localStorage.getItem('response'));
-  // return localStorage.getItem('response');
   return localStorage.getItem(USER_PICTURE);
 }
 

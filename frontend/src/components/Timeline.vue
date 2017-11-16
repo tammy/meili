@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-import card from './card';
+import Draggable from 'vuedraggable';
+import Card from './Card';
 
 export default {
   name: 'timeline',
-  components: { card, draggable },
+  components: { Card, Draggable },
   props: ['trip'],
   computed: {
   },

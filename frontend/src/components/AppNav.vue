@@ -1,36 +1,41 @@
 <template>
-  <nav class="navbar navbar-default">
+  <nav class="navbar">
+  <div class="container-fluid">
     <div class="navbar-header">
-      <router-link to="/" class="navbar-brand"> Welcome {{ name }} </router-link>
+      <router-link class="navbar-brand" to="/">meili</router-link></a>
     </div>
     <ul class="nav navbar-nav navbar-right">
+      <li><a> {{ name }} <img class="profile" :src="pictureUrl"></a>
+        <!-- TODO: make this a dropdown -->
+      </li>
       <li>
-        <button class="btn btn-danger log" v-show="isLoggedIn()" @click="handleLogout()">Log out </button>
-        <button class="btn btn-info log" v-show="!isLoggedIn()" @click="handleLogin()">Log In</button>
+        <button class="btn btn-danger" v-show="isLoggedIn()" @click="handleLogout()">Log out </button>
       </li>
     </ul>
-  </nav>
+  </div>
+</nav>
 </template>
 
 <script>
-import { isLoggedIn, login, logout, getUserName } from '../../utils/auth';
+import * as auth from '../../utils/auth';
 
 export default {
   name: 'app-nav',
   data() {
     return {
-      name: getUserName(),
+      name: auth.getUserName(),
+      pictureUrl: auth.getUserPicture(),
     };
   },
   methods: {
     handleLogin() {
-      login();
+      auth.login();
     },
     handleLogout() {
-      logout();
+      auth.logout();
     },
     isLoggedIn() {
-      return isLoggedIn();
+      return auth.isLoggedIn();
     },
   },
 };
@@ -38,11 +43,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.navbar-right {
-  margin-right: 0px !important
+.navbar-brand {
+  font-weight: 600;
 }
 
-.log {
-  margin: 5px 10px 0 0;
+.navbar-right {
+  padding-right: 5px;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+  background-color: white;
+  color: #337ab7;
+}
+
+.btn-danger {
+  padding: 5px 8px;
+  margin: 8px 10px 0 0;
+}
+
+.profile {
+  border: 1px solid;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  margin-top: -5px;
 }
 </style>

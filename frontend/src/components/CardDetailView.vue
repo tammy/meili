@@ -15,7 +15,7 @@
       <div class="panel-body text-left">
         <p class="field">
           <div class="glyphicon glyphicon-pushpin"></div>
-          <input type="text" class="textbox" v-model="event.location" placeholder="Location"/>
+          <input id="autocomplete" type="text" class="textbox" v-model="event.location" placeholder="Location"/>
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-time"></div>
@@ -37,13 +37,64 @@ export default {
   name: 'card-detail-view',
   components: {
   },
+  data: function () {
+    return {
+      autocomplete: null,
+    }
+  },
   computed: {
+    map() {
+      return this.$store.state.trip.map;
+    },
+    markers() {
+      return this.$store.state.trip.markers;
+    },
     event() {
       return this.$store.state.focusedEvent;
     },
   },
   methods: {
     search() {},
+    save() {
+      // TODO: make this periodically save automatically
+      this.$store.dispatch('saveEvent', this.event);
+    },
+    onPlaceChanged() {
+      var place = this.autocomplete.getPlace();
+      this.event.location = place.formatted_address;
+
+      if (place.geometry) {
+        // remove current marker
+        if (this.event.marker) {
+          this.event.marker.setMap(null);
+          this.event.marker = null;
+        }
+        this.$store.commit('removeMarker', this.event.marker);
+        // place new marker 
+        this.event.marker = new google.maps.Marker({
+          position: place.geometry.location,
+          map: this.map,
+          // label: 'Albert',
+          animation: google.maps.Animation.DROP
+        });
+
+        this.$store.commit('addMarker', this.event.marker);
+        console.log(this.markers.length);
+
+      } else {
+        document.getElementById('autocomplete').placeholder = 'Location';
+      }
+    },
+  },
+  mounted: function() {
+    // Create the autocomplete object and associate it with the UI input control.
+    this.autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */ (
+            document.getElementById('autocomplete')), {
+          // types: ['geocode']
+        });
+
+    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
   },
 };
 </script>

@@ -3,7 +3,7 @@
   <div>
       <h1>this is the map</h1>
       <!-- <div id="locationField"> -->
-        <input id="autocomplete" placeholder="Enter a city" type="text" />
+        <!-- <input id="autocomplete" placeholder="Enter a city" type="text" /> -->
       <!-- </div> -->
       <div id="mapview"></div>
   </div>
@@ -20,81 +20,58 @@ export default {
   },
   data: function () {
     return {
-      map: null,
-      bounds: null,
-      markers: [],
-      autocomplete: null,
+      // map: null,
+      // bounds: null,
+      // markers: [],
+      // autocomplete: null,
     }
   },
   computed: {
+    map() {
+      return this.$store.state.trip.map;
+    },
+    markers() {
+      return this.$store.state.trip.markers;
+    },
     event() {
       return this.$store.state.focusedEvent;
+    },
+    events() {
+      return this.$store.state.trip.events;
+    },
+  },
+  watch: {
+    markers: function() {
+      this.fitBounds();
     },
   },
   methods: {
     focusEvent(marker) {
       this.$store.commit('setFocusedEvent', marker.event);
     },
-    onPlaceChanged() {
-      var place = this.autocomplete.getPlace();
-      if (place.geometry) {
-        // remove current marker
-        if (this.event.marker) {
-          this.event.marker.setMap(null);
-          this.remove(this.markers, this.event.marker);
-        }
-        // place new marker 
-        this.dropPin();
-      } else {
-        document.getElementById('autocomplete').placeholder = 'Enter a city';
-      }
-    },
-    dropPin() {
-      const position = this.autocomplete.getPlace().geometry.location;
-
-      this.event.marker = new google.maps.Marker({
-        position,
-        map: this.map,
-        // label: 'Albert',
-        animation: google.maps.Animation.DROP
-      });
-
-      this.event.marker.event = this.event;
-
-      // add listener to map pins to change focused event on click
-      var mapThis = this;
-      google.maps.event.addListener(this.event.marker, 'click', function() {
-        mapThis.focusEvent(this);
-      });
-
-      this.markers.push(this.event.marker);
-      this.map.fitBounds(this.bounds.extend(position));
-
-      this.fitBounds();
-    },
     fitBounds() {
+      if (!this.events || this.events.length === 0) return;
+
       var bounds = new google.maps.LatLngBounds();
 
-      for (var i=0; i<this.markers.length; i++) {
-          if(this.markers[i].getVisible()) {
-              bounds.extend( this.markers[i].getPosition() );
-          }
+      for (var i=0; i<this.events.length; i++) {
+        // this.markers[i].setMap(this.map);
+        if (this.events[i].marker) {
+          console.log("i");
+          bounds.extend( this.events[i].marker.getPosition() );
+        }
+
+        // add listener to map pins to change focused event on click
+        // var mapThis = this;
+        // google.maps.event.addListener(this.markers[i], 'click', function() {
+        //   mapThis.focusEvent(this);
+        // });
       }
 
       this.map.fitBounds(bounds);
     },
-    remove(array, element) {
-      const index = array.indexOf(element);
-      
-      if (index !== -1) {
-          array.splice(index, 1);
-      }
-    },
   },
   mounted: function () {
-
-    this.bounds = new google.maps.LatLngBounds();
-
     const element = document.getElementById('mapview')
     const mapCentre = new google.maps.LatLng(41.290851, -101.827431)
     const options = {
@@ -102,17 +79,10 @@ export default {
       center: mapCentre
     }
 
-    this.map = new google.maps.Map(element, options);
+    const map = new google.maps.Map(element, options);
+    this.$store.commit('setMap', map);
 
-    // Create the autocomplete object and associate it with the UI input control.
-    this.autocomplete = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */ (
-            document.getElementById('autocomplete')), {
-          // types: ['geocode']
-        });
-
-    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
-
+    this.fitBounds();
   }
 };
 </script>

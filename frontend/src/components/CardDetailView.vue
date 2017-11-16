@@ -66,11 +66,17 @@ export default {
       if (place.geometry) {
         // remove current marker
         if (this.event.marker) {
+          console.log("r");
+          this.$store.commit('removeMarker', this.event.marker);
           this.event.marker.setMap(null);
           this.event.marker = null;
         }
-        this.$store.commit('removeMarker', this.event.marker);
         // place new marker 
+        // this.event.marker = new google.maps.Marker();
+        // this.event.marker.setPosition(place.geometry.location);
+        // this.event.marker.setMap(this.map);
+        // this.event.marker.setAnimation(google.maps.Animation.DROP);
+
         this.event.marker = new google.maps.Marker({
           position: place.geometry.location,
           map: this.map,

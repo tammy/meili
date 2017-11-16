@@ -72,7 +72,7 @@ export function createStore() {
           }
         },
         addMarker: (state, marker) => {
-          state.trip.markers.unshift(marker);
+          state.trip.markers.push(marker);
         },
         removeMarker: (state, marker) => {
           const index = state.trip.markers.indexOf(marker);

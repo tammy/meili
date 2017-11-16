@@ -20,16 +20,16 @@ export default {
   },
   data: function () {
     return {
-      // map: null,
+      map: null,
       // bounds: null,
       // markers: [],
       // autocomplete: null,
     }
   },
   computed: {
-    map() {
-      return this.$store.state.trip.map;
-    },
+    // map() {
+    //   return this.$store.state.trip.map;
+    // },
     markers() {
       return this.$store.state.trip.markers;
     },
@@ -41,37 +41,56 @@ export default {
     },
   },
   watch: {
+    // events: {
+    //   handler: function() {
+    //     this.fitBounds();
+    //   },
+    //   deep: true,
+    // },
     markers: function() {
       this.fitBounds();
-    },
+    }
+  },
+  updated() {
+    this.fitBounds();
   },
   methods: {
     focusEvent(marker) {
       this.$store.commit('setFocusedEvent', marker.event);
     },
     fitBounds() {
-      if (!this.events || this.events.length === 0) return;
+      if (!this.markers || this.markers.length === 0) return;
 
       var bounds = new google.maps.LatLngBounds();
 
+      // for (var i=0; i<this.markers.length; i++) {
+      //   if (this.markers[i]) {
+      //     console.log("i");
+      //     this.markers[i].setMap(this.map);
+      //     this.markers[i].show;
+      //     bounds.extend( this.markers[i].getPosition() );
+      //   }
+
+      //   // add listener to map pins to change focused event on click
+      //   // var mapThis = this;
+      //   // google.maps.event.addListener(this.markers[i], 'click', function() {
+      //   //   mapThis.focusEvent(this);
+      //   // });
+      // }
+
       for (var i=0; i<this.events.length; i++) {
-        // this.markers[i].setMap(this.map);
         if (this.events[i].marker) {
-          console.log("i");
+          console.log("i ");
+          this.events[i].marker.setMap(this.map);
+          // this.events[i].marker.show;
           bounds.extend( this.events[i].marker.getPosition() );
         }
-
-        // add listener to map pins to change focused event on click
-        // var mapThis = this;
-        // google.maps.event.addListener(this.markers[i], 'click', function() {
-        //   mapThis.focusEvent(this);
-        // });
       }
 
       this.map.fitBounds(bounds);
     },
   },
-  mounted: function () {
+  mounted() {
     const element = document.getElementById('mapview')
     const mapCentre = new google.maps.LatLng(41.290851, -101.827431)
     const options = {
@@ -79,8 +98,8 @@ export default {
       center: mapCentre
     }
 
-    const map = new google.maps.Map(element, options);
-    this.$store.commit('setMap', map);
+    this.map = new google.maps.Map(element, options);
+    this.$store.commit('setMap', this.map);
 
     this.fitBounds();
   }

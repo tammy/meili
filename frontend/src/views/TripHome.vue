@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import appNav from '../components/appNav';
+import AppNav from '../components/AppNav';
 
 export default {
   name: 'home',
-  components: { appNav },
+  components: { AppNav },
 };
 </script>
 

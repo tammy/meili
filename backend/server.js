@@ -45,6 +45,12 @@ io.on('connection', (socket) => {
         io.in(tripID).emit('newUser', { usersConnected: pubSubReg[tripID] });
     });
 
+    socket.on('updateCard', (data) => {
+        const tripID = data['tripID'];
+        const newCard = data['card'];
+        socket.to(tripID).emit('updateCard', newCard);
+    });
+
     socket.on('disconnect', () => {
         console.log('Disconnect user from pubsub: ' + user);
         var index = pubSubReg[trip].indexOf(user);

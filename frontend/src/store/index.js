@@ -17,7 +17,9 @@ export function createStore() {
           id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
           events: [],
           collaborators: [],
+          oldEvents: [],
         },
+        lastEditLocal: true,
         onlineUsers: [],
         focusedEvent: {}
       },
@@ -32,6 +34,9 @@ export function createStore() {
         },
         updateOnlineUsers: (state, users) => {
             state.onlineUsers = users;
+        },
+        updateOldEvents: (state, oldEvents) => {
+            state.trip.oldEvents = oldEvents;
         },
         /* Trip */
         setTrip: (state, trip) => {
@@ -50,6 +55,27 @@ export function createStore() {
           const index = state.trip.events.indexOf(event);
           state.trip.events.splice(event, 1);
         },
+        setLocalEdit: (state, localEdit) => {
+          state.lastEditLocal = localEdit;
+        },
+        updateCard: (state, newCard) => {
+          var idx = -1;
+          for (var i = 0; i < state.trip.events.length; i += 1) {
+            if (state.trip.events[i]['id'] == newCard['id']) {
+              idx = i;
+              break;
+            }
+          }
+          if (idx >= 0) {
+            const watchedProps = ['trip', 'title', 'description', 'location',
+            'coordinateLat', 'coordinateLon', 'startTime', 'duration', 'order',
+            'creator'];
+            for (var i = 0; i < watchedProps.length; i += 1) {
+              var prop = watchedProps[i];
+              state.trip.events[idx][prop] = newCard[prop];
+            }
+          }
+        }
       },
       actions: {      // run async
         /* User */
@@ -96,6 +122,10 @@ export function createStore() {
         },
         socket_userDisconnected: (store, data) => {
             store.commit('updateOnlineUsers', data['usersConnected']);
+        },
+        socket_updateCard: (store, newCard) => {
+            store.commit('setLocalEdit', false);
+            store.commit('updateCard', newCard);
         }
       },
     });

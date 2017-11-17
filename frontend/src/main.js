@@ -9,7 +9,7 @@ import Vuex from 'vuex';
 import { isLoggedIn } from '../utils/auth';
 import { createStore } from './store';
 
-const socket = io('http://192.168.0.107:3333');
+const socket = io('http://localhost:3333');
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);

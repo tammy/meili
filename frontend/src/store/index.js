@@ -19,6 +19,8 @@ export function createStore() {
           collaborators: [],
           oldEvents: [],
         },
+        // lastEditLocal is used keep track when we should push changes to server.
+        // Avoids infinite loops.
         lastEditLocal: true,
         onlineUsers: [],
         focusedEvent: {}
@@ -67,6 +69,7 @@ export function createStore() {
             }
           }
           if (idx >= 0) {
+            // FIXME: (PB) Kinda a hack
             const watchedProps = ['trip', 'title', 'description', 'location',
             'coordinateLat', 'coordinateLon', 'startTime', 'duration', 'order',
             'creator'];

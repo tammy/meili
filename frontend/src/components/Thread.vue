@@ -9,6 +9,9 @@
         <div class="content" v-if="showThread[thread.id] === true"> {{ thread.content }} </div>
       </div>
     </div>
+    <div class="thread text-left">
+      <h4 class="heading create-thread hidden-hover"> <div class="glyphicon glyphicon-plus"></div>Create new thread </h4>
+    </div>
   </div>
 </template>
 
@@ -72,5 +75,25 @@ export default {
   color: #31708f;
   border-color: #31708f;
   font-size: 10pt;
+}
+
+.create-thread {
+  background: transparent;
+  border: 1px solid green;
+  color: green;
+}
+
+.glyphicon-plus {
+  margin-right: 10px;
+}
+
+.hidden-hover {
+  border: none;
+  color: transparent;
+}
+
+.hidden-hover:hover {
+  color: green;
+  border: 1px solid green;
 }
 </style>

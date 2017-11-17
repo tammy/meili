@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(`/api/${VERSION}/cards/`, require('./routes/cards'));
 app.use(`/api/${VERSION}/trips/`, require('./routes/trips'));
+app.use(`/api/${VERSION}/messages/`, require('./routes/messages'));
+app.use(`/api/${VERSION}/threads/`, require('./routes/threads'));
 
 const pubSubReg = {};
 

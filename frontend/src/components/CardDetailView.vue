@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     event() {
-      return this.$store.state.focusedEvent;
+      return this.$store.getters.getFocusedEvent;
     },
   },
   methods: {

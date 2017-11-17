@@ -25,9 +25,14 @@ export function createStore() {
         // Avoids infinite loops.
         lastEditLocal: true,
         onlineUsers: {}, // map of user IDs to their details
-        focusedEvent: {}
+        focusedEvent: {}, // Didn't know which one to keep so keeping both for now
+        focusedEventIndex: 0,
       },
-      getters: {},    // currently useless
+      getters: {
+        getFocusedEvent: (state) => {
+          return state.trip.events[state.focusedEventIndex];
+        },
+      },
       mutations: {    // run synchronously
         /* User */
         setUser: (state, user) => {
@@ -51,7 +56,8 @@ export function createStore() {
         },
         /* Events */
         setFocusedEvent: (state, event) => {
-          state.focusedEvent = event;
+          const index = state.trip.events.indexOf(event);
+          state.focusedEventIndex = index;
         },
         addEvent: (state) => {
           const newTripEvent = {'id': uuidv4(), 'trip': state.trip.id, 'new':true};

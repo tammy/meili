@@ -20,9 +20,11 @@
 
 <!-- JavaScript -->
 <script>
+import Thread from './Thread';
 
 export default {
   name: 'card',
+  components: { Thread },
   props: ['tripEvent'],
   computed: {
     showDetails() {

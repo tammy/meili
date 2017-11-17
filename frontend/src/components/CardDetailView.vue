@@ -27,16 +27,18 @@
         </p>
       </div>
     </div>
+    <thread :eventID="event.id"></thread>
+    <!-- <button type="button" class="btn btn-success" v-on:click="save()">Save</button> -->
   </div>
 </template>
 
 <!-- JavaScript -->
 <script>
+import Thread from './Thread';
 
 export default {
   name: 'card-detail-view',
-  components: {
-  },
+  components: { Thread },
   computed: {
     event() {
       return this.$store.getters.getFocusedEvent;

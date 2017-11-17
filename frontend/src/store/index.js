@@ -17,6 +17,7 @@ export function createStore() {
         trip: {
           name: '',
           id: '',
+          picture: '',
           events: [],
           collaborators: [],
           oldEvents: [],
@@ -26,11 +27,20 @@ export function createStore() {
         lastEditLocal: true,
         onlineUsers: {}, // map of user IDs to their details
         focusedEvent: {}, // Didn't know which one to keep so keeping both for now
+        threads: [    // TODO: move this to the appropriate place
+            { id: 'adbv', title: 'hello', content: 'world' },
+            { id: 'ahhwef', title: 'bonjour', content: 'le monde' },
+            { id: 'asgfasgh', title: 'nihao', content: 'shijie' },
+        ],    
         focusedEventIndex: 0,
       },
       getters: {
         getFocusedEvent: (state) => {
           return state.trip.events[state.focusedEventIndex];
+        },
+        getThreads: (state) => (eventID) => {
+          // TODO: get threads based on eventID
+          return state.threads;
         },
       },
       mutations: {    // run synchronously
@@ -86,7 +96,11 @@ export function createStore() {
           } else {
             state.trip.events.unshift(newCard);
           }
-        }
+        },
+        resolveThread: (state, thread) => {
+          const index = state.threads.indexOf(thread);
+          state.threads.splice(index, 1);
+        },
       },
       actions: {      // run async
         /* User */
@@ -112,7 +126,7 @@ export function createStore() {
         setFocusedEvent: (store, event) => {
           store.commit('setFocusedEvent', event);
         },
-        /* Events */
+        /* Sockets */
         socket_connect: (store, data) => {
             console.log("Connected to server socket");
         },

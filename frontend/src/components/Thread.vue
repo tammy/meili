@@ -3,13 +3,13 @@
   <div style="margin-top: 50px">
     <div v-for="thread in threads">
       <div class="thread text-left">
-        <h4 class="heading" v-on:click="toggleThread(thread.id)"> {{ thread.title }} 
+        <h4 class="heading"> {{ thread.title }} 
         <button class="btn btn-default" v-on:click="resolve(thread)">Resolve</button>
-        </h4>
-        <div class="content" v-if="showThread[thread.id] === true"> {{ thread.content }} </div>
+        </h4>  
+        <div class="content"> {{ thread.content }} </div>
       </div>
     </div>
-    <div class="thread text-left">
+    <div class="thread text-left" v-on:click="createThread()">
       <h4 class="heading create-thread hidden-hover"> <div class="glyphicon glyphicon-plus"></div>Create new thread </h4>
     </div>
   </div>
@@ -21,24 +21,26 @@
 export default {
   name: 'thread',
   props: ['eventID'],
+  data() {
+    return {
+      showThread: {},
+    };
+  },
   computed: {
     threads() {
-      return this.$store.getters.getThreads(this.eventID);
-    },
-    showThread() {
-      const map = {};
-      for (let i = 0; i < this.threads.length; i += 1) {
-        map[this.threads[i].id] = true;
+      const threads = this.$store.getters.getThreads(this.eventID);
+      for (let i = 0; i < threads.length; i += 1) {
+        this.showThread[threads[i].id] = false;
       }
-      return map;
+      return threads;
     },
   },
   methods: {
     resolve(thread) {
       this.$store.commit('resolveThread', thread);
     },
-    toggleThread(id) {
-      this.showThread[id] = !this.showThread[id];
+    createThread() {
+      // TODO
     },
   },
 };

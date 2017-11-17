@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       name: auth.getUserName(),
-      pictureUrl: auth.getUserPicture(),
+      pictureUrl: auth.getProfileThumbnailUrl(),
     };
   },
   methods: {

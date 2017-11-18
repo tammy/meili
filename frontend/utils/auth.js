@@ -23,7 +23,7 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 const TOKEN_EXPIRE = 'token_expire';
 const USER_NAME = 'user_name';
-const USER_PICTURE = 'user_picture';
+const PROFILE_THUMBNAIL = 'profile_thumbnail';
 
 var router = new Router({
    mode: 'history',
@@ -57,13 +57,17 @@ function setTokens(authResponse) {
 function configureUser(response) {
   console.log('Successful login for: ' + response.name);
   localStorage.setItem(USER_NAME, response.name);
-  localStorage.setItem(USER_PICTURE, response.picture.data.url);
+  localStorage.setItem(PROFILE_THUMBNAIL, response.picture.data.url);
 }
 
 export function logout() {
+  // FIXME: logout isn't working so clear the tokens regardless of whether the callback is triggered
   clearTokens();
-  FB.logout();
-  router.go('/');
+  FB.logout(function(response) {
+    console.log(response);
+    clearTokens();
+    router.go('/');
+  });
 }
 
 export function getIdToken() {
@@ -78,8 +82,8 @@ export function getUserName() {
   return localStorage.getItem(USER_NAME);
 }
 
-export function getUserPicture() {
-  return localStorage.getItem(USER_PICTURE);
+export function getProfileThumbnailUrl() {
+  return localStorage.getItem(PROFILE_THUMBNAIL);
 }
 
 function getTokenExpirationDate() {

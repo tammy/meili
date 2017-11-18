@@ -11,7 +11,7 @@ import { isLoggedIn } from '../utils/auth';
 import { getChangedCards, getNewCards } from '../utils/models';
 import { createStore } from './store';
 
-const socket = io('http://localhost:3333');
+const socket = io('http://138.197.128.24:3333');
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);

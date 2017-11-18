@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize-cockroachdb');
 var models = require('../models');
 
-models.sequelize.sync({force: true}).then(function() {
+models.sequelize.sync({force: true, logging: console.log}).then(function() {
   // Seed User
   models.User.create({
     id: "1161676737297024",

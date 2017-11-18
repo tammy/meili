@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { getAccessToken } from './auth';
 
-const BASE_URL = 'http://localhost:3333';
+const BASE_URL = 'http://138.197.128.24:3333';
 const VERSION = 'v1';
 const API_URL = `${BASE_URL}/api/${VERSION}`;
 

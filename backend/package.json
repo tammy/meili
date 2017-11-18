@@ -27,6 +27,6 @@
     "stop": "pkill -f \"start-db nodemon server.js\" > /dev/null",
     "dev": "concurrently \"npm run start-db\" \"nodemon server.js\"",
     "start-db": "cockroach start --insecure --store=meili-db --host=localhost --http-port=8000",
-    "setup": "npm install && source config/dbsetup.sh"
+    "setup": "npm install && bash config/dbsetup.sh"
   }
 }

@@ -23,7 +23,7 @@ export function createStore() {
         // lastEditLocal is used keep track when we should push changes to server.
         // Avoids infinite loops.
         lastEditLocal: true,
-        onlineUsers: [],
+        onlineUsers: {}, // map of user IDs to their details
         focusedEvent: {}
       },
       getters: {},    // currently useless
@@ -102,14 +102,7 @@ export function createStore() {
           api.updateEvent(event);
         },
         socket_connect: (store, data) => {
-          var tok = localStorage.getItem('id_token');
-          if (!tok) {
-            tok = 'Unknown user';
-          }
-          (new Vue()).$socket.emit('newConnection', {
-            userID: tok,
-            tripID: store.state.trip.id,
-          });
+            console.log("Connected to server socket");
         },
         socket_activeUsers: (store, data) => {
             store.commit('updateOnlineUsers', data['usersConnected']);

@@ -23,32 +23,28 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 const TOKEN_EXPIRE = 'token_expire';
 const USER_NAME = 'user_name';
+const PROFILE_THUMBNAIL = 'profile_thumbnail';
 
 var router = new Router({
    mode: 'history',
 });
 
 export function login() {
-  FB.login();
-  checkLoginState();
-}
-
-export function checkLoginState() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
-  });
+  }, {scope: 'public_profile'});
 }
 
 function statusChangeCallback(response) {
   console.log("statusChangeCallback");
   if (response.status == 'connected') {
     setTokens(response.authResponse);
-    FB.api('/me', function(response) {
-      setUserName(response);
+    FB.api('/me', {fields: 'name,picture'}, function(response) {
+      configureUser(response);
+      router.go('/trip');
     });
-    router.go('/trip');
   } else {
-    FB.login();
+    FB.login(statusChangeCallback, {scope: 'public_profile, email'});
   }
 }
 
@@ -58,15 +54,20 @@ function setTokens(authResponse) {
   localStorage.setItem(TOKEN_EXPIRE, authResponse.expiresIn);
 }
 
-function setUserName(response) {
+function configureUser(response) {
   console.log('Successful login for: ' + response.name);
   localStorage.setItem(USER_NAME, response.name);
+  localStorage.setItem(PROFILE_THUMBNAIL, response.picture.data.url);
 }
 
 export function logout() {
+  // FIXME: logout isn't working so clear the tokens regardless of whether the callback is triggered
   clearTokens();
-  FB.logout();
-  router.go('/');
+  FB.logout(function(response) {
+    console.log(response);
+    clearTokens();
+    router.go('/');
+  });
 }
 
 export function getIdToken() {
@@ -79,6 +80,10 @@ export function getAccessToken() {
 
 export function getUserName() {
   return localStorage.getItem(USER_NAME);
+}
+
+export function getProfileThumbnailUrl() {
+  return localStorage.getItem(PROFILE_THUMBNAIL);
 }
 
 function getTokenExpirationDate() {

@@ -14,29 +14,36 @@ app.use(cors());
 app.use(`/api/${VERSION}/cards/`, require('./routes/cards'));
 app.use(`/api/${VERSION}/trips/`, require('./routes/trips'));
 
-var pubSubReg = {};
+const pubSubReg = {};
 
 const server = app.listen(PORT, () => {
-    console.log('Starting on localhost:', PORT);    
+    console.log('Starting on localhost:', PORT);
 });
 
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-    var user = 'unpopulatedUser';
-    var trip = 'unknownTrip';
+    let userSocket = 'unpopulatedUser';
+    let trip = 'unknownTrip';
 
     socket.on('newConnection', (data) => {
         console.log('Connection data requested');
-        var userID = data['userID'];
-        var tripID = data['tripID'];
-        user = userID;
+        console.log(data);
+        const userID = data['userID'];
+        const tripID = data['tripID'];
+        const displayName = data['userName'];
+        const profileImageUrl = data['profileImageUrl'];
+        userSocket = socket.id;
         trip = tripID;
 
         if (!pubSubReg.hasOwnProperty(tripID)) {
-            pubSubReg[tripID] = [];
+            pubSubReg[tripID] = {};
         }
-        pubSubReg[tripID].push(userID);
+        pubSubReg[tripID][socket.id] = {
+            userID,
+            displayName,
+            profileImageUrl,
+        };
 
         console.log('Currently active trips and users:');
         console.log(pubSubReg);
@@ -45,19 +52,32 @@ io.on('connection', (socket) => {
         io.in(tripID).emit('newUser', { usersConnected: pubSubReg[tripID] });
     });
 
-    socket.on('disconnect', () => {
-        console.log('Disconnect user from pubsub: ' + user);
-        var index = pubSubReg[trip].indexOf(user);
-        if (index > -1) {
-            pubSubReg[trip].splice(index, 1);
+    const handleDisconnect = () => {
+        // FIXME: ugly hack: we have to double check whether the user is in the list because we're
+        // storing the socket as part of the app state so if the user leaves the site, disconnect will
+        // be called regardless of whether the user is actually on a trip page. Consider not storing
+        // the socket as Vuex state data on the frontend.
+        if (!pubSubReg.hasOwnProperty(trip) || !pubSubReg[trip].hasOwnProperty(userSocket)) {
+            console.log('User does not exist!');
+            return;
         }
+        console.log('Disconnect user from pubsub: ' + userSocket);
 
-        if (pubSubReg[trip].length === 0) {
+        delete pubSubReg[trip][userSocket];
+
+        io.in(trip).emit('userDisconnected', { usersConnected: pubSubReg[trip]});
+
+        if (Object.keys(pubSubReg[trip]).length === 0) {
             delete pubSubReg[trip];
         }
 
-        io.in(trip).emit('userDisconnected', { usersConnected: pubSubReg[trip]});
-    })
+        console.log('Remaining active trips and users:');
+        console.log(pubSubReg);
+    };
+
+    socket.on('removeConnection', handleDisconnect);
+
+    socket.on('disconnect', handleDisconnect);
 });
 
 

@@ -70,7 +70,6 @@ export function createStore() {
             }
           }
           if (idx >= 0) {
-            // FIXME: (PB) Kinda a hack
             assignCardByValue(state.trip.events[idx], newCard);
           }
         }

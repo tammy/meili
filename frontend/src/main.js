@@ -32,11 +32,9 @@ Vue.use(VueSocketio, socket, store);
 
 store.watch(state => state.trip.events, (tripEvents) => {
   console.log('watch');
-  if (!store.state.lastEditLocal) {
-    // A remote edit is coming in. Don't update others because this will cause
-    // an infinite loop.
+  if (!store.state.lastEditLocal) {         // Remote edit
     store.commit('setLocalEdit', true);
-  } else {
+  } else {                                  // Local edit
     const changedCards = getChangedCards(store.state.trip.oldEvents, tripEvents);
 
     changedCards.forEach(changedCard => {

@@ -52,6 +52,12 @@ io.on('connection', (socket) => {
         io.in(tripID).emit('newUser', { usersConnected: pubSubReg[tripID] });
     });
 
+    socket.on('updateCard', (data) => {
+        const tripID = data['tripID'];
+        const newCard = data['card'];
+        socket.to(tripID).emit('updateCard', newCard);
+    });
+
     const handleDisconnect = () => {
         // FIXME: ugly hack: we have to double check whether the user is in the list because we're
         // storing the socket as part of the app state so if the user leaves the site, disconnect will

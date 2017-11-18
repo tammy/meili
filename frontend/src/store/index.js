@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as api from '../../utils/api';
+import { assignCardByValue } from '../../utils/models'
 
 Vue.use(Vuex);
 
@@ -70,13 +71,7 @@ export function createStore() {
           }
           if (idx >= 0) {
             // FIXME: (PB) Kinda a hack
-            const watchedProps = ['trip', 'title', 'description', 'location',
-            'coordinateLat', 'coordinateLon', 'startTime', 'duration', 'order',
-            'creator'];
-            for (var i = 0; i < watchedProps.length; i += 1) {
-              var prop = watchedProps[i];
-              state.trip.events[idx][prop] = newCard[prop];
-            }
+            assignCardByValue(state.trip.events[idx], newCard);
           }
         }
       },

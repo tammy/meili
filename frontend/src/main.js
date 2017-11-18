@@ -7,6 +7,7 @@ import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
 import Vuex from 'vuex';
 import { isLoggedIn } from '../utils/auth';
+import { getChangedCards } from '../utils/models';
 import { createStore } from './store';
 
 const socket = io('http://localhost:3333');
@@ -32,36 +33,16 @@ Vue.use(VueSocketio, socket, store);
 store.watch(state => state.trip.events, (tripEvents) => {
   console.log('watch');
   if (!store.state.lastEditLocal) {
+    // A remote edit is coming in. Don't update others because this will cause
+    // an infinite loop.
     store.commit('setLocalEdit', true);
-    const newOldEvents = tripEvents.map(x => Object.assign({}, x));
-    store.commit('updateOldEvents', newOldEvents);
-    return;
-  }
-  const watchedProps = ['trip', 'title', 'description', 'location',
-  'coordinateLat', 'coordinateLon', 'startTime', 'duration', 'order',
-  'creator'];
-  const oldEvents = store.state.trip.oldEvents;
-  const length = Math.max(tripEvents.length, oldEvents.length);
-  const min = Math.min(tripEvents.length, oldEvents.length);
-  var changedCards = [];
+  } else {
+    const changedCards = getChangedCards(store.state.trip.oldEvents, tripEvents);
 
-  for (var i = 0; i < length; i += 1) {
-    if (i >= min) {
-      changedCards.push(tripEvents[i]);
-    } else {
-      for (var pIdx = 0; pIdx < watchedProps.length; pIdx += 1) {
-        const prop = watchedProps[pIdx];
-        if(tripEvents[i][prop] != oldEvents[i][prop]) {
-          changedCards.push(tripEvents[i]);
-          break;
-        }
-      }
-    }
-  }
-
-  for (var i = 0; i < changedCards.length; i += 1) {
-    const data = {tripID: store.state.trip.id, card: changedCards[i]};
-    socket.emit('updateCard', data);
+    changedCards.forEach(changedCard => {
+      const data = {tripID: store.state.trip.id, card: changedCard};
+      socket.emit('updateCard', data);
+    });
   }
 
   // Update old events

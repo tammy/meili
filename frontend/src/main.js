@@ -7,6 +7,7 @@ import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
 import Vuex from 'vuex';
 import { isLoggedIn } from '../utils/auth';
+import { getChangedCards } from '../utils/models';
 import { createStore } from './store';
 
 const socket = io('http://localhost:3333');
@@ -28,6 +29,25 @@ router.beforeEach((to, from, next) => {
 /* eslint-disable no-unused-vars */
 const store = createStore();
 Vue.use(VueSocketio, socket, store);
+
+store.watch(state => state.trip.events, (tripEvents) => {
+  console.log('watch');
+  if (!store.state.lastEditLocal) {         // Remote edit
+    store.commit('setLocalEdit', true);
+  } else {                                  // Local edit
+    const changedCards = getChangedCards(store.state.trip.oldEvents, tripEvents);
+
+    changedCards.forEach(changedCard => {
+      const data = {tripID: store.state.trip.id, card: changedCard};
+      socket.emit('updateCard', data);
+    });
+  }
+
+  // Update old events
+  const newOldEvents = tripEvents.map(x => Object.assign({}, x));
+  store.commit('updateOldEvents', newOldEvents);
+}, { deep: true });
+
 const app = new Vue({
   el: '#app',
   router,

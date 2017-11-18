@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as api from '../../utils/api';
+import { assignCardByValue } from '../../utils/models'
 
 Vue.use(Vuex);
 
@@ -17,7 +18,11 @@ export function createStore() {
           id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
           events: [],
           collaborators: [],
+          oldEvents: [],
         },
+        // lastEditLocal is used keep track when we should push changes to server.
+        // Avoids infinite loops.
+        lastEditLocal: true,
         onlineUsers: {}, // map of user IDs to their details
         focusedEvent: {}
       },
@@ -32,6 +37,9 @@ export function createStore() {
         },
         updateOnlineUsers: (state, users) => {
             state.onlineUsers = users;
+        },
+        updateOldEvents: (state, oldEvents) => {
+            state.trip.oldEvents = oldEvents;
         },
         /* Trip */
         setTrip: (state, trip) => {
@@ -50,6 +58,21 @@ export function createStore() {
           const index = state.trip.events.indexOf(event);
           state.trip.events.splice(event, 1);
         },
+        setLocalEdit: (state, localEdit) => {
+          state.lastEditLocal = localEdit;
+        },
+        updateCard: (state, newCard) => {
+          var idx = -1;
+          for (var i = 0; i < state.trip.events.length; i += 1) {
+            if (state.trip.events[i]['id'] == newCard['id']) {
+              idx = i;
+              break;
+            }
+          }
+          if (idx >= 0) {
+            assignCardByValue(state.trip.events[idx], newCard);
+          }
+        }
       },
       actions: {      // run async
         /* User */
@@ -89,6 +112,10 @@ export function createStore() {
         },
         socket_userDisconnected: (store, data) => {
             store.commit('updateOnlineUsers', data['usersConnected']);
+        },
+        socket_updateCard: (store, newCard) => {
+            store.commit('setLocalEdit', false);
+            store.commit('updateCard', newCard);
         }
       },
     });

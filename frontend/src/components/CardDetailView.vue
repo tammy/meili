@@ -47,7 +47,7 @@ export default {
     search() {},
     save() {
       // TODO: make this periodically save automatically
-      this.$store.dispatch('saveEvent', event);
+      this.$store.dispatch('saveEvent', this.event);
     },
   },
 };

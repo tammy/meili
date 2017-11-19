@@ -1,60 +1,51 @@
+// TODO: This file must be integrated with websockets (i.e. all endpoints should become event handlers)
+
 var express = require('express');
 var router = express.Router();
-var Sequelize = require('sequelize-cockroachdb');
-var models = require('../models');
 var uuidv4 = require('uuid/v4');
+var storage = require('../utils/storage');
 
+// Endpoint only used for testing
+// Fetch all cards
 router.get('/', (req, res) => {
-    models.Card.findAll({
-        order: ['order'],
-        raw: true
-    }).then((cards) => {
+    return storage.getAllCards((cards) => {
         res.status(200).send(cards);
     });
 });
 
+// Fetch all cards from a trip
 router.get('/:tripId', (req, res) => {
-    models.Card.findAll({
-        where: {
-            trip: req.params.tripId
-        }, 
-        order: ['order'],
-        raw: true
-    }).then((cards) => {
+    const tripId = req.params.tripId;
+    storage.withCardsFromTrip(tripId, (cards) => {
         res.status(200).send(cards);
     });
 });
 
-router.put('/', (req, res) => {
-        var card = req.body.card;
-        models.Card.update(card, { where: {id: card.id}  }).then(() => {
-            res.status(200).send(card);
-        });
+// Update a card for a given trip
+router.put('/:tripId', (req, res) => {
+    const tripId = req.params.tripId;
+    const card = req.body.card;
+
+    storage.updateCard(tripId, card, (newCard) => {
+        res.status(200).send(newCard);
+    });
 });
 
+// Add a card to a trip
 router.post('/:tripId', (req, res) => {
-        var cardId = uuidv4();
-        var tripId = req.params.tripId;
+    const tripId = req.params.tripId;
+    const cardId = uuidv4();
 
-        models.Card.create({ id: cardId, trip: tripId }).then(() => {
-            models.Card.findAll({
-                where: {
-                    id: cardId
-                }, 
-                raw: true
-            }).then((cards) => {
-                res.status(200).send(cards);
-            });
-        });
+    storage.updateCard(tripId, cardId, (newCard) => {
+        res.status(200).send(cards);
+    });
 });
 
+// Delete all cards from a trip
 router.delete('/:tripId', (req, res) => {
     const tripId = req.params.tripId;
-    models.Card.destroy({
-        where: {
-            id: tripId
-        }
-    }).then(() => {
+
+    storage.updateCard(tripId, () => {
         res.status(200);
     });
 });

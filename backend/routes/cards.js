@@ -40,20 +40,25 @@ router.post('/:tripId', (req, res) => {
     newCard.id = cardId;
     newCard.tripId = tripId;
 
-    storage.addCard(tripId, newCard, (newCard) => {
-        res.status(200).send(newCard);
+    models.Card.create(newCard).then(() => {
+        models.Card.findAll({
+            where: {
+                id: cardId
+            }, 
+            raw: true
+        }).then((cards) => {
+            res.status(200).send(cards);
+        });
     });
 });
 
-router.delete('/:tripId/:cardId', (req, res) => {
-    const tripId = req.params.tripId;
+router.delete('/:cardId', (req, res) => {
     const cardId = req.params.cardId;
 
-    console.log(`Deleting card ${cardId}`);
-    storage.deleteCard(cardId, tripId, () => {
-        res.status(200).send();
+    storage.deleteCard(cardId, () => {
+        req.status(200).send("Deletion completed successfully.");
     }, () => {
-        res.status(404).send(`Card with id ${cardId} was not found.`);
+        req.status(404).send(`Card with id ${cardId} was not found.`);
     })
 });
 

@@ -94,8 +94,7 @@ module.exports.getAllCards = (callback) => {
     });
 }
 
-module.exports.deleteCard = (cardId, tripId, callback, notFoundCallback) => {
-    tripCache.invalidateEntry(tripId);
+module.exports.deleteCards = (cardId, callback, notFoundCallback) => {
     models.Card.findAll({
         where: {
             id: cardId

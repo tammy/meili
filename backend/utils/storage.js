@@ -70,10 +70,10 @@ module.exports.updateCard = (tripId, newCard, callback) => {
 }
 
 module.exports.addCard = (tripId, newCard, callback) => {
-    // TODO: implement caching
-    tripCache.invalidateEntry(tripId);
+	// TODO: implement caching
+	tripCache.invalidateEntry(tripId);
 
-    models.Card.create(newCard).then(() => {
+	models.Card.create(newCard).then(() => {
         models.Card.findAll({
             where: {
                 id: newCard.id,
@@ -94,7 +94,8 @@ module.exports.getAllCards = (callback) => {
     });
 }
 
-module.exports.deleteCards = (cardId, callback, notFoundCallback) => {
+module.exports.deleteCard = (cardId, tripId, callback, notFoundCallback) => {
+    tripCache.invalidateEntry(tripId);
     models.Card.findAll({
         where: {
             id: cardId

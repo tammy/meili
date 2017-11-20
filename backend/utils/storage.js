@@ -78,19 +78,6 @@ module.exports.addCard = (tripId, newCard, callback) => {
     });
 }
 
-// module.exports.deleteCard = (tripId, callback) => {
-// 	// TODO: implement caching
-// 	tripCache.invalidateEntry(tripId);
-// 
-// 	models.Card.destroy({
-//         where: {
-//             id: tripId,
-//         }
-//     }).then(() => {
-//         callback();
-//     });
-// }
-
 module.exports.getAllCards = (callback) => {
 	models.Card.findAll({
         order: ['order'],

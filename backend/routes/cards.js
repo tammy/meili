@@ -45,16 +45,6 @@ router.post('/:tripId', (req, res) => {
     });
 });
 
-// Delete all cards from a trip
-router.delete('/:tripId', (req, res) => {
-    console.log("[card.js] DELETING ALL TRIP.");
-    const tripId = req.params.tripId;
-
-    storage.updateCard(tripId, () => {
-        res.status(200);
-    });
-});
-
 router.delete('/:tripId/:cardId', (req, res) => {
     const tripId = req.params.tripId;
     const cardId = req.params.cardId;

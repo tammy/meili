@@ -13,11 +13,18 @@ models.sequelize.sync({force: true}).then(function() {
   models.Trip.create({
     id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
-    name: "Paris vacay",
+    name: "Paris - Grad Trip '19!'",
     description: "La vie est belle."
   });
 
-  // Seed card
+  models.Trip.create({
+    id: "0049afbc-24fc-457d-8aa8-905c24dda41d",
+    owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    name: "South Bay Vacay",
+    description: "Zzzz"
+  });
+
+  // Seed card for paris trip
   models.Card.create({
     id: "3176daf7-ea72-4444-b2be-7d2f466af8d0",
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
@@ -35,6 +42,19 @@ models.sequelize.sync({force: true}).then(function() {
     title: "Arc de Triomphe",
     description: "Beautiful arch in the middle of a great roundabout. About 400 steps to the top.",
     location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", 
+    duration: 20.0,
+    order: 0,
+    startTime: Date.now(),
+    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+  })
+
+  // Seed card for south bay trip
+  models.Card.create({
+    id: "bd6425fa-c8e6-4401-80ea-83614021f2d1",
+	trip: "0049afbc-24fc-457d-8aa8-905c24dda41d",
+    title: "Googleplex",
+    description: "A bunch of building. With Android statues!",
+    location: "1 Ampitheatre Dr.", 
     duration: 20.0,
     order: 0,
     startTime: Date.now(),

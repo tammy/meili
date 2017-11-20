@@ -4,3 +4,4 @@
 *meili-db/
 *.swp
 *.sublime-workspace
+*npm-debug.log

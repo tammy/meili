@@ -43,8 +43,7 @@ export function createStore() {
         },
         /* Trip */
         setTrip: (state, trip) => {
-          state.trip.events = trip;   // TODO: set entire trip instead
-          // state.trip = trip;
+          Object.assign(state.trip, trip);
         },
         /* Events */
         setFocusedEvent: (state, event) => {
@@ -86,11 +85,6 @@ export function createStore() {
             return tripsList;   // TODO: determine whether this should be state or local var
           });
         },
-        getTrip: (store, tripId) => {
-          api.getTrip(tripId).then((trip) => {
-            return store.commit('setTrip', trip);
-          });
-        },
         saveTrip: (store) => {
           for ( let i = 0; i < store.state.trip.events.length; i += 1 ) {
             store.state.trip.events[i].order = i;     // TODO: remove this hack
@@ -103,6 +97,9 @@ export function createStore() {
         },
         socket_connect: (store, data) => {
             console.log("Connected to server socket");
+        },
+        socket_tripData: (store, trip) => {
+            store.commit('setTrip', trip);
         },
         socket_activeUsers: (store, data) => {
             store.commit('updateOnlineUsers', data['usersConnected']);

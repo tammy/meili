@@ -95,4 +95,4 @@ models.sequelize.sync({force: true}).then(function() {
 });
 
 // FIXME: Hack because I spent over an hour on this and I'm sick of it.
-setTimeout(() => process.exit(), 1000);
+setTimeout(() => process.exit(), 5000);

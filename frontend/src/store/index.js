@@ -99,7 +99,7 @@ export function createStore() {
         },
         /* Events */
         saveEvent: (store, event) => {
-          api.updateEvent(event);
+          api.updateEvent(store.state.trip.id, event);
         },
         socket_connect: (store, data) => {
             console.log("Connected to server socket");

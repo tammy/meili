@@ -12,6 +12,7 @@
     "express-jwt": "^3.4.0",
     "jwks-rsa": "^1.1.1",
     "jwt-decode": "^2.2.0",
+    "node-cache": "^4.1.1",
     "sequelize": "^4.13.17",
     "sequelize-cockroachdb": "^1.0.2",
     "socket.io": "^2.0.4",

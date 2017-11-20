@@ -47,10 +47,9 @@ export function createEvent(tripId) {
   return axios.post(url).then(response => response.data);
 }
 
-export function updateEvent(card) {
-  const cardId = card.id;
-  const url = `${API_URL}/cards/`;
-  return axios.put(url, {'card': card}).then((response) => {
+export function updateEvent(tripId, card) {
+  const url = `${API_URL}/cards/${tripId}`;
+  return axios.put(url, {'card': card, 'tripId': tripId}).then((response) => {
     response.data;
   });
 }

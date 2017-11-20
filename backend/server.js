@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const storage = require('./utils/storage');
 
 const PORT = 3333;
 const VERSION = 'v1';
@@ -48,8 +49,16 @@ io.on('connection', (socket) => {
         console.log('Currently active trips and users:');
         console.log(pubSubReg);
 
-        socket.join(tripID);
-        io.in(tripID).emit('newUser', { usersConnected: pubSubReg[tripID] });
+        // FIXME: I feel like maybe this file shouldn't be interacting with the storage layer directly
+        // Send trip data to client and subscribe to trip
+        storage.withTripDetails(tripID, (trip) => {
+            storage.withCardsFromTrip(tripID, (cards) => {
+                trip.events = cards;
+                socket.emit('tripData', trip);
+                socket.join(tripID);
+                io.in(tripID).emit('newUser', { usersConnected: pubSubReg[tripID] });
+            });
+        });
     });
 
     socket.on('updateCard', (data) => {

@@ -45,6 +45,13 @@ module.exports.withCardsFromTrip = (tripId, callback) => {
     });
 };
 
+// TODO: hook into cache
+module.exports.withTripDetails = (tripId, callback) => {
+	models.Trip.findById(tripId).then((trip) => {
+        callback(trip.dataValues);
+    });
+}
+
 module.exports.updateCard = (tripId, newCard, callback) => {
 	module.exports.withCardsFromTrip(tripId, (trip) => {
 		// Update cached value

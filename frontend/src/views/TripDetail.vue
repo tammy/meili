@@ -33,10 +33,6 @@ export default {
     },
   },
 
-  mounted() {
-    this.$store.dispatch('getTrip', this.tripID);
-  },
-
   created() {
     var tok = localStorage.getItem('id_token');
     if (!tok) {

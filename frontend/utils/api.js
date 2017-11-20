@@ -26,12 +26,6 @@ export function getTripList(userId) {
   return axios.get(url).then(response => response.data);
 }
 
-export function getTrip(tripId) {
-  // TODO: add more details of a trip
-  const url = `${API_URL}/cards/${tripId}`;
-  return axios.get(url).then(response => response.data);
-}
-
 export function createTrip(userId) { /* TODO */ }
 
 export function updateTrip(trip) { /* TODO */ }

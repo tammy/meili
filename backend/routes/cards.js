@@ -1,6 +1,7 @@
 // TODO: This file must be integrated with websockets (i.e. all endpoints should become event handlers)
 
 var express = require('express');
+
 var router = express.Router();
 var uuidv4 = require('uuid/v4');
 var storage = require('../utils/storage');
@@ -24,7 +25,7 @@ router.get('/:tripId', (req, res) => {
 // Update a card for a given trip
 router.put('/:tripId', (req, res) => {
     const tripId = req.params.tripId;
-    const card = req.body.card;
+    const card = JSON.parse(req.body.card);
 
     storage.updateCard(tripId, card, (newCard) => {
         res.status(200).send(newCard);
@@ -33,21 +34,32 @@ router.put('/:tripId', (req, res) => {
 
 // Add a card to a trip
 router.post('/:tripId', (req, res) => {
-    const tripId = req.params.tripId;
-    const cardId = uuidv4();
+    var cardId = uuidv4();
+    var tripId = req.params.tripId;
+    const newCard = JSON.parse(req.body.card);
+    newCard.id = cardId;
+    newCard.tripId = tripId;
 
-    storage.updateCard(tripId, cardId, (newCard) => {
-        res.status(200).send(cards);
+    models.Card.create(newCard).then(() => {
+        models.Card.findAll({
+            where: {
+                id: cardId
+            }, 
+            raw: true
+        }).then((cards) => {
+            res.status(200).send(cards);
+        });
     });
 });
 
-// Delete all cards from a trip
-router.delete('/:tripId', (req, res) => {
-    const tripId = req.params.tripId;
+router.delete('/:cardId', (req, res) => {
+    const cardId = req.params.cardId;
 
-    storage.updateCard(tripId, () => {
-        res.status(200);
-    });
+    storage.deleteCard(cardId, () => {
+        req.status(200).send("Deletion completed successfully.");
+    }, () => {
+        req.status(404).send(`Card with id ${cardId} was not found.`);
+    })
 });
 
 module.exports = router;

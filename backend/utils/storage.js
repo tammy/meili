@@ -99,3 +99,23 @@ module.exports.getAllCards = (callback) => {
         callback(cards);
     });
 }
+
+module.exports.deleteCards = (cardId, callback, notFoundCallback) => {
+    models.Card.findAll({
+        where: {
+            id: cardId
+        },
+    }).then((cards) => {
+        if (cards.length == 0) {
+            notFoundCallback();
+        }
+    }).then(() => {
+        models.Card.destroy({
+            where: {
+                id: cardId
+            }
+        }).then(() => {
+            callback();
+        });
+    });
+}

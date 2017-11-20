@@ -28,17 +28,18 @@ router.get('/:messageId'), (req, res) => {
 
 // Create a new message
 router.post('/:threadId', (req, res) => {
-    const cardId = uuidv4();
+    const messageId = uuidv4();
     const threadId = req.params.threadId;
-    var message = req.body.mesasge;
-    const otherMsgs = models.Message.findAll({where: {threadId: threadId}});
-    const order = otherMsgs.length + 1;
-    message['id'] = cardId;
-    message['threadId'] = threadId;
-    message['order'] = order;
-    models.Message.create(message).then((msg) => {
-        res.status(200).send(msg);
-    });
+    const message = JSON.parse(req.body.message);
+    const otherMsgs = models.Message.findAll({where: {threadId: threadId}}).then((messages) => {
+        message['id'] = messageId;
+        message['threadId'] = threadId;
+        const order = messages.length + 1;
+        message['order'] = order;
+        models.Message.create(message).then((msg) => {
+            res.status(200).send(msg);
+        });
+    })
 });
 
 module.exports = router;

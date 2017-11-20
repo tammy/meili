@@ -16,10 +16,13 @@ router.get('/:cardId', (req, res) => {
 });
 
 // Create a new thread
-router.post('/:threadId', (req, res) => {
-    const threadId = req.params.threadId;
-    var thread = req.body.thread;
+router.post('/:cardId', (req, res) => {
+    const threadId = uuidv4();
+    const cardId = req.params.cardId;
+    var thread = JSON.parse(req.body.thread);
     thread['id'] = threadId;
+    thread['cardId'] = cardId;
+    thread['resolved'] = false;
     models.Thread.create(thread).then((createdThread) => {
         res.status(200).send(createdThread);
     });

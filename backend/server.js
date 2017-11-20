@@ -64,7 +64,10 @@ io.on('connection', (socket) => {
     socket.on('updateCard', (data) => {
         const tripID = data['tripID'];
         const newCard = data['card'];
-        socket.to(tripID).emit('updateCard', newCard);
+
+        storage.updateCard(tripID, newCard, () => {
+            socket.to(tripID).emit('updateCard', newCard);
+        });
     });
 
     const handleDisconnect = () => {

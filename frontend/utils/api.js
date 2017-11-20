@@ -28,12 +28,14 @@ export function getTripList(userId) {
 
 export function createTrip(userId) { /* TODO */ }
 
+// TODO: convert to websocket event
 export function updateTrip(trip) { /* TODO */ }
 
 export function deleteTrip(tripId) { /* TODO */ }
 
  /**
  * Trip Events
+ * TODO: convert all to websocket event
  */
 
 export function createEvent(tripId) {

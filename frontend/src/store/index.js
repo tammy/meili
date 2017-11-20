@@ -99,7 +99,6 @@ export function createStore() {
             console.log("Connected to server socket");
         },
         socket_tripData: (store, trip) => {
-            console.log(trip);
             store.commit('setTrip', trip);
         },
         socket_activeUsers: (store, data) => {

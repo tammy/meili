@@ -199,7 +199,7 @@ export function createStore() {
         addCollaborator: (store, email) => {
           api.addCollaborator(store.state.trip.id, email).then((status) => {
             if (status && status == 200) {
-              store.dispatch('getCollaborators', store.state.trip.id);
+              store.dispatch('getCollaborators');
               return true;
             }
             return false;

@@ -27,7 +27,6 @@
         </p>
       </div>
     </div>
-    <button type="button" class="btn btn-success" v-on:click="save()">Save</button>
   </div>
 </template>
 
@@ -45,10 +44,6 @@ export default {
   },
   methods: {
     search() {},
-    save() {
-      // TODO: make this periodically save automatically
-      this.$store.dispatch('saveEvent', this.event);
-    },
   },
 };
 </script>

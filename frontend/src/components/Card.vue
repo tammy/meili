@@ -31,10 +31,10 @@ export default {
   },
   methods: {
     remove() {
-      this.$store.commit('removeEvent', this.tripEvent);
+      this.$store.dispatch('removeEvent', this.tripEvent);
     },
     focusEvent() {
-      this.$store.commit('setFocusedEvent', this.tripEvent);
+      this.$store.dispatch('setFocusedEvent', this.tripEvent);
     },
   },
 };

@@ -6,6 +6,7 @@ import router from './router';
 import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
 import Vuex from 'vuex';
+import VModal from 'vue-js-modal'
 import { isLoggedIn } from '../utils/auth';
 import { getChangedCards, getNewCards } from '../utils/models';
 import { createStore } from './store';
@@ -14,6 +15,7 @@ const socket = io('http://localhost:3333');
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
+Vue.use(VModal);
 
 router.beforeEach((to, from, next) => {
   const authed = isLoggedIn();

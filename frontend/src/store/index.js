@@ -22,6 +22,7 @@ export function createStore() {
           collaborators: [],
           oldEvents: [],
         },
+        tripsList: [],
         // lastEditLocal is used keep track when we should push changes to server.
         // Avoids infinite loops.
         lastEditLocal: true,
@@ -76,14 +77,17 @@ export function createStore() {
         setUser: (state, user) => {
           state.user = user;
         },
-        addCollaborator: (state, user) => {
-          state.trip.collaborators.unshift(user);
+        setCollaborators: (state, users) => {
+          state.trip.collaborators = users;
+        },
+        updateCollaborators: (state, user) => {
+          state.trip.collaborators.push(user);
         },
         updateOnlineUsers: (state, users) => {
-            state.onlineUsers = users;
+          state.onlineUsers = users;
         },
         updateOldEvents: (state, oldEvents) => {
-            state.trip.oldEvents = oldEvents;
+          state.trip.oldEvents = oldEvents;
         },
         /* Trip */
         setTrip: (state, trip) => {
@@ -91,6 +95,9 @@ export function createStore() {
         },
         setTripName: (state, name) => {
           state.trip.name = name;
+        },
+        setTripsList: (state, tripsList) => {
+          state.tripsList = tripsList;
         },
         /* Events */
         setFocusedEvent: (state, event) => {
@@ -148,10 +155,21 @@ export function createStore() {
             return store.commit('setUser', user);
           });
         },
-        getTripList: (store) => {
-          api.getTripList(userId).then((tripsList) => {
-            return tripsList;   // TODO: determine whether this should be state or local var
+        /* Trips */
+        getTripsList: (store) => {
+          api.getTripList().then((tripsList) => {
+            return store.commit('setTripsList', tripsList);
           });
+        },
+        createTrip: (store, newTrip) => {
+          return new Promise((resolve, reject) => {
+            api.createTrip(store.state.user.id, newTrip).then((trip) => {
+              store.dispatch('getTripsList');
+              resolve(response);
+            }, error => {
+              reject(error);
+            });
+          })
         },
         saveTrip: (store) => {
           for ( let i = 0; i < store.state.trip.events.length; i += 1 ) {
@@ -159,11 +177,26 @@ export function createStore() {
           }
           api.updateTrip(store.state.trip);
         },
+        /* Trip Events */
         removeEvent: (store, event) => {
           store.commit('removeEvent', event);
         },
         setFocusedEvent: (store, event) => {
           store.commit('setFocusedEvent', event);
+        },
+        addCollaborator: (store, email) => {
+          api.addCollaborator(store.state.trip.id, email).then((status) => {
+            if (status && status == 200) {
+              store.dispatch('getCollaborators', store.state.trip.id);
+              return true;
+            }
+            return false;
+          });
+        },
+        getCollaborators: (store) => {
+          api.getCollaborators(store.state.trip.id).then((users) => {
+            store.commit('setCollaborators', users);
+          });
         },
         /* Sockets */
         socket_connect: (store, data) => {

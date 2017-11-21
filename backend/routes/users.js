@@ -31,4 +31,24 @@ router.get('/:tripId', (req, res) => {
   });
 });
 
+router.put('/:tripId/:userId', (req, res) => {
+  const newRelation = {
+    userId: req.params.userId,
+    tripId: req.params.tripId
+  };
+  models.UserTrip.create(newRelation).then(() => {
+    res.status(200).send(`User ${req.params.userId} added to ${req.params.tripId}`)
+  });
+});
+
+router.delete('/:tripId/:userId', (req, res) => {
+  const newRelation = {
+    userId: req.params.userId,
+    tripId: req.params.tripId
+  };
+  models.UserTrip.destroy({where: newRelation}).then(() => {
+    res.status(200).send(`User ${req.params.userId} removed from ${req.params.tripId}`);
+  });
+});
+
 module.exports = router;

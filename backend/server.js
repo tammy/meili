@@ -77,6 +77,12 @@ io.on('connection', (socket) => {
         });
     });
 
+    socket.on('updateTripName', (tripData) => {
+        storage.updateTrip(tripData, () => {
+            socket.to(tripData['id']).emit('updateTripName', tripData.name);
+        });
+    });
+
     const handleDisconnect = () => {
         // FIXME: ugly hack: we have to double check whether the user is in the list because we're
         // storing the socket as part of the app state so if the user leaves the site, disconnect will

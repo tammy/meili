@@ -143,6 +143,9 @@ export function createStore() {
           } else {
             state.trip.events.unshift(newCard);
           }
+          state.trip.events = state.trip.events.sort((a, b) => {
+            return a.order > b.order ? 1 : -1;
+          });
         },
         resolveThread: (state, thread) => {
           const index = state.threads.indexOf(thread);
@@ -231,6 +234,7 @@ export function createStore() {
             store.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_updateCard: (store, newCard) => {
+            console.log('udpating cards');
             store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
         },

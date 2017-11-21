@@ -62,40 +62,23 @@ export default {
       if (place.geometry) {
         this.event.location = place.formatted_address;
         
-        // console.log('location set');
         if (this.event.marker) {
-          // console.log("remove marker");
           this.$store.commit('removeMarker', this.event.marker);
-          // this.event.marker.setMap(null);
           this.event.marker = null;
         }
 
         this.event.marker = place.geometry.location;
-        // console.log(place.geometry.location);
-        // console.log(place.geometry.location.lat());
-        // console.log(place.geometry.location.lng());
         this.event.coordinateLat = place.geometry.location.lat();
         this.event.coordinateLon = place.geometry.location.lng();
-        // this.event.marker = new google.maps.Marker({
-        //   position: place.geometry.location,
-        //   // map: this.map,
-        //   // label: 'Albert',
-        //   animation: google.maps.Animation.DROP
-        // });
 
-        // console.log('marker made');
         this.$store.commit('addMarker', this.event.marker);
-        // console.log(this.markers.length);
       }
     },
   },
   mounted: function() {
-    // Create the autocomplete object and associate it with the UI input control.
     this.autocomplete = new google.maps.places.Autocomplete(
         /** @type {!HTMLInputElement} */ (
-            document.getElementById('autocomplete')), {
-          // types: ['geocode']
-        });
+            document.getElementById('autocomplete')), {});
 
     this.autocomplete.addListener('place_changed', this.onPlaceChanged);
   },

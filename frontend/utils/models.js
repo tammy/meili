@@ -27,6 +27,18 @@ export function getChangedCards(oldCards, newCards) {
   return changedCards;
 }
 
+export function getNewCards(oldCards, newCards) {
+  const oldCardIds = oldCards.map(x => x.id);
+  var addedCards = []
+  newCards.forEach(newCard => {
+    if (oldCardIds.indexOf(newCard.id) == -1 && newCard.new) {
+      newCard.new = false;
+      addedCards.push(newCard);
+    }
+  });
+  return addedCards;
+}
+
 export function assignCardByValue(target, source) {
   watchedProps.forEach(prop => {
     target[prop] = source[prop];

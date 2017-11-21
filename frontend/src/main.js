@@ -7,7 +7,7 @@ import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
 import Vuex from 'vuex';
 import { isLoggedIn } from '../utils/auth';
-import { getChangedCards } from '../utils/models';
+import { getChangedCards, getNewCards } from '../utils/models';
 import { createStore } from './store';
 
 const socket = io('http://localhost:3333');
@@ -36,10 +36,15 @@ store.watch(state => state.trip.events, (tripEvents) => {
     store.commit('setLocalEdit', true);
   } else {                                  // Local edit
     const changedCards = getChangedCards(store.state.trip.oldEvents, tripEvents);
+    const newCards = getNewCards(store.state.trip.oldEvents, tripEvents);
 
     changedCards.forEach(changedCard => {
       const data = {tripID: store.state.trip.id, card: changedCard};
       socket.emit('updateCard', data);
+    });
+    newCards.forEach(newCard => {
+      const data = {tripID: store.state.trip.id, card: newCard};
+      socket.emit('addCard', data);
     });
   }
 

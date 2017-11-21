@@ -80,7 +80,7 @@ export default {
 .right-pane {
   box-shadow: 0 0 11px rgba(33,33,33,.2);
   padding: 30px 35px;
-  width: 64%;
+  width: calc(100% - 630px);
   margin-left: 30px;
 }
 

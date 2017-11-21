@@ -67,7 +67,12 @@ export function createStore() {
 
           const idx = currentCardsIdxes.indexOf(newCard.id);
           if (idx >= 0) {
+            // This line is to ensure that vuex updates the state, but it
+            // assigns by reference
             Vue.set(state.trip.events, idx, newCard);
+            // The following lines assigns by values and overrides the prev
+            // assignment. The previous one was just to let Vuex know that
+            // something changed.
             assignCardByValue(state.trip.events[idx], newCard);
             console.log(state.trip.events[idx]);
           } else {

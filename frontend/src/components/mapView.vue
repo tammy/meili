@@ -1,7 +1,6 @@
 <!-- HTML -->
 <template>
   <div>
-      <h1>this is the map</h1>
       <!-- <div id="locationField"> -->
         <!-- <input id="autocomplete" placeholder="Enter a city" type="text" /> -->
       <!-- </div> -->
@@ -109,12 +108,6 @@ export default {
 <!-- CSS -->
 <style scoped>
 
-#mapview {
-  width: 100%;
-  height: 400px;
-  background-color: lightgrey;
-}
-
 #locationField {
   width: 190px;
   height: 25px;
@@ -125,11 +118,15 @@ export default {
   width: 100%;
 }
 
-.mapview {
-  width: 800px;
-  height: 600px;
-  margin: 0 auto;
-  background: gray;
+#mapview {
+  border-radius: 0;
+  border-color: #bce8f1;
+  /*max-width: 400px;*/
+  width: 100%;
+  margin-top: 10px;
+  height: 300px;
+  /*margin: 0 auto;*/
+  background: lightgrey;
 }
 
 </style>

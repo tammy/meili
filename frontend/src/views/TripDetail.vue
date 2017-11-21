@@ -6,7 +6,7 @@
       </div>
       <div class="trip-details">
         <timeline :trip="trip" class="col-sm-5 timeline"></timeline>
-        <map-view></map-view>
+        <map-view class="col-sm-7"></map-view>
         <div class="col-sm-7 right-pane">
           <card-detail-view></card-detail-view>
         </div>

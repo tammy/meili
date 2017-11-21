@@ -59,6 +59,10 @@ export default {
       // TODO: make this periodically save automatically
       this.$store.dispatch('saveEvent', this.event);
     },
+    onChange() {
+      var place = this.autocomplete.getPlace();
+      this.event.location = place.formatted_address;
+    },
     onPlaceChanged() {
       var place = this.autocomplete.getPlace();
       this.event.location = place.formatted_address;
@@ -100,7 +104,7 @@ export default {
           // types: ['geocode']
         });
 
-    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
+    this.autocomplete.addListener('place_changed', this.onChange);
   },
 };
 </script>

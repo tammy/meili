@@ -46,6 +46,9 @@ export function createStore() {
         setTrip: (state, trip) => {
           Object.assign(state.trip, trip);
         },
+        setTripName: (state, name) => {
+          state.trip.name = name;
+        },
         /* Events */
         setFocusedEvent: (state, event) => {
           state.focusedEvent = event;
@@ -109,6 +112,10 @@ export function createStore() {
         },
         socket_tripData: (store, trip) => {
             store.commit('setTrip', trip);
+        },
+        socket_updateTripName: (store, name) => {
+            store.commit('setLocalEdit', false);
+            store.commit('setTripName', name);
         },
         socket_activeUsers: (store, data) => {
             store.commit('updateOnlineUsers', data['usersConnected']);

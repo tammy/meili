@@ -30,9 +30,8 @@ export function getUser(userId) {
 }
 
 export function addCollaborator(tripId, email) {
-  const url = `${API_URL}/users/${tripId}/${email}`;
+  const url = `${API_URL}/users/${tripId}/email/${email}`;
   return axios.put(url).then(response => response.status);
-  // TODO: doesn't need to use userId, could be email or some other method
 }
 
 export function getCollaborators(tripId) {

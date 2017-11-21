@@ -154,7 +154,7 @@ export default {
   /*max-width: 400px;*/
   width: 100%;
   margin-top: 10px;
-  height: 300px;
+  height: 350px;
   /*margin: 0 auto;*/
   background: lightgrey;
 }

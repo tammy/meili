@@ -143,6 +143,9 @@ export function createStore() {
           } else {
             state.trip.events.unshift(newCard);
           }
+          state.trip.events = state.trip.events.sort((a, b) => {
+            return a.order > b.order ? 1 : -1;
+          });
         },
         resolveThread: (state, thread) => {
           const index = state.threads.indexOf(thread);
@@ -177,7 +180,7 @@ export function createStore() {
           return new Promise((resolve, reject) => {
             api.createTrip(store.state.user.id, newTrip).then((trip) => {
               store.dispatch('getTripsList');
-              resolve(response);
+              resolve(trip);
             }, error => {
               reject(error);
             });
@@ -199,7 +202,7 @@ export function createStore() {
         addCollaborator: (store, email) => {
           api.addCollaborator(store.state.trip.id, email).then((status) => {
             if (status && status == 200) {
-              store.dispatch('getCollaborators', store.state.trip.id);
+              store.dispatch('getCollaborators');
               return true;
             }
             return false;
@@ -231,6 +234,7 @@ export function createStore() {
             store.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_updateCard: (store, newCard) => {
+            console.log('udpating cards');
             store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
         },

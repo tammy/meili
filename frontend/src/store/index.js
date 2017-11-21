@@ -54,8 +54,6 @@ export function createStore() {
         addEvent: (state) => {
           // const newTripEvent = api.createEvent(state.trip.id);
           const newTripEvent = {'id': uuidv4(), 'trip': state.trip.id, 'new':true};
-          console.log("ADD CARD LOCALLY TO FRONT END");
-          console.log(`New card: ${newTripEvent['id']}`);
           state.trip.events.unshift(newTripEvent);
         },
         removeEvent: (state, event) => {
@@ -70,12 +68,10 @@ export function createStore() {
 
           const idx = currentCardsIdxes.indexOf(newCard.id);
           if (idx >= 0) {
-            console.log("Already exists. Updating.");
             Vue.set(state.trip.events, idx, newCard);
             assignCardByValue(state.trip.events[idx], newCard);
             console.log(state.trip.events[idx]);
           } else {
-            console.log("New card. Adding.");
             state.trip.events.unshift(newCard);
           }
           state.updateHack = !state.updateHack;
@@ -119,13 +115,10 @@ export function createStore() {
             store.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_updateCard: (store, newCard) => {
-            console.log('Got event saying card was changed');
-            console.log(newCard);
             store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
         },
         socket_addCard: (store, newCard) => {
-            console.log('Got event saying new card was added');
             if (newCard.new) {
               newCard.new = false;
             }

@@ -73,8 +73,6 @@ io.on('connection', (socket) => {
     socket.on('addCard', data => {
         const tripID = data['tripID'];
         const newCard = data['card'];
-        console.log("ADDING CARD-------------------------------");
-        console.log(newCard);
         storage.addCard(tripID, newCard, () => {
             socket.to(tripID).emit('addCard', newCard);
         });

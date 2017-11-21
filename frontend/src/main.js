@@ -40,11 +40,9 @@ store.watch(state => state.trip.events, (tripEvents) => {
 
     changedCards.forEach(changedCard => {
       const data = {tripID: store.state.trip.id, card: changedCard};
-      console.log(`CHANGED CARD DETECTE ${data.card.id}`);
       socket.emit('updateCard', data);
     });
     newCards.forEach(newCard => {
-      console.log("WATCH DETECTED LOCAL CHANGE");
       const data = {tripID: store.state.trip.id, card: newCard};
       socket.emit('addCard', data);
     });

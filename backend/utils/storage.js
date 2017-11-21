@@ -52,6 +52,12 @@ module.exports.withTripDetails = (tripId, callback) => {
     });
 }
 
+module.exports.updateTrip = (trip, callback) => {
+    models.Trip.update(trip, { where: {id: trip.id}  }).then((trip) => {
+        callback(trip);
+    });
+}
+
 module.exports.updateCard = (tripId, newCard, callback) => {
     module.exports.withCardsFromTrip(tripId, (trip) => {
         // Update cached value

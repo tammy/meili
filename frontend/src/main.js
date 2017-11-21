@@ -53,6 +53,15 @@ store.watch(state => state.trip.events, (tripEvents) => {
   store.commit('updateOldEvents', newOldEvents);
 }, { deep: true });
 
+store.watch(state => state.trip.name, (tripName) => {
+  console.log('watch tripName');
+  if (!store.state.lastEditLocal) {         // Remote edit
+    store.commit('setLocalEdit', true);
+  } else {                                  // Local edit
+    socket.emit('updateTripName', store.state.trip);
+  }
+}, { deep: true });
+
 const app = new Vue({
   el: '#app',
   router,

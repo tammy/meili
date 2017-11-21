@@ -16,6 +16,7 @@ app.use(`/api/${VERSION}/cards/`, require('./routes/cards'));
 app.use(`/api/${VERSION}/trips/`, require('./routes/trips'));
 app.use(`/api/${VERSION}/messages/`, require('./routes/messages'));
 app.use(`/api/${VERSION}/threads/`, require('./routes/threads'));
+app.use(`/api/${VERSION}/users/`, require('./routes/users'));
 
 const pubSubReg = {};
 

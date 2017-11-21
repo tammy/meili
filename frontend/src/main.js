@@ -32,6 +32,41 @@ router.beforeEach((to, from, next) => {
 const store = createStore();
 Vue.use(VueSocketio, socket, store);
 
+store.watch(state => state.threads, (threads) => {
+  if (!store.state.lastEditLocal) {         // Remote edit
+    store.commit('setLocalEdit', true);
+  } else {                                  // Local edit
+    // Detect changes
+    threads.forEach(thread => {
+      if (thread.new) {
+        thread.new = false;
+        const data = {eventID: thread.cardId, thread: thread, tripID: store.state.trip.id};
+        socket.emit('addThread', data);
+      }
+    });
+  }
+}, { deep: true });
+
+store.watch(state => state.messages, (messages) => {
+  if (!store.state.lastEditLocal) {         // Remote edit
+    store.commit('setLocalEdit', true);
+  } else {                                  // Local edit
+    // Detect changes
+    for (var threadId in messages) {
+      const msgs = messages[threadId];
+      msgs.forEach(msg => {
+        if (msg.new) {
+          msg.new = false;
+          const data = {threadID: threadId, message: msg, tripID: store.state.trip.id};
+          socket.emit('addMessage', data);
+        }
+      });
+      // do something with key
+    }
+    // socket.emit('addCard', data);
+  }
+}, { deep: true });
+
 store.watch(state => state.trip.events, (tripEvents) => {
   console.log('watch tripEvent');
   if (!store.state.lastEditLocal) {         // Remote edit

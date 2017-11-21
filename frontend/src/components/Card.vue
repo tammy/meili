@@ -20,7 +20,6 @@
 
 <!-- JavaScript -->
 <script>
-
 export default {
   name: 'card',
   props: ['tripEvent'],
@@ -34,6 +33,7 @@ export default {
       this.$store.dispatch('removeEvent', this.tripEvent);
     },
     focusEvent() {
+      this.$store.dispatch('getThreads', this.tripEvent.id);
       this.$store.dispatch('setFocusedEvent', this.tripEvent);
     },
   },
@@ -53,7 +53,7 @@ export default {
 }
 
 .panel:hover {
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 .panel-heading {

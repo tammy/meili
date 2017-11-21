@@ -16,6 +16,23 @@ router.get('/', (req, res) => {
     });
 });
 
+// Fetch all trips belonging to a certain user
+router.get('/:userId', (req, res) => {
+  models.Trip.findAll({
+    raw: true
+  }).then((trips) => {
+    models.UserTrip.findAll({
+      attributes: ['tripId'],
+      where: {userId: req.params.userId},
+      raw: true
+    }).then((tripIds) => {
+      tIds = tripIds.map(t => t.tripId);
+      const filtTrips = trips.filter(t => tIds.indexOf(t.id) > -1);
+      res.status(200).send(filtTrips);
+    })
+  });
+});
+
 // Fetch the contents of a specific trip
 router.get('/:tripId', (req, res) => {
     models.Trip.findById(req.params.tripId).then((trip) => {

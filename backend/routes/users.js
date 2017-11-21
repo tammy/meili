@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
   });
 });
 
-// Fetch the contents of a specific trip
+// Fetch the users for a specific trip
 router.get('/:tripId', (req, res) => {
   models.User.findAll({
     raw: true
@@ -31,6 +31,7 @@ router.get('/:tripId', (req, res) => {
   });
 });
 
+// Add a user to a given trip
 router.put('/:tripId/:userId', (req, res) => {
   const newRelation = {
     userId: req.params.userId,
@@ -41,6 +42,7 @@ router.put('/:tripId/:userId', (req, res) => {
   });
 });
 
+// Remove a user from a given trip
 router.delete('/:tripId/:userId', (req, res) => {
   const newRelation = {
     userId: req.params.userId,

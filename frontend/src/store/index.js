@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as api from '../../utils/api';
 import { assignCardByValue } from '../../utils/models'
+const uuidv4 = require('uuid/v4');
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ Vue.use(Vuex);
 export function createStore() {
     return new Vuex.Store({
       state: {
+        updateHack: false,
         user: {},
         trip: {   // TODO: do not hardcode this, get this from the API
           name: 'Graduation - Paris, France',
@@ -50,7 +52,10 @@ export function createStore() {
           state.focusedEvent = event;
         },
         addEvent: (state) => {
-          const newTripEvent = api.createEvent(state.trip.id);
+          // const newTripEvent = api.createEvent(state.trip.id);
+          const newTripEvent = {'id': uuidv4(), 'trip': state.trip.id, 'new':true};
+          console.log("ADD CARD LOCALLY TO FRONT END");
+          console.log(`New card: ${newTripEvent['id']}`);
           state.trip.events.unshift(newTripEvent);
         },
         removeEvent: (state, event) => {
@@ -61,16 +66,19 @@ export function createStore() {
           state.lastEditLocal = localEdit;
         },
         updateCard: (state, newCard) => {
-          var idx = -1;
-          for (var i = 0; i < state.trip.events.length; i += 1) {
-            if (state.trip.events[i]['id'] == newCard['id']) {
-              idx = i;
-              break;
-            }
-          }
+          const currentCardsIdxes = state.trip.events.map(e => e.id);
+
+          const idx = currentCardsIdxes.indexOf(newCard.id);
           if (idx >= 0) {
+            console.log("Already exists. Updating.");
+            Vue.set(state.trip.events, idx, newCard);
             assignCardByValue(state.trip.events[idx], newCard);
+            console.log(state.trip.events[idx]);
+          } else {
+            console.log("New card. Adding.");
+            state.trip.events.unshift(newCard);
           }
+          state.updateHack = !state.updateHack;
         }
       },
       actions: {      // run async
@@ -111,7 +119,17 @@ export function createStore() {
             store.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_updateCard: (store, newCard) => {
+            console.log('Got event saying card was changed');
+            console.log(newCard);
             store.commit('setLocalEdit', false);
+            store.commit('updateCard', newCard);
+        },
+        socket_addCard: (store, newCard) => {
+            console.log('Got event saying new card was added');
+            if (newCard.new) {
+              newCard.new = false;
+            }
+            // store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
         }
       },

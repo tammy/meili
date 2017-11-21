@@ -70,6 +70,16 @@ io.on('connection', (socket) => {
         });
     });
 
+    socket.on('addCard', data => {
+        const tripID = data['tripID'];
+        const newCard = data['card'];
+        console.log("ADDING CARD-------------------------------");
+        console.log(newCard);
+        storage.addCard(tripID, newCard, () => {
+            socket.to(tripID).emit('addCard', newCard);
+        });
+    });
+
     const handleDisconnect = () => {
         // FIXME: ugly hack: we have to double check whether the user is in the list because we're
         // storing the socket as part of the app state so if the user leaves the site, disconnect will
@@ -97,5 +107,3 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', handleDisconnect);
 });
-
-

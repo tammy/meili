@@ -43,9 +43,6 @@ export default {
     }
   },
   computed: {
-    map() {
-      return this.$store.state.trip.map;
-    },
     markers() {
       return this.$store.state.trip.markers;
     },
@@ -59,40 +56,33 @@ export default {
       // TODO: make this periodically save automatically
       this.$store.dispatch('saveEvent', this.event);
     },
-    onChange() {
-      var place = this.autocomplete.getPlace();
-      this.event.location = place.formatted_address;
-    },
     onPlaceChanged() {
       var place = this.autocomplete.getPlace();
-      this.event.location = place.formatted_address;
 
       if (place.geometry) {
-        // remove current marker
+        this.event.location = place.formatted_address;
+        
+        console.log('location set');
         if (this.event.marker) {
-          console.log("r");
+          console.log("remove marker");
           this.$store.commit('removeMarker', this.event.marker);
-          this.event.marker.setMap(null);
+          // this.event.marker.setMap(null);
           this.event.marker = null;
         }
-        // place new marker 
-        // this.event.marker = new google.maps.Marker();
-        // this.event.marker.setPosition(place.geometry.location);
-        // this.event.marker.setMap(this.map);
-        // this.event.marker.setAnimation(google.maps.Animation.DROP);
 
-        this.event.marker = new google.maps.Marker({
-          position: place.geometry.location,
-          map: this.map,
-          // label: 'Albert',
-          animation: google.maps.Animation.DROP
-        });
+        this.event.marker = place.geometry.location;
+        // this.event.coordinateLat = place.geometry.location.lat;
+        // this.event.coordinateLon = place.geometry.location.lng;
+        // this.event.marker = new google.maps.Marker({
+        //   position: place.geometry.location,
+        //   // map: this.map,
+        //   // label: 'Albert',
+        //   animation: google.maps.Animation.DROP
+        // });
 
+        console.log('marker made');
         this.$store.commit('addMarker', this.event.marker);
         console.log(this.markers.length);
-
-      } else {
-        document.getElementById('autocomplete').placeholder = 'Location';
       }
     },
   },
@@ -104,7 +94,7 @@ export default {
           // types: ['geocode']
         });
 
-    this.autocomplete.addListener('place_changed', this.onChange);
+    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
   },
 };
 </script>

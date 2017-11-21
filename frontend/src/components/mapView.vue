@@ -3,7 +3,7 @@
   <div>
       <!-- <div id="locationField"> -->
         <!-- <input id="autocomplete" placeholder="Enter a city" type="text" /> -->
-      <!-- </div> -->
+      <!-- </div>  -->
       <div id="mapview"></div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     return {
       map: null,
       // bounds: null,
-      // markers: [],
+      mapMarkers: [],
       // autocomplete: null,
     }
   },
@@ -40,13 +40,23 @@ export default {
     },
   },
   watch: {
-    // events: {
-    //   handler: function() {
-    //     this.fitBounds();
-    //   },
-    //   deep: true,
-    // },
+    events: {
+        handler: function(oldValue, newValue) {
+            console.log("deep change");
+
+            for (var i=0; i<oldValue.length; i++) {
+              console.log(oldValue);
+              console.log("new lat: " +newValue[i]);
+              if (oldValue[i].marker !== newValue[i].marker) {
+                console.log('marker not eq');
+                this.fitBounds();
+              }
+            }
+        },
+        deep: true
+    },
     markers: function() {
+      console.log('MARKER CHANGE');
       this.fitBounds();
     }
   },
@@ -77,12 +87,27 @@ export default {
       //   // });
       // }
 
+      // remove oldmarkers
+      for (var i=0; i<this.mapMarkers.length; i++) {
+        console.log('r');
+        this.mapMarkers[i].setMap(null);
+      }
+
+      this.mapMarkers = [];
+
       for (var i=0; i<this.events.length; i++) {
         if (this.events[i].marker) {
           console.log("i ");
-          this.events[i].marker.setMap(this.map);
+          const marker = new google.maps.Marker({
+            position: this.events[i].marker,
+            map: this.map,
+            // label: 'Albert',
+            animation: google.maps.Animation.DROP
+          });
+          // this.events[i].marker.setMap(this.map);
           // this.events[i].marker.show;
-          bounds.extend( this.events[i].marker.getPosition() );
+          this.mapMarkers.push(marker);
+          bounds.extend( marker.getPosition() );
         }
       }
 
@@ -98,7 +123,6 @@ export default {
     }
 
     this.map = new google.maps.Map(element, options);
-    this.$store.commit('setMap', this.map);
 
     this.fitBounds();
   }

@@ -31,7 +31,7 @@ const store = createStore();
 Vue.use(VueSocketio, socket, store);
 
 store.watch(state => state.trip.events, (tripEvents) => {
-  console.log('watch');
+  console.log('watch tripEvent');
   if (!store.state.lastEditLocal) {         // Remote edit
     store.commit('setLocalEdit', true);
   } else {                                  // Local edit

@@ -41,7 +41,7 @@ export default {
 
     getTripSocket().emit('newConnection', {
       userID: tok,
-      tripID: this.trip.id,
+      tripID: this.$route.params.id,
       userName: getUserName(),
       profileImageUrl: getProfileThumbnailUrl(),
     });

@@ -13,9 +13,9 @@ export function createStore() {
     return new Vuex.Store({
       state: {
         user: {},
-        trip: {   // TODO: do not hardcode this, get this from the API
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
+        trip: {
+          name: '',
+          id: '',
           events: [],
           collaborators: [],
           oldEvents: [],
@@ -91,10 +91,13 @@ export function createStore() {
           }
           api.updateTrip(store.state.trip);
         },
-        /* Events */
-        saveEvent: (store, event) => {
-          api.updateEvent(store.state.trip.id, event);
+        removeEvent: (store, event) => {
+          store.commit('removeEvent', event);
         },
+        setFocusedEvent: (store, event) => {
+          store.commit('setFocusedEvent', event);
+        },
+        /* Events */
         socket_connect: (store, data) => {
             console.log("Connected to server socket");
         },

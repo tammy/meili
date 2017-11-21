@@ -61,8 +61,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .timeline {
-  border: 1px solid black;
   width: 600px;
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 .online-panel {
@@ -77,7 +77,9 @@ export default {
 }
 
 .right-pane {
-  padding: 0 30px;
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  padding: 30px;
+  width: 64%;
   margin-left: 30px;
 }
 

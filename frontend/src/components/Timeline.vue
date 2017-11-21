@@ -54,8 +54,8 @@ export default {
   text-align: left;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 10px 0 10px 30px;
-  max-height: calc(100vh - 250px);
+  padding: 10px 0 30px 25px;
+  max-height: calc(100vh - 200px);
 }
 
 body {

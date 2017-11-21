@@ -62,9 +62,9 @@ export default {
       if (place.geometry) {
         this.event.location = place.formatted_address;
         
-        console.log('location set');
+        // console.log('location set');
         if (this.event.marker) {
-          console.log("remove marker");
+          // console.log("remove marker");
           this.$store.commit('removeMarker', this.event.marker);
           // this.event.marker.setMap(null);
           this.event.marker = null;
@@ -83,9 +83,9 @@ export default {
         //   animation: google.maps.Animation.DROP
         // });
 
-        console.log('marker made');
+        // console.log('marker made');
         this.$store.commit('addMarker', this.event.marker);
-        console.log(this.markers.length);
+        // console.log(this.markers.length);
       }
     },
   },

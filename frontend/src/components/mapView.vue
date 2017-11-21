@@ -39,13 +39,13 @@ export default {
   watch: {
     events: {
         handler: function(oldValue, newValue) {
-            console.log("deep change");
+            // console.log("deep change");
 
             for (var i=0; i<oldValue.length; i++) {
               // console.log(oldValue);
               // console.log("new lat: " +newValue[i]);
               if (oldValue[i] !== newValue[i]) {
-                console.log('marker not eq');
+                // console.log('marker not eq');
               }
             }
             this.fitBounds();
@@ -53,7 +53,7 @@ export default {
         deep: true
     },
     markers: function() {
-      console.log('MARKER CHANGE');
+      // console.log('MARKER CHANGE');
       this.fitBounds();
     }
   },
@@ -87,14 +87,11 @@ export default {
       // remove oldmarkers
       
 
-      console.log('FITBOUNDS');
-      // console.log(this.events);
-
       var newMarkers = [];
 
       for (var i=0; i<this.events.length; i++) {
         if (this.events[i].coordinateLat) {
-          console.log("i " + this.events[i].coordinateLat);
+          // console.log("i " + this.events[i].coordinateLat);
           const position = new google.maps.LatLng(this.events[i].coordinateLat, this.events[i].coordinateLon);
           const marker = new google.maps.Marker({
             position,
@@ -110,7 +107,7 @@ export default {
       }
 
       for (var i=0; i<this.mapMarkers.length; i++) {
-        console.log('r');
+        // console.log('r');
         this.mapMarkers[i].setMap(null);
       }
 
@@ -124,7 +121,6 @@ export default {
     this.fitBounds();
   },
   mounted() {
-    console.log("MOUNTED");
     const element = document.getElementById('mapview')
     const mapCentre = new google.maps.LatLng(41.290851, -101.827431)
     const options = {

@@ -9,8 +9,8 @@ var storage = require('../utils/storage');
 router.get('/', (req, res) => {
   models.User.findAll({
     raw: true
-  }).then((trips) => {
-    res.status(200).send(trips);
+  }).then((users) => {
+    res.status(200).send(users);
   });
 });
 

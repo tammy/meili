@@ -55,7 +55,7 @@ router.put('/:tripId', (req, res) => {
 // Create a new trip
 router.post('/', (req, res) => {
     var tripId = uuidv4();
-    const newTrip = JSON.parse(req.body.trip);
+    const newTrip = req.body.trip;
     newTrip.id = tripId;
 
     models.Trip.create(newTrip).then(() => {

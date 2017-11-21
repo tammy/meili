@@ -17,6 +17,13 @@ models.sequelize.sync({force: true}).then(function() {
     picture: "http://www.example.com"
   });
 
+  models.User.create({
+    id: "846707232167446",
+    name: "Justin Li",
+    email: "justin@gmail.com",
+    picture: "http://www.example.com"
+  });
+
   models.Trip.create({
     id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     owner: "1161676737297024",
@@ -41,6 +48,14 @@ models.sequelize.sync({force: true}).then(function() {
     tripId: "0049afbc-24fc-457d-8aa8-905c24dda41d",
   });
   models.UserTrip.create({
+    userId: "846707232167446",
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "846707232167446",
+    tripId: "0049afbc-24fc-457d-8aa8-905c24dda41d",
+  });
+  models.UserTrip.create({
     userId: "abc",
     tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
@@ -51,7 +66,7 @@ models.sequelize.sync({force: true}).then(function() {
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Eiffel Tower",
     description: "The brilliant tower!",
-    location: "Place Charles de Gaulle, 75008 Paris, France", 
+    location: "Place Charles de Gaulle, 75008 Paris, France",
     duration: 20.0,
     order: 0,
     startTime: Date.now(),
@@ -62,7 +77,7 @@ models.sequelize.sync({force: true}).then(function() {
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Arc de Triomphe",
     description: "Beautiful arch in the middle of a great roundabout. About 400 steps to the top.",
-    location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", 
+    location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
     duration: 20.0,
     order: 0,
     startTime: Date.now(),
@@ -75,7 +90,7 @@ models.sequelize.sync({force: true}).then(function() {
 	trip: "0049afbc-24fc-457d-8aa8-905c24dda41d",
     title: "Googleplex",
     description: "A bunch of building. With Android statues!",
-    location: "1 Ampitheatre Dr.", 
+    location: "1 Ampitheatre Dr.",
     duration: 20.0,
     order: 0,
     startTime: Date.now(),

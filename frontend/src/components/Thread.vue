@@ -136,15 +136,15 @@ export default {
 }
 
 .hidden-hover {
-  background-color: white;
-  color: green;
-  border: 1px solid green;
+  background-color: transparent;
+  color: transparent;
+  border: none;
 }
 
 .hidden-hover:hover {
-  color: white;
+  color: green;
   border: 1px solid green;
-  background-color: green;
+  background-color: white;
 }
 
 .textbox {

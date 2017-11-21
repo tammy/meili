@@ -43,11 +43,4 @@ export function createEvent(tripId) {
   return axios.post(url).then(response => response.data);
 }
 
-export function updateEvent(tripId, card) {
-  const url = `${API_URL}/cards/${tripId}`;
-  return axios.put(url, {'card': card, 'tripId': tripId}).then((response) => {
-    response.data;
-  });
-}
-
 export function deleteEvent(card) { /* TODO */ }

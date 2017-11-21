@@ -28,14 +28,14 @@ io.on('connection', (socket) => {
     let trip = 'unknownTrip';
 
     socket.on('newConnection', (data) => {
-        console.log('Connection data requested');
-        console.log(data);
         const userID = data['userID'];
         const tripID = data['tripID'];
         const displayName = data['userName'];
         const profileImageUrl = data['profileImageUrl'];
         userSocket = socket.id;
         trip = tripID;
+
+        console.log('Connection data requested for trip ' + tripID + ' from user ' + userID);
 
         if (!pubSubReg.hasOwnProperty(tripID)) {
             pubSubReg[tripID] = {};
@@ -45,9 +45,6 @@ io.on('connection', (socket) => {
             displayName,
             profileImageUrl,
         };
-
-        console.log('Currently active trips and users:');
-        console.log(pubSubReg);
 
         // FIXME: I feel like maybe this file shouldn't be interacting with the storage layer directly
         // Send trip data to client and subscribe to trip

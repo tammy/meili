@@ -124,6 +124,10 @@ export function createStore() {
             if (newCard.new) {
               newCard.new = false;
             }
+            // Keeping this for now, as this is what i'm most unsure about.
+            // Since we override for when we add cards i'm not going to mark
+            // it as a remote change. Seems to be behaving okay but ill
+            // keep an eye on it.
             // store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
         }

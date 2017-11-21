@@ -1,9 +1,9 @@
-const watchedProps = ['trip', 'title', 'description', 'location',
+const watchedProps = ['trip', 'title', 'description', 'location', 'marker',
 'coordinateLat', 'coordinateLon', 'startTime', 'duration', 'order',
 'creator'];
 
 export function getChangedCards(oldCards, newCards) {
-  const watchedProps = ['trip', 'title', 'description', 'location',
+  const watchedProps = ['trip', 'title', 'description', 'location', 'marker',
   'coordinateLat', 'coordinateLon', 'startTime', 'duration', 'order',
   'creator'];
   // const oldEvents = store.state.trip.oldEvents;

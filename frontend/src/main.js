@@ -6,6 +6,7 @@ import router from './router';
 import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
 import Vuex from 'vuex';
+import VModal from 'vue-js-modal'
 import { isLoggedIn } from '../utils/auth';
 import { getChangedCards, getNewCards } from '../utils/models';
 import { createStore } from './store';
@@ -14,6 +15,7 @@ const socket = io('http://localhost:3333');
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
+Vue.use(VModal);
 
 router.beforeEach((to, from, next) => {
   const authed = isLoggedIn();
@@ -29,6 +31,41 @@ router.beforeEach((to, from, next) => {
 /* eslint-disable no-unused-vars */
 const store = createStore();
 Vue.use(VueSocketio, socket, store);
+
+store.watch(state => state.threads, (threads) => {
+  if (!store.state.lastEditLocal) {         // Remote edit
+    store.commit('setLocalEdit', true);
+  } else {                                  // Local edit
+    // Detect changes
+    threads.forEach(thread => {
+      if (thread.new) {
+        thread.new = false;
+        const data = {eventID: thread.cardId, thread: thread, tripID: store.state.trip.id};
+        socket.emit('addThread', data);
+      }
+    });
+  }
+}, { deep: true });
+
+store.watch(state => state.messages, (messages) => {
+  if (!store.state.lastEditLocal) {         // Remote edit
+    store.commit('setLocalEdit', true);
+  } else {                                  // Local edit
+    // Detect changes
+    for (var threadId in messages) {
+      const msgs = messages[threadId];
+      msgs.forEach(msg => {
+        if (msg.new) {
+          msg.new = false;
+          const data = {threadID: threadId, message: msg, tripID: store.state.trip.id};
+          socket.emit('addMessage', data);
+        }
+      });
+      // do something with key
+    }
+    // socket.emit('addCard', data);
+  }
+}, { deep: true });
 
 store.watch(state => state.trip.events, (tripEvents) => {
   console.log('watch tripEvent');

@@ -2,19 +2,30 @@
   <div class="full-width">
     <!-- Section for all trips -->
     <div class="whitespace-top">
+      <h1 class="text-left">Trips</h1>
       <div v-for="trip in tripsList">
           <div class="col-xs-3 box">
             <div class="item" v-on:click="goToTrip(trip.id)">
+            <img class="photo" v-bind:class="{ 'default-picture': !trip.picture }" :src="trip.picture"/>
             {{ trip.name }}
             </div>
           </div>
       </div>
-      <div class="col-xs-3 box">
-        <div class="item hidden-hover" v-on:click="addTrip()">
-          <div class="glyphicon glyphicon-plus"></div>
-        </div>
+      <div class="col-xs-12" style="margin-top: 20px">
+        <button class="btn btn-success" v-on:click="showNewTripModal()">Create a new adventure</button>
       </div>
     </div>
+
+    <modal name="new-trip" height="auto">
+      <div style="padding: 20px 30px">
+        <h4>New Trip</h4>
+        <hr/>
+        <input type="text" v-model="newTrip.name" placeholder="Trip name (ex. The best trip ever!)"></input>
+        <div class="col-xs-12 text-center" style="margin: 10px 0">
+          <button class="btn btn-success" v-on:click="createTrip()">Create</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -23,13 +34,21 @@ export default {
   name: 'trips-list',
   data() {
     return {
-      tripsList: [
-        {
-          name: 'Graduation - Paris, France',
-          id: '6347f1fc-64d1-4f8b-ac79-44d59d130b6d',
-        },
-      ],
+      defaultPicture: '',
+      newTrip: {
+        name: null,
+        description: null,
+        picture: null,
+      },
+      success: false,
+      error: false,
     };
+  },
+  computed: {
+    tripsList() {
+      this.$store.dispatch('getTripsList');
+      return this.$store.state.tripsList;
+    },
   },
   methods: {
     goToTrip(tripID) {
@@ -38,28 +57,68 @@ export default {
         params: { id: tripID },
       });
     },
-    addTrip() {
-      console.log('new trip');
-      // TODO: open modal?
+    createTrip() {
+      this.$store.dispatch('createTrip', this.newTrip).then(
+        (response) => {
+          this.success = true;
+        }, 
+        (error) => {
+          this.error = true;
+      });
+      this.$modal.hide('new-trip');
+    },
+    showNewTripModal() {
+      this.$modal.show('new-trip');
     },
   },
 };
 </script>
 
 <style scoped>
+input {
+  width: calc(100% - 20px);
+  margin: 10px 10px 0 10px;
+  border: none;
+  border-bottom: 3px dashed #bce8f1;
+  height: 34px;
+}
+
+input:focus {
+  outline: none;
+}
+
+hr {
+  border-color: #bce8f1;
+}
+
+h1 {
+  margin-left: 20px;
+}
+
 .full-width {
   padding: 0 30px;
   width: 100%;
 }
 
+.photo {
+  height: 85%;
+  width: calc(100% - 10px);
+  margin-bottom: 25px;
+  border: 1px solid #bce8f1;
+}
+
 .item {
   margin: 10px 0;
   padding: 20px;
-  min-height: 200px;
+  height: 400px;
   color: #31708f;
   background-color: transparent;
   border: 1px solid #bce8f1;
   cursor: pointer;
+}
+
+.item:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 
 .hidden-hover {
@@ -72,12 +131,22 @@ export default {
   border: 1px solid green;
 }
 
-.item:hover {
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
-}
-
 .glyphicon-plus {
   margin: 20% 0;
   font-size: 20px;
+}
+
+.box {
+  font-size: 13pt;
+  font-weight: 500;
+}
+
+/* Source: http://lea.verou.me/css3patterns/#madras */
+.default-picture {
+  background-color: #bce8f1;
+  background-image: repeating-linear-gradient(
+    45deg, transparent, transparent 35px, 
+    rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
+  border-color: #bce8f1;
 }
 </style>

@@ -177,7 +177,7 @@ export function createStore() {
           return new Promise((resolve, reject) => {
             api.createTrip(store.state.user.id, newTrip).then((trip) => {
               store.dispatch('getTripsList');
-              resolve(response);
+              resolve(trip);
             }, error => {
               reject(error);
             });

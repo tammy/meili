@@ -22,7 +22,7 @@ module.exports.User = sequelize.define('user', {
   id: { type: DataTypes.STRING, primaryKey: true  },
   name: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING },
-  profilePicture: { type: DataTypes.STRING }
+  picture: { type: DataTypes.STRING },
 })
 
 
@@ -32,6 +32,12 @@ module.exports.Trip = sequelize.define('trip', {
   owner: { type: DataTypes.STRING  },
   name: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
+  picture: { type: DataTypes.STRING }
+})
+
+module.exports.UserTrip = sequelize.define('userTrip', {
+  userId: { type: DataTypes.STRING, primaryKey: true  },
+  tripId: { type: DataTypes.UUID, primaryKey: true },
 })
 
 // Unsure if we need this. It seems silly that the ORM layer doesn't handle this for you.
@@ -57,7 +63,7 @@ module.exports.Card = sequelize.define('card', {
   startTime: { type: DataTypes.DATE },
   duration: { type: DataTypes.DOUBLE },
   order: { type: DataTypes.INTEGER },
-  creator: { type: DataTypes.UUID }
+  creator: { type: DataTypes.STRING }
 })
 
 
@@ -76,7 +82,7 @@ module.exports.Message = sequelize.define('message', {
   id: { type: DataTypes.UUID, primaryKey: true },
   threadId: { type: DataTypes.UUID, primaryKey: true },
   order: { type: DataTypes.INTEGER },
-  owner:  { type: DataTypes.UUID },
+  owner:  { type: DataTypes.STRING },
   content: { type: DataTypes.TEXT }
 })
 

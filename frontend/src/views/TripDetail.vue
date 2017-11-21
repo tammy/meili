@@ -63,6 +63,7 @@ export default {
 .timeline {
   width: 600px;
   box-shadow: 0 0 11px rgba(33,33,33,.2);
+  overflow-y: hidden;
 }
 
 .online-panel {
@@ -78,7 +79,7 @@ export default {
 
 .right-pane {
   box-shadow: 0 0 11px rgba(33,33,33,.2);
-  padding: 30px;
+  padding: 30px 35px;
   width: 64%;
   margin-left: 30px;
 }

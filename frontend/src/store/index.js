@@ -96,10 +96,21 @@ export function createStore() {
             return store.commit('setUser', user);
           });
         },
-        getTripsList: (store, tripsList) => {
+        /* Trips */
+        getTripsList: (store) => {
           api.getTripList().then((tripsList) => {
             return store.commit('setTripsList', tripsList);
           });
+        },
+        createTrip: (store, newTrip) => {
+          return new Promise((resolve, reject) => {
+            api.createTrip(store.state.user.id, newTrip).then((trip) => {
+              store.dispatch('getTripsList');
+              resolve(response);
+            }, error => {
+              reject(error);
+            });
+          })
         },
         saveTrip: (store) => {
           for ( let i = 0; i < store.state.trip.events.length; i += 1 ) {
@@ -107,6 +118,7 @@ export function createStore() {
           }
           api.updateTrip(store.state.trip);
         },
+        /* Trip Events */
         removeEvent: (store, event) => {
           store.commit('removeEvent', event);
         },
@@ -127,7 +139,7 @@ export function createStore() {
             store.commit('setCollaborators', users);
           });
         },
-        /* Events */
+        /* Socket Events */
         socket_connect: (store, data) => {
             console.log("Connected to server socket");
         },

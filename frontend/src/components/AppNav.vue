@@ -43,6 +43,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.navbar {
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
 .navbar-brand {
   font-weight: 600;
 }

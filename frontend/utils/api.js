@@ -33,7 +33,17 @@ export function getTripList() {
   return axios.get(url).then(response => response.data);
 }
 
-export function createTrip(userId) { /* TODO */ }
+export function createTrip(userId, newTrip) {
+  const url = `${API_URL}/trips`;
+  const data = JSON.stringify({
+    // owner: userId,
+    owner: localStorage.id_token || '',
+    name: newTrip.name || '',
+    description: newTrip.description || '',
+  });
+
+  return axios.post(url, data).then(response => response.data);
+}
 
 // TODO: convert to websocket event
 export function updateTrip(trip) { /* TODO */ }

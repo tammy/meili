@@ -2,6 +2,7 @@
   <div class="full-width">
     <!-- Section for all trips -->
     <div class="whitespace-top">
+      <h1 class="text-left">Trips</h1>
       <div v-for="trip in tripsList">
           <div class="col-xs-3 box">
             <div class="item" v-on:click="goToTrip(trip.id)">
@@ -10,13 +11,21 @@
             </div>
           </div>
       </div>
-      <div class="col-xs-3 box">
-        <div class="item add hidden-hover" v-on:click="addTrip()">
-          <div class="glyphicon glyphicon-plus"></div>
-          Your next adventure!
-        </div>
+      <div class="col-xs-12" style="margin-top: 20px">
+        <button class="btn btn-success" v-on:click="showNewTripModal()">Create a new adventure</button>
       </div>
     </div>
+
+    <modal name="new-trip" height="auto">
+      <div style="padding: 20px 30px">
+        <h4>New Trip</h4>
+        <hr/>
+        <input type="text" v-model="newTrip.name" placeholder="Trip name (ex. The best trip ever!)"></input>
+        <div class="col-xs-12 text-center" style="margin: 10px 0">
+          <button class="btn btn-success" v-on:click="createTrip()">Create</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -26,6 +35,13 @@ export default {
   data() {
     return {
       defaultPicture: '',
+      newTrip: {
+        name: null,
+        description: null,
+        picture: null,
+      },
+      success: false,
+      error: false,
     };
   },
   computed: {
@@ -41,15 +57,44 @@ export default {
         params: { id: tripID },
       });
     },
-    addTrip() {
-      console.log('new trip');
-      // TODO: open modal?
+    createTrip() {
+      this.$store.dispatch('createTrip', this.newTrip).then(
+        (response) => {
+          this.success = true;
+        }, 
+        (error) => {
+          this.error = true;
+      });
+      this.$modal.hide('new-trip');
+    },
+    showNewTripModal() {
+      this.$modal.show('new-trip');
     },
   },
 };
 </script>
 
 <style scoped>
+input {
+  width: calc(100% - 20px);
+  margin: 10px 10px 0 10px;
+  border: none;
+  border-bottom: 3px dashed #bce8f1;
+  height: 34px;
+}
+
+input:focus {
+  outline: none;
+}
+
+hr {
+  border-color: #bce8f1;
+}
+
+h1 {
+  margin-left: 20px;
+}
+
 .full-width {
   padding: 0 30px;
   width: 100%;
@@ -58,7 +103,7 @@ export default {
 .photo {
   height: 85%;
   width: calc(100% - 10px);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border: 1px solid #bce8f1;
 }
 

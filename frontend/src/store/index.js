@@ -37,11 +37,14 @@ export function createStore() {
         setCollaborators: (state, users) => {
           state.trip.collaborators = users;
         },
+        updateCollaborators: (state, user) => {
+          state.trip.collaborators.push(user);
+        },
         updateOnlineUsers: (state, users) => {
-            state.onlineUsers = users;
+          state.onlineUsers = users;
         },
         updateOldEvents: (state, oldEvents) => {
-            state.trip.oldEvents = oldEvents;
+          state.trip.oldEvents = oldEvents;
         },
         /* Trip */
         setTrip: (state, trip) => {
@@ -111,16 +114,18 @@ export function createStore() {
           store.commit('setFocusedEvent', event);
         },
         addCollaborator: (store, email) => {
-          api.addCollaborator(email);
+          api.addCollaborator(store.state.trip.id, email).then((status) => {
+            if (status && status == 200) {
+              store.dispatch('getCollaborators', store.state.trip.id);
+              return true;
+            }
+            return false;
+          });
         },
         getCollaborators: (store) => {
           api.getCollaborators(store.state.trip.id).then((users) => {
             store.commit('setCollaborators', users);
           });
-        },
-        /* Events */
-        saveEvent: (store, event) => {
-          api.updateEvent(store.state.trip.id, event);
         },
         /* Events */
         socket_connect: (store, data) => {

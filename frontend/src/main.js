@@ -35,6 +35,9 @@ store.watch(state => state.trip.events, (tripEvents) => {
   if (!store.state.lastEditLocal) {         // Remote edit
     store.commit('setLocalEdit', true);
   } else {                                  // Local edit
+    for ( let i = 0; i < store.state.trip.events.length; i += 1 ) {
+      store.state.trip.events[i].order = i;     // TODO: remove this hack
+    }
     const changedCards = getChangedCards(store.state.trip.oldEvents, tripEvents);
     const newCards = getNewCards(store.state.trip.oldEvents, tripEvents);
 

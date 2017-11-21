@@ -26,9 +26,6 @@ export default {
     }
   },
   computed: {
-    // map() {
-    //   return this.$store.state.trip.map;
-    // },
     markers() {
       return this.$store.state.trip.markers;
     },
@@ -45,13 +42,13 @@ export default {
             console.log("deep change");
 
             for (var i=0; i<oldValue.length; i++) {
-              console.log(oldValue);
-              console.log("new lat: " +newValue[i]);
-              if (oldValue[i].marker !== newValue[i].marker) {
+              // console.log(oldValue);
+              // console.log("new lat: " +newValue[i]);
+              if (oldValue[i] !== newValue[i]) {
                 console.log('marker not eq');
-                this.fitBounds();
               }
             }
+            this.fitBounds();
         },
         deep: true
     },
@@ -64,11 +61,11 @@ export default {
     this.fitBounds();
   },
   methods: {
-    focusEvent(marker) {
-      this.$store.commit('setFocusedEvent', marker.event);
-    },
+    // focusEvent(marker) {
+    //   this.$store.commit('setFocusedEvent', marker.event);
+    // },
     fitBounds() {
-      if (!this.markers || this.markers.length === 0) return;
+      if (!this.events || this.events.length === 0) return;
 
       var bounds = new google.maps.LatLngBounds();
 
@@ -88,33 +85,46 @@ export default {
       // }
 
       // remove oldmarkers
+      
+
+      console.log('FITBOUNDS');
+      // console.log(this.events);
+
+      var newMarkers = [];
+
+      for (var i=0; i<this.events.length; i++) {
+        if (this.events[i].coordinateLat) {
+          console.log("i " + this.events[i].coordinateLat);
+          const position = new google.maps.LatLng(this.events[i].coordinateLat, this.events[i].coordinateLon);
+          const marker = new google.maps.Marker({
+            position,
+            map: this.map,
+            // label: 'Albert',
+            // animation: google.maps.Animation.DROP
+          });
+          // this.events[i].marker.setMap(this.map);
+          // this.events[i].marker.show;
+          newMarkers.push(marker);
+          bounds.extend( marker.getPosition() );
+        }
+      }
+
       for (var i=0; i<this.mapMarkers.length; i++) {
         console.log('r');
         this.mapMarkers[i].setMap(null);
       }
 
       this.mapMarkers = [];
-
-      for (var i=0; i<this.events.length; i++) {
-        if (this.events[i].marker) {
-          console.log("i ");
-          const marker = new google.maps.Marker({
-            position: this.events[i].marker,
-            map: this.map,
-            // label: 'Albert',
-            animation: google.maps.Animation.DROP
-          });
-          // this.events[i].marker.setMap(this.map);
-          // this.events[i].marker.show;
-          this.mapMarkers.push(marker);
-          bounds.extend( marker.getPosition() );
-        }
-      }
+      this.mapMarkers = newMarkers;
 
       this.map.fitBounds(bounds);
     },
   },
+  beforeMount() {
+    this.fitBounds();
+  },
   mounted() {
+    console.log("MOUNTED");
     const element = document.getElementById('mapview')
     const mapCentre = new google.maps.LatLng(41.290851, -101.827431)
     const options = {

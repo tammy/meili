@@ -71,8 +71,11 @@ export default {
         }
 
         this.event.marker = place.geometry.location;
-        // this.event.coordinateLat = place.geometry.location.lat;
-        // this.event.coordinateLon = place.geometry.location.lng;
+        // console.log(place.geometry.location);
+        // console.log(place.geometry.location.lat());
+        // console.log(place.geometry.location.lng());
+        this.event.coordinateLat = place.geometry.location.lat();
+        this.event.coordinateLon = place.geometry.location.lng();
         // this.event.marker = new google.maps.Marker({
         //   position: place.geometry.location,
         //   // map: this.map,

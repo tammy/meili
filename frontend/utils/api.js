@@ -13,8 +13,13 @@ export function getUser(userId) {
   // and the frontend doesn't have access to it
 }
 
-export function addCollaborator(userId) {
+export function addCollaborator(email) {
   // TODO: doesn't need to use userId, could be email or some other method
+}
+
+export function getCollaborators(tripId) {
+  const url = `${API_URL}/users/${tripId}`;
+  return axios.get(url).then(response => response.data);
 }
 
 /**

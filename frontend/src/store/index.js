@@ -34,8 +34,8 @@ export function createStore() {
         setUser: (state, user) => {
           state.user = user;
         },
-        addCollaborator: (state, user) => {
-          state.trip.collaborators.unshift(user);
+        setCollaborators: (state, users) => {
+          state.trip.collaborators = users;
         },
         updateOnlineUsers: (state, users) => {
             state.onlineUsers = users;
@@ -109,6 +109,18 @@ export function createStore() {
         },
         setFocusedEvent: (store, event) => {
           store.commit('setFocusedEvent', event);
+        },
+        addCollaborator: (store, email) => {
+          api.addCollaborator(email);
+        },
+        getCollaborators: (store) => {
+          api.getCollaborators(store.state.trip.id).then((users) => {
+            store.commit('setCollaborators', users);
+          });
+        },
+        /* Events */
+        saveEvent: (store, event) => {
+          api.updateEvent(store.state.trip.id, event);
         },
         /* Events */
         socket_connect: (store, data) => {

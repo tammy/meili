@@ -36,7 +36,7 @@ module.exports.withCardsFromTrip = (tripId, callback) => {
     models.Card.findAll({
         where: {
             trip: tripId,
-        }, 
+        },
         order: ['order'],
         raw: true
     }).then((cards) => {
@@ -57,7 +57,7 @@ module.exports.updateCard = (tripId, newCard, callback) => {
         // Update cached value
         for (let i = 0; i < trip.length; i++) {
             console.log('[storage.js] ' + trip[i].id);
-            if (trip[i].id = newCard.id) {
+            if (newCard.id && trip[i].id == newCard.id) {
                 console.log('[storage.js] Mutating cached trip list with update for card ' + trip[i].id);
                 trip[i] = newCard;
                 // TODO: maybe consider passing in a Set instead of a list since the callback passes back a Set
@@ -66,7 +66,7 @@ module.exports.updateCard = (tripId, newCard, callback) => {
             }
         }
         callback(newCard);
-    }); 
+    });
 }
 
 module.exports.addCard = (tripId, newCard, callback) => {
@@ -77,7 +77,7 @@ module.exports.addCard = (tripId, newCard, callback) => {
         models.Card.findAll({
             where: {
                 id: newCard.id,
-            }, 
+            },
             raw: true,
         }).then((cards) => {
             callback(cards);

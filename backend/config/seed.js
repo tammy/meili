@@ -64,6 +64,7 @@ models.sequelize.sync({force: true}).then(function() {
   // Seed thread
   models.Thread.create({
     id: "5b2ab182-cf6a-4f97-ba81-630f29df375d",
+    cardId: "48df18dc-c32d-4db0-827c-608dc42c22ea",
     resolved: false,
     topic: "I AM ALERGIC TO FISH!",
     options: "['Go somewhere else', 'Sucks. You gonna starve.']",
@@ -72,6 +73,7 @@ models.sequelize.sync({force: true}).then(function() {
   });
   models.Thread.create({
     id: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
+    cardId: "48df18dc-c32d-4db0-827c-608dc42c22ea",
     resolved: false,
     topic: "I WANT TO BE HEARD! THAT IS ALL!",
     replies: "[4ae498bb-fd2a-4e45-acfe-d22bfee7c415]"
@@ -80,15 +82,17 @@ models.sequelize.sync({force: true}).then(function() {
   // Seed message
   models.Message.create({
     id: "d3f82eb4-44f5-4969-9319-029eb6444e82",
+    threadId: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
     owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
     content: "This is a message!"
   });
   models.Message.create({
     id: "4ae498bb-fd2a-4e45-acfe-d22bfee7c415",
+    threadId: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
     owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
     content: "This is another message!"
   });
 });
 
 // FIXME: Hack because I spent over an hour on this and I'm sick of it.
-setTimeout(() => process.exit(), 1000);
+setTimeout(() => process.exit(), 5000);

@@ -64,17 +64,18 @@ module.exports.Card = sequelize.define('card', {
 // Thread
 module.exports.Thread = sequelize.define('thread', {
   id: { type: DataTypes.UUID, primaryKey: true },
+  cardId: { type: DataTypes.UUID, primaryKey: true },
   resolved: { type: DataTypes.BOOLEAN },
   topic: { type: DataTypes.TEXT },
   options: { type: DataTypes.TEXT },
-  answers: { type: DataTypes.TEXT },
-  replies: { type: DataTypes.TEXT }
+  answers: { type: DataTypes.TEXT }
 })
-
 
 // Message
 module.exports.Message = sequelize.define('message', {
   id: { type: DataTypes.UUID, primaryKey: true },
+  threadId: { type: DataTypes.UUID, primaryKey: true },
+  order: { type: DataTypes.INTEGER },
   owner:  { type: DataTypes.UUID },
   content: { type: DataTypes.TEXT }
 })

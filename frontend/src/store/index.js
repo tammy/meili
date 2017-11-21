@@ -13,7 +13,6 @@ Vue.use(Vuex);
 export function createStore() {
     return new Vuex.Store({
       state: {
-        updateHack: false,
         user: {},
         trip: {   // TODO: do not hardcode this, get this from the API
           name: 'Graduation - Paris, France',
@@ -74,7 +73,6 @@ export function createStore() {
           } else {
             state.trip.events.unshift(newCard);
           }
-          state.updateHack = !state.updateHack;
         }
       },
       actions: {      // run async

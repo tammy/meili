@@ -50,7 +50,6 @@ export default {
       return listOfUserData;
     },
     collaborators() {
-      this.$store.dispatch('getCollaborators');
       return this.$store.state.trip.collaborators;
     },
   },
@@ -61,6 +60,9 @@ export default {
     addCollaborator() {
       this.$store.dispatch('addCollaborator', this.email);
     },
+  },
+  mounted() {
+    this.$store.dispatch('getCollaborators');
   },
 };
 </script>

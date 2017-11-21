@@ -84,6 +84,24 @@ io.on('connection', (socket) => {
         });
     });
 
+    socket.on('addMessage', data => {
+        const threadID = data['threadID'];
+        const tripID = data['tripID'];
+        const newMessage = data['message'];
+        storage.addMessage(threadID, newMessage, (cardId) => {
+            socket.to(tripID).emit('addMessage', cardId);
+        });
+    });
+
+    socket.on('addThread', data => {
+        const cardID = data['eventID'];
+        const tripID = data['tripID'];
+        const newThread = data['thread'];
+        storage.addThread(cardID, newThread, (cardId) => {
+            socket.to(tripID).emit('addMessage', cardId);
+        });
+    });
+
     const handleDisconnect = () => {
         // FIXME: ugly hack: we have to double check whether the user is in the list because we're
         // storing the socket as part of the app state so if the user leaves the site, disconnect will

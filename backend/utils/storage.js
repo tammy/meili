@@ -91,6 +91,28 @@ module.exports.addCard = (tripId, newCard, callback) => {
     });
 }
 
+module.exports.addThread = (cardId, newThread, callback) => {
+  models.Thread.create(newThread).then((createdThread) => {
+    callback(cardId);
+  });
+}
+
+module.exports.addMessage = (threadId, newMessage, callback) => {
+  models.Message.findAll({where: {threadId: threadId}}).then((messages) => {
+      newMessage['order'] = messages.length + 1;
+      console.log("Adding message");
+      console.log(newMessage);
+      models.Message.create(newMessage).then((msg) => {
+          models.Thread.find({
+              where: {id: threadId},
+              raw: true
+          }).then((thread) => {
+            callback(thread.cardId);
+          });
+      });
+  })
+}
+
 module.exports.getAllCards = (callback) => {
     models.Card.findAll({
         order: ['order'],

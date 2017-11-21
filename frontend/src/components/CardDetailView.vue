@@ -2,10 +2,10 @@
 <template>
   <div>
     <div class="panel panel-detailed">
-      <div class="panel-heading"> 
-        <h3 class="panel-title"> 
+      <div class="panel-heading">
+        <h3 class="panel-title">
           <input type="text" class="textbox text-center" v-model="event.title" placeholder="Event">
-            <button class="glyphicon glyphicon-search search" 
+            <button class="glyphicon glyphicon-search search"
               v-show="event.focused && event.name"
               v-on:click="search()"
               ></button>
@@ -21,7 +21,7 @@
           <div class="glyphicon glyphicon-time"></div>
           <input class="textbox" v-model="event.startTime" placeholder="Time"/>
         </p>
-        <p class="field"> 
+        <p class="field">
           <div class="glyphicon glyphicon-pencil"></div>
           <input type="text" class="textbox" v-model="event.description" placeholder="Notes"></input>
         </p>
@@ -41,7 +41,12 @@ export default {
   components: { Thread },
   computed: {
     event() {
-      return this.$store.getters.getFocusedEvent;
+      // Sometimes this returns null. Didnt bother digging into it.
+      const ev = this.$store.getters.getFocusedEvent;
+      if (!ev) {
+        return {};
+      }
+      return ev;
     },
   },
   methods: {
@@ -109,8 +114,8 @@ input:focus {
 
 .search {
   padding: 0;
-  display: inline-block; 
-  float: right; 
+  display: inline-block;
+  float: right;
   margin: 0;
   border-width: 0;
   background-color: transparent;

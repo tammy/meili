@@ -6,6 +6,22 @@ const VERSION = 'v1';
 const API_URL = `${BASE_URL}/api/${VERSION}`;
 
 /**
+ * Messages
+ */
+ export function getMessages(threadID) {
+  const url = `${API_URL}/messages/${threadID}`;
+  return axios.get(url).then(response => response.data);
+ }
+
+/**
+ * Threads
+ */
+ export function getThreads(eventID) {
+  const url = `${API_URL}/threads/${eventID}`;
+  return axios.get(url).then(response => response.data);
+ }
+
+/**
  * User
  */
 export function getUser(userId) {

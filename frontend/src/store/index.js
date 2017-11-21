@@ -27,11 +27,8 @@ export function createStore() {
         lastEditLocal: true,
         onlineUsers: {}, // map of user IDs to their details
         focusedEvent: {}, // Didn't know which one to keep so keeping both for now
-        threads: [    // TODO: move this to the appropriate place
-            { id: 'adbv', title: 'hello', content: 'world' },
-            { id: 'ahhwef', title: 'bonjour', content: 'le monde' },
-            { id: 'asgfasgh', title: 'nihao', content: 'shijie' },
-        ],    
+        threads: [],
+        messages: {},
         focusedEventIndex: 0,
       },
       getters: {
@@ -42,8 +39,39 @@ export function createStore() {
           // TODO: get threads based on eventID
           return state.threads;
         },
+        getMessages: (state) => (threadID) => {
+          // TODO: get threads based on eventID
+          if (state.messages[threadID]) {
+            return state.messages[threadID].sort((a, b) => {
+              return a.order > b.order ? 1 : -1;
+            })
+          };
+          return [];
+        },
       },
       mutations: {    // run synchronously
+        addMessageToThread: (state, [message, thread]) => {
+          var newMessage = {id: uuidv4(), threadId: thread.id, owner: localStorage.id_token, content: message, new: true};
+          if (state.messages[thread.id] === undefined) {
+            state.messages[thread.id] = [];
+          }
+          state.messages[thread.id].push(newMessage);
+        },
+        addNewThreadToEvent: (state, [threadTopic, threadContent, eventID]) => {
+          var newThread = {id: uuidv4(), cardId: eventID, content: threadContent, topic: threadTopic, new: true};
+          state.threads.push(newThread);
+        },
+        setMessages: (state, messages) => {
+          state.messages = messages;
+        },
+        addMessageForThread: (state, [messages, threadID]) => {
+          Vue.set(state.messages, threadID, messages);
+          console.log(state.messages);
+          console.log();
+        },
+        setThreads: (state, threads) => {
+          state.threads = threads;
+        },
         /* User */
         setUser: (state, user) => {
           state.user = user;
@@ -103,6 +131,17 @@ export function createStore() {
         },
       },
       actions: {      // run async
+        getThreads: (store, eventID) => {
+          api.getThreads(eventID).then(threads => {
+            store.commit('setMessages', {});
+            threads.forEach(thread => {
+              api.getMessages(thread.id).then(messages => {
+                return store.commit('addMessageForThread', [messages, thread.id]);
+              });
+            });
+            return store.commit('setThreads', threads);
+          });
+        },
         /* User */
         getUser: (store, userId) => {
           api.getUser(userId).then((user) => {
@@ -160,6 +199,10 @@ export function createStore() {
             // keep an eye on it.
             // store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
+        },
+        socket_addMessage: (store, cardId) => {
+            console.log('updating threads');
+            store.dispatch('getThreads', cardId);
         }
       },
     });

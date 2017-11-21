@@ -73,6 +73,7 @@ module.exports.Thread = sequelize.define('thread', {
   id: { type: DataTypes.UUID, primaryKey: true },
   cardId: { type: DataTypes.UUID, primaryKey: true },
   resolved: { type: DataTypes.BOOLEAN },
+  content: { type: DataTypes.STRING },
   topic: { type: DataTypes.TEXT },
   options: { type: DataTypes.TEXT },
   answers: { type: DataTypes.TEXT }

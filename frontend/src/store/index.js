@@ -19,6 +19,7 @@ export function createStore() {
           id: '',
           picture: '',
           events: [],
+          markers: [],
           collaborators: [],
           oldEvents: [],
         },
@@ -110,7 +111,18 @@ export function createStore() {
         },
         removeEvent: (state, event) => {
           const index = state.trip.events.indexOf(event);
-          state.trip.events.splice(event, 1);
+          if (index !== -1) {
+            state.trip.events.splice(event, 1);
+          }
+        },
+        addMarker: (state, marker) => {
+          state.trip.markers.push(marker);
+        },
+        removeMarker: (state, marker) => {
+          const index = state.trip.markers.indexOf(marker);
+          if (index !== -1) {
+            state.trip.markers.splice(marker, 1);
+          }
         },
         setLocalEdit: (state, localEdit) => {
           state.lastEditLocal = localEdit;

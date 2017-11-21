@@ -114,6 +114,17 @@ export default {
   font-size: 10pt;
 }
 
+.btn-reply:hover {
+  float: right;
+  padding: 3px 10px;
+  margin-top: 0px;
+  margin-right: -18px;
+  color: white;
+  border-color: #31708f;
+  font-size: 10pt;
+  background-color: #31708f;
+}
+
 .create-thread {
   background: transparent;
   border: 1px solid green;
@@ -125,13 +136,15 @@ export default {
 }
 
 .hidden-hover {
-  border: none;
-  color: transparent;
+  background-color: white;
+  color: green;
+  border: 1px solid green;
 }
 
 .hidden-hover:hover {
-  color: green;
+  color: white;
   border: 1px solid green;
+  background-color: green;
 }
 
 .textbox {
@@ -139,7 +152,7 @@ export default {
   padding-right: 5px;
   margin-bottom: 5px;
   position: relative;
-  width: calc(100% - 40px);
+  width: 100%;
   font-size: 18px;
 }
 </style>

@@ -51,7 +51,6 @@ export function createStore() {
           state.focusedEvent = event;
         },
         addEvent: (state) => {
-          // const newTripEvent = api.createEvent(state.trip.id);
           const newTripEvent = {'id': uuidv4(), 'trip': state.trip.id, 'new':true};
           state.trip.events.unshift(newTripEvent);
         },

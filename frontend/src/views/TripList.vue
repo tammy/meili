@@ -46,7 +46,6 @@ export default {
   },
   computed: {
     tripsList() {
-      this.$store.dispatch('getTripsList');
       return this.$store.state.tripsList;
     },
   },
@@ -70,6 +69,9 @@ export default {
     showNewTripModal() {
       this.$modal.show('new-trip');
     },
+  },
+  mounted() {
+    this.$store.dispatch('getTripsList');
   },
 };
 </script>

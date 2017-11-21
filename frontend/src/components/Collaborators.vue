@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       email: null,
-      success: true,
+      success: false,
     };
   },
   computed: {
@@ -54,7 +54,6 @@ export default {
       return listOfUserData;
     },
     collaborators() {
-      this.$store.dispatch('getCollaborators');
       return this.$store.state.trip.collaborators;
     },
   },
@@ -67,6 +66,9 @@ export default {
       // TODO: watch for the success of this call
       // this.success = true;
     },
+  },
+  mounted() {
+    this.$store.dispatch('getCollaborators');
   },
 };
 </script>

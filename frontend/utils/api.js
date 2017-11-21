@@ -21,7 +21,7 @@ export function addCollaborator(userId) {
  * Trip
  */
 
-export function getTripList(userId) {
+export function getTripList() {
   const url = `${API_URL}/trips`;
   return axios.get(url).then(response => response.data);
 }

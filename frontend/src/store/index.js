@@ -21,6 +21,7 @@ export function createStore() {
           collaborators: [],
           oldEvents: [],
         },
+        tripsList: [],
         // lastEditLocal is used keep track when we should push changes to server.
         // Avoids infinite loops.
         lastEditLocal: true,
@@ -48,6 +49,9 @@ export function createStore() {
         },
         setTripName: (state, name) => {
           state.trip.name = name;
+        },
+        setTripsList: (state, tripsList) => {
+          state.tripsList = tripsList;
         },
         /* Events */
         setFocusedEvent: (state, event) => {
@@ -89,9 +93,9 @@ export function createStore() {
             return store.commit('setUser', user);
           });
         },
-        getTripList: (store) => {
-          api.getTripList(userId).then((tripsList) => {
-            return tripsList;   // TODO: determine whether this should be state or local var
+        getTripsList: (store, tripsList) => {
+          api.getTripList().then((tripsList) => {
+            return store.commit('setTripsList', tripsList);
           });
         },
         saveTrip: (store) => {

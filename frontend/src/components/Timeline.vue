@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="margin-box">
     <div class="align-left">
       <button type="button" class="btn btn-add" v-on:click="add()">Add Event</button>
     </div>
-    <div class="timeline timeline-container">
+    <div class="timeline">
       <div class="timeline-container">
         <ul>
           <draggable v-model="trip.events" :options="{handle:'.handle'}">
@@ -50,11 +50,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.margin-box {
+  margin-bottom: 20px;
+}
+
 .timeline {
   text-align: left;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px 0 10px 30px;
+  margin-bottom: 15px;
   max-height: calc(100vh - 250px);
 }
 

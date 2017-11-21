@@ -59,7 +59,7 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px 0 30px 25px;
-  max-height: calc(100vh - 200px);
+  max-height: 100%;
   margin-bottom: 15px;
 }
 

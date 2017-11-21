@@ -183,12 +183,6 @@ export function createStore() {
             });
           })
         },
-        saveTrip: (store) => {
-          for ( let i = 0; i < store.state.trip.events.length; i += 1 ) {
-            store.state.trip.events[i].order = i;     // TODO: remove this hack
-          }
-          api.updateTrip(store.state.trip);
-        },
         /* Trip Events */
         removeEvent: (store, event) => {
           store.commit('removeEvent', event);

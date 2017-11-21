@@ -87,7 +87,7 @@ models.sequelize.sync({force: true}).then(function() {
   // Seed card for south bay trip
   models.Card.create({
     id: "bd6425fa-c8e6-4401-80ea-83614021f2d1",
-	trip: "0049afbc-24fc-457d-8aa8-905c24dda41d",
+	  trip: "0049afbc-24fc-457d-8aa8-905c24dda41d",
     title: "Googleplex",
     description: "A bunch of building. With Android statues!",
     location: "1 Ampitheatre Dr.",
@@ -103,6 +103,7 @@ models.sequelize.sync({force: true}).then(function() {
     cardId: "48df18dc-c32d-4db0-827c-608dc42c22ea",
     resolved: false,
     topic: "I AM ALERGIC TO FISH!",
+    content: "Let's talk about this.",
     options: "['Go somewhere else', 'Sucks. You gonna starve.']",
     answers: "[2, 34]",
     replies: "['d3f82eb4-44f5-4969-9319-029eb6444e82']"

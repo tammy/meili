@@ -4,24 +4,60 @@ var models = require('../models');
 models.sequelize.sync({force: true}).then(function() {
   // Seed User
   models.User.create({
-    id: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    id: "1161676737297024",
     name: "Paul",
     email: "pbardea@gmail.com",
-    profilePicture: "http://www.example.com"
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "abc",
+    name: "Ginko",
+    email: "ginko@gmail.com",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "846707232167446",
+    name: "Justin Li",
+    email: "justin@gmail.com",
+    picture: "http://www.example.com"
   });
 
   models.Trip.create({
     id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
-    owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    owner: "1161676737297024",
     name: "Paris - Grad Trip '19!'",
-    description: "La vie est belle."
+    description: "La vie est belle.",
+    picture: "https://www.everettpotter.com/wp-content/uploads/2015/05/header.jpg"
   });
 
   models.Trip.create({
     id: "0049afbc-24fc-457d-8aa8-905c24dda41d",
-    owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    owner: "1161676737297024",
     name: "South Bay Vacay",
     description: "Zzzz"
+  });
+
+  models.UserTrip.create({
+    userId: "1161676737297024",
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "1161676737297024",
+    tripId: "0049afbc-24fc-457d-8aa8-905c24dda41d",
+  });
+  models.UserTrip.create({
+    userId: "846707232167446",
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "846707232167446",
+    tripId: "0049afbc-24fc-457d-8aa8-905c24dda41d",
+  });
+  models.UserTrip.create({
+    userId: "abc",
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
 
   // Seed card for paris trip
@@ -30,22 +66,22 @@ models.sequelize.sync({force: true}).then(function() {
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Eiffel Tower",
     description: "The brilliant tower!",
-    location: "Place Charles de Gaulle, 75008 Paris, France", 
+    location: "Place Charles de Gaulle, 75008 Paris, France",
     duration: 20.0,
     order: 0,
     startTime: Date.now(),
-    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+    creator: "1161676737297024"
   });
   models.Card.create({
     id: "48df18dc-c32d-4db0-827c-608dc42c22ea",
 	trip: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
     title: "Arc de Triomphe",
     description: "Beautiful arch in the middle of a great roundabout. About 400 steps to the top.",
-    location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", 
+    location: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
     duration: 20.0,
     order: 0,
     startTime: Date.now(),
-    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+    creator: "1161676737297024"
   })
 
   // Seed card for south bay trip
@@ -54,11 +90,11 @@ models.sequelize.sync({force: true}).then(function() {
 	trip: "0049afbc-24fc-457d-8aa8-905c24dda41d",
     title: "Googleplex",
     description: "A bunch of building. With Android statues!",
-    location: "1 Ampitheatre Dr.", 
+    location: "1 Ampitheatre Dr.",
     duration: 20.0,
     order: 0,
     startTime: Date.now(),
-    creator: "a1d2753b-2964-4944-ab03-e6e5c2d6e336"
+    creator: "1161676737297024"
   })
 
   // Seed thread
@@ -83,13 +119,13 @@ models.sequelize.sync({force: true}).then(function() {
   models.Message.create({
     id: "d3f82eb4-44f5-4969-9319-029eb6444e82",
     threadId: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
-    owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    owner: "1161676737297024",
     content: "This is a message!"
   });
   models.Message.create({
     id: "4ae498bb-fd2a-4e45-acfe-d22bfee7c415",
     threadId: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
-    owner: "a1d2753b-2964-4944-ab03-e6e5c2d6e336",
+    owner: "1161676737297024",
     content: "This is another message!"
   });
 });

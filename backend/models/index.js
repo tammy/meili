@@ -29,12 +29,13 @@ module.exports.User = sequelize.define('user', {
 // Trip
 module.exports.Trip = sequelize.define('trip', {
   id: { type: DataTypes.UUID, primaryKey: true  },
-  owner: { type: DataTypes.STRING  },
+  owner: { type: DataTypes.STRING  }, // not used right now, but concept makes sense so leaving it
   name: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
   picture: { type: DataTypes.STRING }
 })
 
+// TODO: Eventually want to add role of user (readonly, etc)
 module.exports.UserTrip = sequelize.define('userTrip', {
   userId: { type: DataTypes.STRING, primaryKey: true  },
   tripId: { type: DataTypes.UUID, primaryKey: true },

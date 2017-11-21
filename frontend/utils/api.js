@@ -30,7 +30,7 @@ export function getUser(userId) {
 }
 
 export function addCollaborator(tripId, email) {
-  const url = `${API_URL}/users/${tripId}/${email}`;
+  const url = `${API_URL}/users/${tripId}/email/${email}`;
   return axios.put(url).then(response => response.status);
 }
 
@@ -51,11 +51,11 @@ export function getTripList() {
 
 export function createTrip(userId, newTrip) {
   const url = `${API_URL}/trips`;
-  const data = JSON.stringify({
+  const data = {
     owner: localStorage.id_token || '',
     name: newTrip.name || '',
     description: newTrip.description || '',
-  });
+  };
 
-  return axios.post(url, data).then(response => response.data);
+  return axios.post(url, {trip: data}).then(response => response.data);
 }

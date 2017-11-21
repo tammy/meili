@@ -6,8 +6,10 @@
       </div>
       <div class="trip-details">
         <timeline :trip="trip" class="col-sm-5 timeline"></timeline>
-        <div class="col-sm-7 right-pane">
+        <div class="col-sm-7 map-pane">
           <map-view></map-view>
+        </div>
+        <div class="col-sm-7 right-pane">
           <card-detail-view></card-detail-view>
         </div>
       </div>
@@ -78,6 +80,14 @@ export default {
   float: left;
   padding-left: 20px;
   width: calc(100% - 50px);
+}
+
+.map-pane {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  width: calc(100% - 630px);
+  margin-left: 30px;
+  padding: 10px 35px;
+  margin-bottom: 10px;
 }
 
 .right-pane {

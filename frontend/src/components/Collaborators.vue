@@ -27,9 +27,6 @@
 
         <input type="email" v-model="email" placeholder="name@domain.com"></input>
         <button class="btn btn-success" v-on:click="addCollaborator()">Add</button>
-        <div class="alert alert-success" v-if="success">
-          <strong>Success!</strong> Collaborator {{email}} has been added.
-        </div>
       </div>
     </modal>
   </div>
@@ -43,7 +40,6 @@ export default {
   data() {
     return {
       email: null,
-      success: true,
     };
   },
   computed: {
@@ -54,7 +50,6 @@ export default {
       return listOfUserData;
     },
     collaborators() {
-      this.$store.dispatch('getCollaborators');
       return this.$store.state.trip.collaborators;
     },
   },
@@ -64,9 +59,10 @@ export default {
     },
     addCollaborator() {
       this.$store.dispatch('addCollaborator', this.email);
-      // TODO: watch for the success of this call
-      // this.success = true;
     },
+  },
+  mounted() {
+    this.$store.dispatch('getCollaborators');
   },
 };
 </script>

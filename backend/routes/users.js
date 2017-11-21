@@ -42,6 +42,25 @@ router.put('/:tripId/:userId', (req, res) => {
   });
 });
 
+// Add a user email to a given trip
+router.put('/:tripId/email/:userEmail', (req, res) => {
+  models.User.find({
+    where: {email: req.params.userEmail},
+    raw: true
+  }).then(user => {
+    if (!user) {
+      res.status(404).send("User not found");
+    }
+    const newRelation = {
+      userId: user.id,
+      tripId: req.params.tripId
+    };
+    models.UserTrip.create(newRelation).then(() => {
+      res.status(200).send(`User ${req.params.userEmail} added to ${req.params.tripId} by email address.`)
+    });
+  })
+});
+
 // Remove a user from a given trip
 router.delete('/:tripId/:userId', (req, res) => {
   const newRelation = {
@@ -51,6 +70,25 @@ router.delete('/:tripId/:userId', (req, res) => {
   models.UserTrip.destroy({where: newRelation}).then(() => {
     res.status(200).send(`User ${req.params.userId} removed from ${req.params.tripId}`);
   });
+});
+
+// Remove a user email from a given trip
+router.delete('/:tripId/email/:userEmail', (req, res) => {
+  models.User.find({
+    where: {email: req.params.userEmail},
+    raw: true
+  }).then(user => {
+    if (!user) {
+      res.status(404).send("User not found");
+    }
+    const newRelation = {
+      userId: user.id,
+      tripId: req.params.tripId
+    };
+    models.UserTrip.destroy({where: newRelation}).then(() => {
+      res.status(200).send(`User ${req.params.userEmail} removed from ${req.params.tripId} by email address.`);
+    });
+  })
 });
 
 module.exports = router;

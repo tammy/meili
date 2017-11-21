@@ -7,6 +7,7 @@
       <div class="trip-details">
         <timeline :trip="trip" class="col-sm-5 timeline"></timeline>
         <div class="col-sm-7 right-pane">
+          <map-view></map-view>
           <card-detail-view></card-detail-view>
         </div>
       </div>
@@ -17,6 +18,7 @@
 import Timeline from '../components/Timeline';
 import CardDetailView from '../components/CardDetailView';
 import Collaborators from '../components/Collaborators';
+import MapView from '../components/MapView';
 
 import { getTripSocket } from '../../utils/socket';
 import { getUserName, getProfileThumbnailUrl } from '../../utils/auth';
@@ -27,6 +29,7 @@ export default {
     Timeline,
     CardDetailView,
     Collaborators,
+    MapView,
   },
   computed: {
     trip() {

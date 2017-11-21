@@ -15,7 +15,7 @@
       <div class="panel-body text-left">
         <p class="field">
           <div class="glyphicon glyphicon-pushpin"></div>
-          <input type="text" class="textbox" v-model="event.location" placeholder="Location"/>
+          <input id="autocomplete" type="text" class="textbox" v-model="event.location" placeholder="Location"/>
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-time"></div>
@@ -37,13 +37,50 @@ export default {
   name: 'card-detail-view',
   components: {
   },
+  data: function () {
+    return {
+      autocomplete: null,
+    }
+  },
   computed: {
+    markers() {
+      return this.$store.state.trip.markers;
+    },
     event() {
       return this.$store.state.focusedEvent;
     },
   },
   methods: {
     search() {},
+    save() {
+      // TODO: make this periodically save automatically
+      this.$store.dispatch('saveEvent', this.event);
+    },
+    onPlaceChanged() {
+      var place = this.autocomplete.getPlace();
+
+      if (place.geometry) {
+        this.event.location = place.formatted_address;
+        
+        if (this.event.marker) {
+          this.$store.commit('removeMarker', this.event.marker);
+          this.event.marker = null;
+        }
+
+        this.event.marker = place.geometry.location;
+        this.event.coordinateLat = place.geometry.location.lat();
+        this.event.coordinateLon = place.geometry.location.lng();
+
+        this.$store.commit('addMarker', this.event.marker);
+      }
+    },
+  },
+  mounted: function() {
+    this.autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */ (
+            document.getElementById('autocomplete')), {});
+
+    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
   },
 };
 </script>

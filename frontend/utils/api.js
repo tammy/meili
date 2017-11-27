@@ -44,14 +44,14 @@ export function getCollaborators(tripId) {
  */
 
 export function getTripList() {
-  const url = `${API_URL}/trips`;
+  const userId = localStorage.id_token;
+  const url = `${API_URL}/trips/${userId}`;
   return axios.get(url).then(response => response.data);
 }
 
 export function createTrip(userId, newTrip) {
   const url = `${API_URL}/trips`;
   const data = {
-    // owner: userId,
     owner: localStorage.id_token || '',
     name: newTrip.name || '',
     description: newTrip.description || '',
@@ -59,20 +59,3 @@ export function createTrip(userId, newTrip) {
 
   return axios.post(url, {trip: data}).then(response => response.data);
 }
-
-// TODO: convert to websocket event
-export function updateTrip(trip) { /* TODO */ }
-
-export function deleteTrip(tripId) { /* TODO */ }
-
- /**
- * Trip Events
- * TODO: convert all to websocket event
- */
-
-export function createEvent(tripId) {
-  const url = `${API_URL}/cards/${tripId}`;
-  return axios.post(url).then(response => response.data);
-}
-
-export function deleteEvent(card) { /* TODO */ }

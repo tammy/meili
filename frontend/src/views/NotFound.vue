@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="navbar-header">
-      <router-link class="navbar-brand" to="/">meili</router-link></a>
-    </div>
+    <app-nav></app-nav>
     <div class="content">
       <div><h1>meili</h1></div>
       <div class="not-found">Oops! This page doesn't exist. Head back <a src="/">home</a>.</div>
@@ -38,7 +36,6 @@ export default {
   top: 50%;
   left: 50%;
   background-color: #d63865;
-  /*border: 1px solid #bce8f1;*/
 }
 
 h1 {
@@ -49,7 +46,6 @@ h1 {
 .not-found {
   box-sizing: border-box;
   position: relative;
-  /* width: 13em;  - apply for fixed size */
   margin: 0.2em;
   padding: 0 15px 0 46px;
   border: none;
@@ -59,7 +55,7 @@ h1 {
   border-radius: 0.2em;
   font-size: 16px;
   color: #FFF;
-  /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+  font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;
   text-shadow: 0 -1px 0 #354C8C;
 }
 

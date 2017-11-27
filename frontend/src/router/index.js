@@ -5,6 +5,7 @@ import Login from '@/views/Login';
 import TripHome from '@/views/TripHome';
 import TripDetail from '@/views/TripDetail';
 import TripList from '@/views/TripList';
+import NotFound from '@/views/NotFound';
 
 Vue.use(Router);
 
@@ -23,6 +24,14 @@ export default new Router({
         { path: '', name: 'TripList', component: TripList },
         { path: ':id', name: 'TripDetail', component: TripDetail },
       ],
+    },
+    { 
+      path: '/404',
+      component: NotFound
+    },
+    { 
+      path: '/*',
+      redirect: '/404'
     },
   ],
 });

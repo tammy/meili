@@ -4,7 +4,7 @@
     <div class="navbar-header">
       <router-link class="navbar-brand" to="/">meili</router-link></a>
     </div>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" v-show="isLoggedIn()">
       <li><a> {{ name }} <img class="profile" :src="pictureUrl"></a>
         <!-- TODO: make this a dropdown -->
       </li>

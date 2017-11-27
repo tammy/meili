@@ -63,6 +63,7 @@ function configureUser(response) {
 export function logout() {
   // FIXME: logout isn't working so clear the tokens regardless of whether the callback is triggered
   clearTokens();
+  router.go('/');
   FB.logout(function(response) {
     console.log(response);
     clearTokens();

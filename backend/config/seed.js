@@ -5,8 +5,36 @@ models.sequelize.sync({force: true}).then(function() {
   // Seed User
   models.User.create({
     id: "1161676737297024",
-    name: "Paul",
+    name: "Paul Local",
     email: "pbardea@gmail.com",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "1184507718347259",
+    name: "Paul Prod",
+    email: "pbardea@gmail.com",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "10215703425365000",
+    name: "Yemin Prod",
+    email: "yemins@email.com",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "1860435200650659",
+    name: "Tammy Prod",
+    email: "hello@tammyliu.me",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "1824104227617090",
+    name: "Tammy Local",
+    email: "hello@tammyliu.me",
     picture: "http://www.example.com"
   });
 
@@ -39,17 +67,36 @@ models.sequelize.sync({force: true}).then(function() {
     description: "Zzzz"
   });
 
+  // Add Everyone to Paris Trip
   models.UserTrip.create({
-    userId: "1161676737297024",
+    userId: "1161676737297024", // Paul Local
     tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
+  models.UserTrip.create({
+    userId: "1184507718347259", // Paul Prod
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "1824104227617090", // Tammy Local
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "1860435200650659", // Tammy Prod
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "10215703425365000", // Yemin
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "846707232167446", // Justin
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+
+  // Add Paul to Cali
   models.UserTrip.create({
     userId: "1161676737297024",
     tripId: "0049afbc-24fc-457d-8aa8-905c24dda41d",
-  });
-  models.UserTrip.create({
-    userId: "846707232167446",
-    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
   models.UserTrip.create({
     userId: "846707232167446",

@@ -47,7 +47,14 @@ models.sequelize.sync({force: true}).then(function() {
 
   models.User.create({
     id: "846707232167446",
-    name: "Justin Li",
+    name: "Justin Local",
+    email: "justin@gmail.com",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
+    id: "848173762020793",
+    name: "Justin Prod",
     email: "justin@gmail.com",
     picture: "http://www.example.com"
   });

@@ -60,7 +60,7 @@ export default {
       this.$store.dispatch('createTrip', this.newTrip).then(
         (response) => {
           this.success = true;
-        }, 
+        },
         (error) => {
           this.error = true;
       });

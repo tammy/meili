@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var Sequelize = require('sequelize-cockroachdb');
 var models = require('../models');
+var users = require('../models/users');
 var uuidv4 = require('uuid/v4');
 var storage = require('../utils/storage');
 
@@ -56,11 +57,14 @@ router.put('/:tripId', (req, res) => {
 router.post('/', (req, res) => {
     var tripId = uuidv4();
     const newTrip = req.body.trip;
+    const ownerId = req.body.owner;
     newTrip.id = tripId;
 
     models.Trip.create(newTrip).then(() => {
-        models.Trip.findById(tripId).then((trip) => {
-            res.status(200).send(trip);
+        users.addUserToTripByUserId(tripId, ownerId, () => {
+            models.Trip.findById(tripId).then((trip) => {
+                res.status(200).send(trip);
+            });
         });
     });
 });

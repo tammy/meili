@@ -4,7 +4,7 @@ Travel planning app, to travel with friends without the headache of planning wit
 ## Dependencies
 1. Install `npm` and `nodemon` globally on your machine.
 2. Install `cockroachdb` from [here](https://www.cockroachlabs.com/docs/stable/install-cockroachdb.html) on your machine.
-3. To run tests install [bats](https://github.com/sstephenson/bats) and [jq](https://stedolan.github.io/jq/download/)
+3. To run tests install [bats](https://github.com/sstephenson/bats) and [jq](https://stedolan.github.io/jq/download/).
 
 ## Setup
 1. In the home directory, run `npm run setup`.

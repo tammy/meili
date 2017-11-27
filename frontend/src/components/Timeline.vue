@@ -38,9 +38,6 @@ export default {
       const strDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false });
       return strDate;
     },
-    reorder() {
-      this.$store.commit('saveTrip');
-    },
     add() {
       this.$store.commit('addEvent');
     },

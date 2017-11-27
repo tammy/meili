@@ -5,12 +5,12 @@
         <collaborators/>
       </div>
       <div class="trip-details">
-        <timeline :trip="trip" class="col-sm-5 timeline"></timeline>
-        <div class="col-sm-7 right-pane">
-          <div class="pane">
+        <timeline :trip="trip" class="col-sm-5 timeline-panel"></timeline>
+        <div class="col-sm-7 right-panel">
+          <div class="map-view">
             <map-view></map-view>
           </div>
-          <div class="pane">
+          <div class="detail-view">
             <card-detail-view></card-detail-view>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.timeline {
+.timeline-panel {
   width: 600px;
   box-shadow: 0 0 11px rgba(33,33,33,.2);
   overflow-y: hidden;
@@ -84,15 +84,21 @@ export default {
   width: calc(100% - 50px);
 }
 
-.right-pane {
+.right-panel {
   width: calc(100% - 630px);
   margin-left: 30px;
 }
 
-.pane {
+.detail-view {
   box-shadow: 0 0 11px rgba(33,33,33,.2);
   padding: 30px 35px;
   margin-bottom: 10px;
+}
+
+.map-view {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  margin-bottom: 20px;
+  margin-top: -10px;
 }
 
 .full-width {

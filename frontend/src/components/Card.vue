@@ -45,7 +45,7 @@ export default {
 .panel {
   border-radius: 0;
   border-color: #bce8f1;
-  width: 400px;
+  width: 92%;
   margin-bottom: 0px;
   display: inline-block;
   transition: box-shadow .3s;

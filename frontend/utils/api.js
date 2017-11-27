@@ -52,10 +52,12 @@ export function getTripList() {
 export function createTrip(userId, newTrip) {
   const url = `${API_URL}/trips`;
   const data = {
+    trip: {
+      name: newTrip.name || '',
+      description: newTrip.description || '',
+    },
     owner: localStorage.id_token || '',
-    name: newTrip.name || '',
-    description: newTrip.description || '',
   };
 
-  return axios.post(url, {trip: data}).then(response => response.data);
+  return axios.post(url, data).then(response => response.data);
 }

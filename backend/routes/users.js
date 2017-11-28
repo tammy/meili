@@ -61,7 +61,7 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
 
 // Add a user upon login
 router.post('/', (req, res) => {
-  const newUser = JSON.parse(req.body.user);
+  const newUser = req.body.user;
   models.User.find({
     where: {id: newUser.id},
     raw: true

@@ -1,4 +1,6 @@
 import Router from 'vue-router';
+import * as api from './api';
+
 
 window.fbAsyncInit = function() {
   FB.init({
@@ -43,6 +45,13 @@ function statusChangeCallback(response) {
     setTokens(response.authResponse);
     FB.api('/me', {fields: 'name,picture,email'}, function(response) {
       configureUser(response);
+      const userInfo = {
+        id: localStorage[ID_TOKEN_KEY],
+        email: localStorage[USER_EMAIL],
+        name: localStorage[USER_NAME],
+        picture: localStorage[PROFILE_THUMBNAIL],
+      };
+      api.updateUser(userInfo);
       router.go('/trip');
     });
   } else {

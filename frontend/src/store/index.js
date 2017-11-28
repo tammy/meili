@@ -1,5 +1,3 @@
-// TODO: This file has inconsistent indenting
-
 import io from 'socket.io-client';
 import Vue from 'vue';
 import Vuex from 'vuex';

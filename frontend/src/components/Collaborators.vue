@@ -55,14 +55,12 @@ export default {
   },
   methods: {
     showCollaboratorModal() {
+      this.$store.dispatch('getCollaborators');
       this.$modal.show('add-collaborator');
     },
     addCollaborator() {
       this.$store.dispatch('addCollaborator', this.email);
     },
-  },
-  mounted() {
-    this.$store.dispatch('getCollaborators');
   },
 };
 </script>

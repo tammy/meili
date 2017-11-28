@@ -46,10 +46,10 @@ function statusChangeCallback(response) {
     FB.api('/me', {fields: 'name,picture,email'}, function(response) {
       configureUser(response);
       const userInfo = {
-        id: localStorage[ID_TOKEN_KEY],
-        email: localStorage[USER_EMAIL],
-        name: localStorage[USER_NAME],
-        picture: localStorage[PROFILE_THUMBNAIL],
+        id: getIdToken(),
+        email: getUserEmail(),
+        name: getUserName(),
+        picture: getProfileThumbnailUrl(),
       };
       api.updateUser(userInfo).then(response => {
         if (response == 200) {

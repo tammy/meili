@@ -58,6 +58,15 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
   })
 });
 
+
+// Add a user upon login
+router.post('/', (req, res) => {
+    const newUser = JSON.parse(req.body.user);
+    models.User.create(newUser).then(user => {
+        res.status(200).send(user);
+    });
+});
+
 // Remove a user from a given trip
 router.delete('/:tripId/:userId', (req, res) => {
   const newRelation = {

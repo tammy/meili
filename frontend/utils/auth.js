@@ -66,7 +66,7 @@ function setTokens(authResponse) {
 }
 
 function configureUser(response) {
-  console.log(response);
+  console.log("Login response: " + response);
   localStorage.setItem(USER_NAME, response.name);
   localStorage.setItem(USER_EMAIL, response.email);
   localStorage.setItem(PROFILE_THUMBNAIL, response.picture.data.url);
@@ -77,7 +77,7 @@ export function logout() {
   clearTokens();
   router.go('/');
   FB.logout(function(response) {
-    console.log(response);
+    console.log("Lougout response: " + response);
     clearTokens();
     router.go('/');
   });

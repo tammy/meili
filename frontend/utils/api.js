@@ -55,6 +55,7 @@ export function createTrip(userId, newTrip) {
     trip: {
       name: newTrip.name || '',
       description: newTrip.description || '',
+      picture: newTrip.picture || '',
     },
     owner: localStorage.id_token || '',
   };

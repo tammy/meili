@@ -1,17 +1,24 @@
 <template>
-  <div class="container">
-    <div class="content">
-      <div><h1>meili</h1></div>
-      <button class="btn-login" @click="handleLogin()">Login with Facebook</button>
+  <background-slideshow>
+    <div class="container">
+      <div class="content">
+        <div><h1>meili</h1></div>
+        <div class="tagline"><p>Plan your adventure <em>together</em>.</p></div>
+        <button class="btn-login" @click="handleLogin()">Login with Facebook</button>
+      </div>
     </div>
-  </div>
+  </background-slideshow>
 </template>
 
 <script>
 import { isLoggedIn, login } from '../../utils/auth';
+import BackgroundSlideshow from '../components/BackgroundSlideshow';
 
 export default {
   name: 'login',
+  components: {
+    BackgroundSlideshow,
+  },
   beforeRouteEnter(to, from, next) {
     if (isLoggedIn()) {
       next('/trips');
@@ -29,32 +36,48 @@ export default {
 
 <style scoped>
 .container {
-  background-color: transparent;
   position: relative;
 }
 
 .content {
   width: 500px;
   height: 300px;
-  padding: 50px 0;
+  padding: 0px 0;
   margin: 30vh 0 0 -250px;
   position: absolute;
   top: 50%;
   left: 50%;
-  background-color: #d63865;
+  /* TODO: Figure out if we should use a background */
+  /*background-color: rgba(214, 56, 101, 0.8);*/
   /*border: 1px solid #bce8f1;*/
 }
 
-h1 {
-  font-size: 80px;
+h1, p {
   color: white;
+}
+
+h1 {
+  font-size: 110px;
+  text-shadow: 3px 3px 5px rgba(0,0,0,0.7);
+}
+
+p {
+  font-size: 30px;
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
+}
+
+/* Space out children of .content except for the first element */
+.content > * {
+    margin-top: 15px;
+}
+.content > *:first-child {
+    margin-top: 0px;
 }
 
 .btn-login {
   box-sizing: border-box;
   position: relative;
   /* width: 13em;  - apply for fixed size */
-  margin: 0.2em;
   padding: 0 15px 0 46px;
   border: none;
   text-align: left;

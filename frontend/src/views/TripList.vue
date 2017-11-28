@@ -21,6 +21,7 @@
         <h4>New Trip</h4>
         <hr/>
         <input type="text" v-model="newTrip.name" placeholder="Trip name (ex. The best trip ever!)"></input>
+        <input type="text" v-model="newTrip.picture" placeholder="Photo URL (ex. http://www.photos.com/myphoto.jpg)"></input>
         <div class="col-xs-12 text-center" style="margin: 10px 0">
           <button class="btn btn-success" v-on:click="createTrip()">Create</button>
         </div>
@@ -79,7 +80,7 @@ export default {
 <style scoped>
 input {
   width: calc(100% - 20px);
-  margin: 10px 10px 0 10px;
+  margin: 10px 10px 30px 10px;
   border: none;
   border-bottom: 3px dashed #bce8f1;
   height: 34px;

@@ -1,4 +1,6 @@
 import Router from 'vue-router';
+import * as api from './api';
+
 
 window.fbAsyncInit = function() {
   FB.init({
@@ -23,7 +25,10 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 const TOKEN_EXPIRE = 'token_expire';
 const USER_NAME = 'user_name';
+const USER_EMAIL = 'user_email';
 const PROFILE_THUMBNAIL = 'profile_thumbnail';
+
+const FB_SCOPE = 'public_profile, email';
 
 var router = new Router({
    mode: 'history',
@@ -32,19 +37,28 @@ var router = new Router({
 export function login() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
-  }, {scope: 'public_profile'});
+  }, {scope: FB_SCOPE});
 }
 
 function statusChangeCallback(response) {
-  console.log("statusChangeCallback");
   if (response.status == 'connected') {
     setTokens(response.authResponse);
-    FB.api('/me', {fields: 'name,picture'}, function(response) {
+    FB.api('/me', {fields: 'name,picture,email'}, function(response) {
       configureUser(response);
-      router.go('/trip');
+      const userInfo = {
+        id: getIdToken(),
+        email: getUserEmail(),
+        name: getUserName(),
+        picture: getProfileThumbnailUrl(),
+      };
+      api.updateUser(userInfo).then(response => {
+        if (response == 200) {
+          router.go('/trip');
+        }
+      });
     });
   } else {
-    FB.login(statusChangeCallback, {scope: 'public_profile, email'});
+    FB.login(statusChangeCallback, {scope: FB_SCOPE});
   }
 }
 
@@ -55,8 +69,9 @@ function setTokens(authResponse) {
 }
 
 function configureUser(response) {
-  console.log('Successful login for: ' + response.name);
+  console.log("Login response: " + response);
   localStorage.setItem(USER_NAME, response.name);
+  localStorage.setItem(USER_EMAIL, response.email);
   localStorage.setItem(PROFILE_THUMBNAIL, response.picture.data.url);
 }
 
@@ -65,7 +80,7 @@ export function logout() {
   clearTokens();
   router.go('/');
   FB.logout(function(response) {
-    console.log(response);
+    console.log("Lougout response: " + response);
     clearTokens();
     router.go('/');
   });
@@ -81,6 +96,10 @@ export function getAccessToken() {
 
 export function getUserName() {
   return localStorage.getItem(USER_NAME);
+}
+
+export function getUserEmail() {
+  return localStorage.getItem(USER_EMAIL);
 }
 
 export function getProfileThumbnailUrl() {

@@ -58,6 +58,30 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
   })
 });
 
+
+// Add a user upon login
+router.post('/', (req, res) => {
+  const newUser = req.body.user;
+  models.User.find({
+    where: {id: newUser.id},
+    raw: true
+  }).then(user => {
+    if (user) {
+      models.User.update(newUser, {where: {id: newUser.id}} ).then(updatedUser => {
+        res.status(200).send(updatedUser);
+      }).catch(err => {
+        res.status(400).send(err);
+      });
+    } else {
+      models.User.create(newUser).then(createdUser => {
+        res.status(200).send(createdUser);
+      }).catch( err => {
+        res.status(400).send(err);
+      });
+    }
+  });
+});
+
 // Remove a user from a given trip
 router.delete('/:tripId/:userId', (req, res) => {
   const newRelation = {

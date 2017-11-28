@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
         // be called regardless of whether the user is actually on a trip page. Consider not storing
         // the socket as Vuex state data on the frontend.
         if (!pubSubReg.hasOwnProperty(trip) || !pubSubReg[trip].hasOwnProperty(userSocket)) {
-            console.log('User does not exist!');
+            console.log('[socket-disconnect] User does not exist!');
             return;
         }
         console.log('Disconnect user from pubsub: ' + userSocket);

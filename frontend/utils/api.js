@@ -29,6 +29,11 @@ export function getUser(userId) {
   // and the frontend doesn't have access to it
 }
 
+export function updateUser(userInfo) {
+  const url = `${API_URL}/users`;
+  return axios.post(url, {user: userInfo}).then(response => response.status);
+}
+
 export function addCollaborator(tripId, email) {
   const url = `${API_URL}/users/${tripId}/email/${email}`;
   return axios.put(url).then(response => response.status);

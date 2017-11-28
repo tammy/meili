@@ -51,8 +51,11 @@ function statusChangeCallback(response) {
         name: localStorage[USER_NAME],
         picture: localStorage[PROFILE_THUMBNAIL],
       };
-      api.updateUser(userInfo);
-      router.go('/trip');
+      api.updateUser(userInfo).then(response => {
+        if (response == 200) {
+          router.go('/trip');
+        }
+      });
     });
   } else {
     FB.login(statusChangeCallback, {scope: FB_SCOPE});

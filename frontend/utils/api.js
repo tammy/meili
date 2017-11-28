@@ -31,7 +31,7 @@ export function getUser(userId) {
 
 export function updateUser(userInfo) {
   const url = `${API_URL}/users`;
-  return axios.post(url, {user: userInfo}).then(response => response.data);
+  return axios.post(url, {user: userInfo}).then(response => response.status);
 }
 
 export function addCollaborator(tripId, email) {

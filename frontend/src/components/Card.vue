@@ -10,7 +10,7 @@
         </div>
         <div class="panel-body text-left" v-show="showDetails">
           <p v-show="tripEvent.location">{{ tripEvent.location }}</p>
-          <p v-show="tripEvent.startTime">{{ tripEvent.startTime }}</p>
+          <p v-show="tripEvent.startTime">{{ formatDatetime(tripEvent.startTime) }}</p>
           <p v-show="tripEvent.description">{{ tripEvent.description }}</p>
         </div>
       </div>
@@ -35,6 +35,11 @@ export default {
     focusEvent() {
       this.$store.dispatch('getThreads', this.tripEvent.id);
       this.$store.dispatch('setFocusedEvent', this.tripEvent);
+    },
+    formatDatetime(dateStr) {
+      const date = new Date(dateStr);
+      const strDate = date.toLocaleString().replace(',', '');
+      return strDate;
     },
   },
 };

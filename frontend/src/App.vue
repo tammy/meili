@@ -10,6 +10,9 @@ import AppNav from './components/AppNav';
 export default {
   name: 'app',
   components: { AppNav },
+  mounted() {
+    this.$store.dispatch('getUser');
+  },
 };
 </script>
 

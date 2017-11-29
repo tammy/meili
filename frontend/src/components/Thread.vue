@@ -21,15 +21,18 @@
     <!-- <div class="thread text-left">
       
     </div> -->
-    <button class="btn btn-success align-right" v-on:click="showCreateThreadModal()">Create Thread</button>
+    <button class="btn btn-success" v-on:click="showCreateThreadModal()">Create Thread</button>
 
     <!-- Create Thread Modal -->
-    <modal name="create-thread" height="auto">
+    <modal name="create-thread" height="auto" @closed="closeModal">
       <div style="padding: 20px 30px">
-        Title: <input type="text" placeholder="New thread topic" v-model="newThreadTopic"></input>      
+        <strong>TITLE:</strong> <input type="text" placeholder="New thread topic" v-model="newThreadTopic"></input>      
         <hr/>
-        <input type="text" placeholder="Contents" v-model="newThreadContent"></input>
-        <button class="btn btn-success" v-on:click="createThread()">Create</button>
+        <textarea class="modal-content" placeholder="CONTENT" v-model="newThreadContent">
+        </textarea>
+        <div style="text-align: center">
+          <button class="btn btn-success" v-on:click="createThread()">Create</button>
+        </div>
       </div>
     </modal>
   </div>
@@ -61,11 +64,12 @@ export default {
     },
   },
   methods: {
-    resolve(thread) { // TODO: this is currently not used, because I can't figure out a good place to put this
+    // TODO: this is currently not used, because I can't figure out a good place to put this
+    resolve(thread) {
       this.$store.commit('resolveThread', thread);
     },
     reply(thread) {
-      if( this.newMessages[thread.id] ) {
+      if (this.newMessages[thread.id]) {
         console.log(thread);
         this.$store.commit('addMessageToThread', [this.newMessages[thread.id], thread]);
         this.newMessages[thread.id] = "";
@@ -78,6 +82,9 @@ export default {
     },
     createThread() {
       this.$store.commit('addNewThreadToEvent', [this.newThreadTopic, this.newThreadContent, this.eventID]);
+      this.$modal.close('create-thread');
+    },
+    closeModal() {
       this.newThreadTopic = "";
       this.newThreadContent = "";
     },
@@ -91,8 +98,22 @@ input {
   width: calc(100% - 90px);
   margin: 10px 10px 0 10px;
   border: none;
-  /*border-bottom: 3px dashed #bce8f1;*/
   height: 34px;
+}
+
+textarea {
+  width: calc(100% - 30px);
+  height: 50px;
+  margin: 0;
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+  box-shadow: none; 
+  resize: none;
+}
+
+textarea:focus {
+  outline: none;
 }
 
 input:focus {

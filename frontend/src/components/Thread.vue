@@ -1,29 +1,37 @@
 <!-- HTML -->
 <template>
-  <div style="margin-top: 50px">
+  <div style="margin-top: 10px">
     <div v-for="thread in threads">
       <div class="thread text-left">
-        <h4 class="heading"> {{ thread.topic }}
-        <!-- <button class="btn btn-default btn-resolve" v-on:click="resolve(thread)">Resolve</button> -->
+        <h4> {{ thread.topic }}
+          <div>by {{ thread.author }} </div>
         </h4>
-        <div class="content">
-          {{ thread.content }}
-          <message :threadID="thread.id"></message>
-          <p class="field">
+        <div v-if="true">
+          <hr/>
+          <div class="content">
+            {{ thread.content }}
+            <message :threadID="thread.id"></message>
             <input type="text" class="textbox" placeholder="Reply..." v-model="newMessages[thread.id]"></input>
-          </p>
-          <button class="btn btn-default btn-reply" v-on:click="reply(thread)">Reply</button>
+            <button class="btn btn-default btn-reply" v-on:click="reply(thread)">Reply</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="thread text-left">
-      <input type="text" class="textbox" placeholder="New thread topic" v-model="newThreadTopic"></input>
-      <input type="text" class="textbox" placeholder="New thread contents" v-model="newThreadContent"></input>
-      <h4 class="heading create-thread hidden-hover" v-on:click="createThread()">
-        <div class="glyphicon glyphicon-plus"></div>
-        Create new thread
-      </h4>
-    </div>
+    <!-- Make this a modal? -->
+    <!-- <div class="thread text-left">
+      
+    </div> -->
+    <button class="btn btn-success align-right" v-on:click="showCreateThreadModal()">Create Thread</button>
+
+    <!-- Create Thread Modal -->
+    <modal name="create-thread" height="auto">
+      <div style="padding: 20px 30px">
+        Title: <input type="text" placeholder="New thread topic" v-model="newThreadTopic"></input>      
+        <hr/>
+        <input type="text" placeholder="Contents" v-model="newThreadContent"></input>
+        <button class="btn btn-success" v-on:click="createThread()">Create</button>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -53,13 +61,20 @@ export default {
     },
   },
   methods: {
-    resolve(thread) {
+    resolve(thread) { // TODO: this is currently not used, because I can't figure out a good place to put this
       this.$store.commit('resolveThread', thread);
     },
     reply(thread) {
-      console.log(thread);
-      this.$store.commit('addMessageToThread', [this.newMessages[thread.id], thread]);
-      this.newMessages[thread.id] = "";
+      if( this.newMessages[thread.id] ) {
+        console.log(thread);
+        this.$store.commit('addMessageToThread', [this.newMessages[thread.id], thread]);
+        this.newMessages[thread.id] = "";
+      } else {
+        // TODO: give empty warning
+      }
+    },
+    showCreateThreadModal() {
+      this.$modal.show('create-thread');
     },
     createThread() {
       this.$store.commit('addNewThreadToEvent', [this.newThreadTopic, this.newThreadContent, this.eventID]);
@@ -72,23 +87,36 @@ export default {
 
 <!-- CSS -->
 <style scoped>
+input {
+  width: calc(100% - 90px);
+  margin: 10px 10px 0 10px;
+  border: none;
+  /*border-bottom: 3px dashed #bce8f1;*/
+  height: 34px;
+}
+
+input:focus {
+  outline: none;
+}
+
+hr {
+  margin: 5px 0;
+}
+
 .thread {
   background-color: transparent;
   margin-bottom: 10px;
+  padding: 10px;
+  border: 1px dashed #bce8f1;
 }
 
-.heading {
-  padding: 10px 25px;
-  color: #31708f;
-  background-color: #bce8f1;
-  border: 0.5px solid #bce8f1;
+.thread > h4 {
+  padding: 10px;
   margin: 0;
-  cursor: pointer;
 }
 
 .content {
-  padding: 30px 25px;
-  border: 0.5px solid #bce8f1;
+  padding: 10px;
   border-top: none;
 }
 
@@ -104,7 +132,6 @@ export default {
 }
 
 .btn-reply {
-  float: right;
   padding: 3px 10px;
   margin-top: 0px;
   margin-right: -18px;
@@ -115,7 +142,6 @@ export default {
 }
 
 .btn-reply:hover {
-  float: right;
   padding: 3px 10px;
   margin-top: 0px;
   margin-right: -18px;
@@ -145,14 +171,5 @@ export default {
   color: green;
   border: 1px solid green;
   background-color: white;
-}
-
-.textbox {
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-bottom: 5px;
-  position: relative;
-  width: 100%;
-  font-size: 18px;
 }
 </style>

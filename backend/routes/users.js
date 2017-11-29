@@ -21,12 +21,14 @@ router.get('/:tripId', (req, res) => {
     raw: true
   }).then((users) => {
     models.UserTrip.findAll({
-      attributes: ['userId'],
+      attributes: ['userId', 'readOnly'],
       where: {tripId: req.params.tripId},
       raw: true
     }).then((userIds) => {
       uIds = userIds.map(u => u.userId);
+      uPerms = userIds.map(u => u.readOnly);
       const filtUsers = users.filter(u => uIds.indexOf(u.id) > -1);
+      filtUsers.forEach((u, idx) => u.readOnly = uPerms[idx]);
       res.status(200).send(filtUsers);
     });
   });
@@ -34,13 +36,17 @@ router.get('/:tripId', (req, res) => {
 
 // Add a user to a given trip
 router.put('/:tripId/:userId', (req, res) => {
-  users.addUserToTripByUserId(req.body.tripId, req.body.userId, () => {
-    res.status(200).send(`User ${req.body.userId} added to ${req.body.tripId}`);
+  users.addUserToTripByUserId(req.params.tripId, req.params.userId, req.body.readOnly, () => {
+    res.status(200).send(`User ${req.body.userId} added to ${req.body.tripId}.`);
   });
 });
 
 // Add a user email to a given trip
 router.put('/:tripId/email/:userEmail', (req, res) => {
+  var readOnlyPermission = false;
+  if (req.body.readOnly) {
+    readOnlyPermission = true;
+  }
   models.User.find({
     where: {email: req.params.userEmail},
     raw: true
@@ -50,11 +56,22 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
     }
     const newRelation = {
       userId: user.id,
-      tripId: req.params.tripId
+      tripId: req.params.tripId,
+      readOnly: readOnlyPermission
     };
-    models.UserTrip.create(newRelation).then(() => {
-      res.status(200).send(`User ${req.params.userEmail} added to ${req.params.tripId} by email address.`)
-    });
+    models.UserTrip.find({
+      where: {userId: user.id}
+    }).then(userInTripRelation => {
+      if (!userInTripRelation) {
+        models.UserTrip.create(newRelation).then(() => {
+          res.status(200).send(`User ${req.params.userEmail} added to ${req.params.tripId} by email address.`)
+        });
+      } else {
+        models.UserTrip.update(newRelation, {where: {userId: user.id}}).then(updatedRelation => {
+          res.status(200).send(`User permissios changed for ${req.params.userEmail} for trip ${req.params.tripId} to read only = ${readOnlyPermission}.`);
+        });
+      }
+    })
   })
 });
 

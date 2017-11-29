@@ -58,7 +58,7 @@ export default {
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
-  background-color: white;
+  background-color: transparent;
   color: #337ab7;
 }
 

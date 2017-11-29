@@ -67,18 +67,18 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
       readOnly: readOnlyPermission
     };
     models.UserTrip.find({
-      where: {userId: user.id}
+      where: {userId: user.id, tripId: req.params.tripId}
     }).then(userInTripRelation => {
-      if (!userInTripRelation) {
+      if (userInTripRelation) {
+        models.UserTrip.update(newRelation, {where: {userId: user.id, tripId: req.params.tripId}}).then(updatedRelation => {
+          res.status(200).send(`User permissions changed for ${req.params.userEmail} for trip ${req.params.tripId} to read only = ${readOnlyPermission}.`);
+        });
+      } else {
         models.UserTrip.create(newRelation).then(() => {
           res.status(200).send(`User ${req.params.userEmail} added to ${req.params.tripId} by email address.`)
         });
-      } else {
-        models.UserTrip.update(newRelation, {where: {userId: user.id}}).then(updatedRelation => {
-          res.status(200).send(`User permissios changed for ${req.params.userEmail} for trip ${req.params.tripId} to read only = ${readOnlyPermission}.`);
-        });
       }
-    })
+    });
   })
 });
 

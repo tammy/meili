@@ -58,7 +58,9 @@ export function createStore() {
             threadId: thread.id,
             owner: state.user.id,
             content: message,
-            new: true
+            new: true,
+            authorName: state.user.name,
+            authorPicture: state.user.picture,
           };
           if (state.messages[thread.id] === undefined) {
             state.messages[thread.id] = [];
@@ -72,7 +74,8 @@ export function createStore() {
             content: threadContent,
             topic: threadTopic,
             new: true,
-            author: state.user.id,
+            authorName: state.user.name,
+            authorPicture: state.user.picture,
           };
           state.threads.push(newThread);
         },

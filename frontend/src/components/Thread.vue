@@ -4,14 +4,19 @@
     <div v-for="thread in threads">
       <div class="thread text-left">
         <h4> {{ thread.topic }}
-          <div>by {{ thread.author }} </div>
+          <div style="float: right; margin-top: -5px;">
+            <div class="avatar">
+              <img :src="thread.authorPicture" :alt="thread.authorName" v-if="thread.authorPicture"></img>
+              <div class="glyphicon glyphicon-user" v-else></div>
+            </div>
+          </div>
         </h4>
         <div v-if="true">
           <hr/>
           <div class="content">
             {{ thread.content }}
             <message :threadID="thread.id"></message>
-            <input type="text" class="textbox" placeholder="Reply..." v-model="newMessages[thread.id]"></input>
+            <input type="text" class="textbox" placeholder="Reply..." style="margin-left: 0px;" v-model="newMessages[thread.id]"></input>
             <button class="btn btn-default btn-reply" v-on:click="reply(thread)">Reply</button>
           </div>
         </div>
@@ -74,15 +79,22 @@ export default {
         this.$store.commit('addMessageToThread', [this.newMessages[thread.id], thread]);
         this.newMessages[thread.id] = "";
       } else {
-        // TODO: give empty warning
+        console.log("Reply is empty!");
+        // TODO: give "text is empty" error
       }
     },
     showCreateThreadModal() {
       this.$modal.show('create-thread');
     },
     createThread() {
-      this.$store.commit('addNewThreadToEvent', [this.newThreadTopic, this.newThreadContent, this.eventID]);
-      this.$modal.close('create-thread');
+      if (this.newThreadTopic && this.newThreadContent) {
+        this.$store.commit('addNewThreadToEvent', [this.newThreadTopic, this.newThreadContent, this.eventID]);
+        this.$modal.hide('create-thread');
+        this.closeModal();  
+      } else {
+        console.log("Thread topic or content is empty!");
+        // TODO: give "text is empty" error
+      }
     },
     closeModal() {
       this.newThreadTopic = "";
@@ -94,6 +106,30 @@ export default {
 
 <!-- CSS -->
 <style scoped>
+
+.glyphicon-user {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px; 
+  margin: 3px 2px 0 4px;
+}
+
+.glyphicon {
+  color: #bce8f1;
+}
+
+img {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.avatar {
+  border: 2px solid #bce8f1;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 input {
   width: calc(100% - 90px);
   margin: 10px 10px 0 10px;

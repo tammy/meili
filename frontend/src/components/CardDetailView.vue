@@ -19,7 +19,8 @@
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-time"></div>
-          <input class="textbox" v-model="event.startTime" placeholder="Time"/>
+          <date-picker class="textbox" v-model="event.datetime" :config="config" placeholder="Date & Time" @dp-hide="commitDatetime">
+          </date-picker>
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-pencil"></div>
@@ -34,15 +35,22 @@
 
 <!-- JavaScript -->
 <script>
+import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+import DatePicker from 'vue-bootstrap-datetimepicker';
 import Thread from './Thread';
 
 export default {
   name: 'card-detail-view',
-  components: { Thread },
-  data: function () {
+  components: { Thread, DatePicker },
+  data() {
     return {
+      config: {
+        useCurrent: false,
+        showClear: true,
+        showClose: true,
+      },
       autocomplete: null,
-    }
+    };
   },
   computed: {
     markers() {
@@ -54,6 +62,8 @@ export default {
       if (!ev) {
         return {};
       }
+
+      ev.datetime = new Date(ev.startTime);
       return ev;
     },
   },
@@ -64,11 +74,11 @@ export default {
       this.$store.dispatch('saveEvent', this.event);
     },
     onPlaceChanged() {
-      var place = this.autocomplete.getPlace();
+      const place = this.autocomplete.getPlace();
 
       if (place.geometry) {
         this.event.location = place.formatted_address;
-        
+
         if (this.event.marker) {
           this.$store.commit('removeMarker', this.event.marker);
           this.event.marker = null;
@@ -80,6 +90,9 @@ export default {
 
         this.$store.commit('addMarker', this.event.marker);
       }
+    },
+    commitDatetime() {
+      this.event.startTime = this.event.datetime;
     },
   },
   mounted: function() {
@@ -139,9 +152,11 @@ input:focus {
   padding-left: 5px;
   padding-right: 5px;
   position: relative;
-  width: calc(100% - 40px);
+  width: calc(100% - 40px) !important;
   border: none;
   font-size: 18px;
+  display: inline-block;
+  box-shadow: none !important;
 }
 
 .title {

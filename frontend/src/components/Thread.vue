@@ -22,8 +22,6 @@
         </div>
       </div>
     </div>
-    <!-- Make this a modal? -->
-    <!-- <div class="thread text-left">
       
     </div> -->
     <button class="btn btn-success" v-on:click="showCreateThreadModal()">Create Thread</button>
@@ -69,13 +67,12 @@ export default {
     },
   },
   methods: {
-    // TODO: this is currently not used, because I can't figure out a good place to put this
+    // TODO: Resolving threads is currently not used, because I can't figure out a good place to put this
     resolve(thread) {
       this.$store.commit('resolveThread', thread);
     },
     reply(thread) {
       if (this.newMessages[thread.id]) {
-        console.log(thread);
         this.$store.commit('addMessageToThread', [this.newMessages[thread.id], thread]);
         this.newMessages[thread.id] = "";
       } else {

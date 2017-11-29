@@ -182,6 +182,7 @@ export function createStore() {
         },
         /* User */
         getUser: (store) => {
+          // TODO: stop using localStorage and get something from auth
           const user = {
             id: localStorage.id_token,
             name: localStorage.user_name,

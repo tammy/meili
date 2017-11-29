@@ -1,9 +1,13 @@
 <!-- HTML -->
 <template>
-  <div style="margin-top: 50px">
+  <div style="margin-top: 10px">
     <div v-for="message in messages">
       <div class="thread text-left">
-        <div class="content"> {{ message.content }} </div>
+        <div class="avatar">
+          <img :src="message.authorPicture" :alt="message.authorName" v-if="message.authorPicture"></img>
+          <div class="glyphicon glyphicon-user" v-else></div>
+        </div>
+        <div class="glyphicon glyphicon-chevron-right" style="margin-top: 5px"></div> {{ message.content }}
       </div>
     </div>
   </div>
@@ -22,13 +26,10 @@ export default {
   },
   computed: {
     messages() {
-      var messages = this.$store.getters.getMessages(this.threadID);
+      const messages = this.$store.getters.getMessages(this.threadID);
 
       if (!messages) {
           return [];
-      }
-      for (let i = 0; i < messages.length; i += 1) {
-        this.showMessage[messages[i].id] = false;
       }
       return messages;
     },
@@ -39,9 +40,33 @@ export default {
 
 <!-- CSS -->
 <style scoped>
+.avatar {
+  border: 2px solid #bce8f1;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+img {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.glyphicon-user {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px; 
+  margin: 5px 0 0 6px;
+}
+
+.glyphicon {
+   color: #bce8f1;
+   display: inline-block;
+}
+
 .thread {
   background-color: transparent;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .heading {
@@ -54,8 +79,7 @@ export default {
 }
 
 .content {
-  padding: 30px 25px;
-  border: 3px solid #bce8f1;
+  padding: 0 10px;
 }
 
 .btn-resolve {

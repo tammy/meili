@@ -51,14 +51,30 @@ export function createStore() {
       },
       mutations: {    // run synchronously
         addMessageToThread: (state, [message, thread]) => {
-          var newMessage = {id: uuidv4(), threadId: thread.id, owner: localStorage.id_token, content: message, new: true};
+          var newMessage = {
+            id: uuidv4(),
+            threadId: thread.id,
+            owner: state.user.id,
+            content: message,
+            new: true,
+            authorName: state.user.name,
+            authorPicture: state.user.picture,
+          };
           if (state.messages[thread.id] === undefined) {
             state.messages[thread.id] = [];
           }
           state.messages[thread.id].push(newMessage);
         },
         addNewThreadToEvent: (state, [threadTopic, threadContent, eventID]) => {
-          var newThread = {id: uuidv4(), cardId: eventID, content: threadContent, topic: threadTopic, new: true};
+          var newThread = {
+            id: uuidv4(),
+            cardId: eventID,
+            content: threadContent,
+            topic: threadTopic,
+            new: true,
+            authorName: state.user.name,
+            authorPicture: state.user.picture,
+          };
           state.threads.push(newThread);
         },
         setMessages: (state, messages) => {
@@ -163,10 +179,14 @@ export function createStore() {
           });
         },
         /* User */
-        getUser: (store, userId) => {
-          api.getUser(userId).then((user) => {
-            return store.commit('setUser', user);
-          });
+        getUser: (store) => {
+          // TODO: stop using localStorage and get something from auth
+          const user = {
+            id: localStorage.id_token,
+            name: localStorage.user_name,
+            picture: localStorage.profile_thumbnail,
+          };
+          return store.commit('setUser', user);
         },
         /* Trips */
         getTripsList: (store) => {

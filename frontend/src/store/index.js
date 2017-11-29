@@ -20,6 +20,7 @@ export function createStore() {
           markers: [],
           collaborators: [],
           oldEvents: [],
+          readOnly: false,
         },
         tripsList: [],
         // lastEditLocal is used keep track when we should push changes to server.
@@ -47,6 +48,9 @@ export function createStore() {
             })
           };
           return [];
+        },
+        getUserReadOnly: (state) => {
+          return state.trip.readOnly;
         },
       },
       mutations: {    // run synchronously
@@ -94,6 +98,9 @@ export function createStore() {
         },
         setCollaborators: (state, users) => {
           state.trip.collaborators = users;
+        },
+        setUserPermission: (state, readOnly) => {
+          state.trip.readOnly = readOnly;
         },
         updateCollaborators: (state, user) => {
           state.trip.collaborators.push(user);
@@ -223,6 +230,11 @@ export function createStore() {
         getCollaborators: (store) => {
           api.getCollaborators(store.state.trip.id).then((users) => {
             store.commit('setCollaborators', users);
+          });
+        },
+        getUserPermissions: (store, userId) => {
+          api.getUserPermissions(store.state.trip.id, userId).then(readOnly => {
+            store.commit('setUserPermission', readOnly);
           });
         },
         /* Sockets */

@@ -22,8 +22,6 @@
         </div>
       </div>
     </div>
-      
-    </div> -->
     <button class="btn btn-success" v-on:click="showCreateThreadModal()">Create Thread</button>
 
     <!-- Create Thread Modal -->

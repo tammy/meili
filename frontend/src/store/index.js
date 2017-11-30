@@ -232,8 +232,8 @@ export function createStore() {
             store.commit('setCollaborators', users);
           });
         },
-        getUserPermissions: (store, userId) => {
-          api.getUserPermissions(store.state.trip.id, userId).then(readOnly => {
+        getUserPermissions: (store, tripId, userId) => {
+          api.getUserPermissions(tripId, userId).then(readOnly => {
             store.commit('setUserPermission', readOnly);
           });
         },

@@ -56,7 +56,7 @@ export default {
       profileImageUrl: getProfileThumbnailUrl(),
     });
 
-    this.$store.dispatch('getUserPermissions', tok);
+    this.$store.dispatch('getUserPermissions', this.tripID, tok);
 
     console.log('Connecting to trip');
   },

@@ -39,7 +39,6 @@ module.exports.Trip = sequelize.define('trip', {
 module.exports.UserTrip = sequelize.define('userTrip', {
   userId: { type: DataTypes.STRING, primaryKey: true  },
   tripId: { type: DataTypes.UUID, primaryKey: true },
-  readOnly: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 })
 
 // Unsure if we need this. It seems silly that the ORM layer doesn't handle this for you.

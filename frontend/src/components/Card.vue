@@ -4,7 +4,7 @@
       <div class="panel panel-event" v-on:click="focusEvent()">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <input type="text" v-bind:readonly="isReadOnly" class="textbox text-center" v-model="tripEvent.title" placeholder="Event Name"/>
+            <input type="text" class="textbox text-center" v-model="tripEvent.title" placeholder="Event Name"/>
             <div class="glyphicon glyphicon-resize-vertical handle"></div>
           </h3>
         </div>
@@ -26,9 +26,6 @@ export default {
   computed: {
     showDetails() {
       return this.tripEvent.location || this.tripEvent.startTime || this.tripEvent.description;
-    },
-    isReadOnly() {
-      return this.$store.getters.getUserReadOnly;
     },
   },
   methods: {

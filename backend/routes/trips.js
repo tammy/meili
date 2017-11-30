@@ -23,12 +23,14 @@ router.get('/:userId', (req, res) => {
     raw: true
   }).then((trips) => {
     models.UserTrip.findAll({
-      attributes: ['tripId'],
+      attributes: ['tripId', 'readOnly'],
       where: {userId: req.params.userId},
       raw: true
     }).then((tripIds) => {
-      tIds = tripIds.map(t => t.tripId);
+      const tIds = tripIds.map(t => t.tripId);
+      const tPerms = tripIds.map(t => t.readOnly);
       const filtTrips = trips.filter(t => tIds.indexOf(t.id) > -1);
+      filtTrips.forEach((t, idx) => t.readOnly = tPerms[idx]);
       res.status(200).send(filtTrips);
     })
   });

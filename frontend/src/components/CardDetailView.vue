@@ -93,6 +93,8 @@ export default {
 
         this.$store.commit('addCoord', [this.event.coordinateLat, this.event.coordinateLon]);
       } else {
+        if (this.event.coordinateLat)
+          this.$store.commit('removeCoord', [this.event.coordinateLat, this.event.coordinateLon]);
         this.event.coordinateLat = null;
         this.event.coordinateLon = null;
       }

@@ -136,13 +136,13 @@ export function createStore() {
             state.trip.events.splice(event, 1);
           }
         },
-        addMarker: (state, marker) => {
-          state.trip.markers.push(marker);
+        addCoord: (state, coord) => {
+          state.trip.markers.push(coord);
         },
-        removeMarker: (state, marker) => {
-          const index = state.trip.markers.indexOf(marker);
+        removeCoord: (state, coord) => {
+          const index = state.trip.markers.indexOf(coord);
           if (index !== -1) {
-            state.trip.markers.splice(marker, 1);
+            state.trip.markers.splice(coord, 1);
           }
         },
         setLocalEdit: (state, localEdit) => {

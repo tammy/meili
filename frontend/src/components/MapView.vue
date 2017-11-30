@@ -53,12 +53,10 @@ export default {
         deep: true
     },
     markers: function() {
+      console.log('markers: ' + markers.length);
       // console.log('MARKER CHANGE');
-      this.fitBounds();
+      // this.fitBounds();
     }
-  },
-  updated() {
-    this.fitBounds();
   },
   methods: {
     // focusEvent(marker) {
@@ -116,9 +114,6 @@ export default {
 
       this.map.fitBounds(bounds);
     },
-  },
-  beforeMount() {
-    this.fitBounds();
   },
   mounted() {
     const element = document.getElementById('mapview')

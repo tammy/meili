@@ -133,16 +133,31 @@ export function createStore() {
         removeEvent: (state, event) => {
           const index = state.trip.events.indexOf(event);
           if (index !== -1) {
-            state.trip.events.splice(event, 1);
+            state.trip.events.splice(index, 1);
           }
         },
         addCoord: (state, coord) => {
-          state.trip.markers.push(coord);
+          var index;
+          for ( index = 0; index < state.trip.markers.length; index++ ) {
+            if (state.trip.markers[index][0] == coord[0] && state.trip.markers[index][1] == coord[1]) {
+              break;
+            }
+          }
+
+          if (index === state.trip.markers.length ) {
+            state.trip.markers.push(coord);
+          }
         },
         removeCoord: (state, coord) => {
-          const index = state.trip.markers.indexOf(coord);
-          if (index !== -1) {
-            state.trip.markers.splice(coord, 1);
+          var index;
+          for ( index = 0; index < state.trip.markers.length; index++ ) {
+            if (state.trip.markers[index][0] == coord[0] && state.trip.markers[index][1] == coord[1]) {
+              break;
+            }
+          }
+          
+          if (index !== state.trip.markers.length) {
+            state.trip.markers.splice(index, 1);
           }
         },
         setLocalEdit: (state, localEdit) => {
@@ -263,6 +278,7 @@ export function createStore() {
             console.log('udpating cards');
             store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
+            store.commit('addCoord', [newCard.coordinateLat, newCard.coordinateLon]);
         },
         socket_addCard: (store, newCard) => {
             if (newCard.new) {

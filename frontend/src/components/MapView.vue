@@ -39,24 +39,18 @@ export default {
   watch: {
     events: {
         handler: function(oldValue, newValue) {
-            // console.log("deep change");
-
-            for (var i=0; i<oldValue.length; i++) {
-              // console.log(oldValue);
-              // console.log("new lat: " +newValue[i]);
-              if (oldValue[i] !== newValue[i]) {
-                // console.log('marker not eq');
-              }
+            if (oldValue != newValue) {
+              this.fitBounds();
             }
-            this.fitBounds();
         },
         deep: true
     },
     markers: function() {
-      console.log('markers: ' + markers.length);
+      console.log('markers: ' + this.markers.length);
       // console.log('MARKER CHANGE');
-      // this.fitBounds();
-    }
+      this.fitBounds();
+    },
+    deep: true
   },
   methods: {
     // focusEvent(marker) {
@@ -67,14 +61,6 @@ export default {
 
       var bounds = new google.maps.LatLngBounds();
 
-      // for (var i=0; i<this.markers.length; i++) {
-      //   if (this.markers[i]) {
-      //     console.log("i");
-      //     this.markers[i].setMap(this.map);
-      //     this.markers[i].show;
-      //     bounds.extend( this.markers[i].getPosition() );
-      //   }
-
       //   // add listener to map pins to change focused event on click
       //   // var mapThis = this;
       //   // google.maps.event.addListener(this.markers[i], 'click', function() {
@@ -84,8 +70,14 @@ export default {
 
       // remove oldmarkers
       
+      for (var i=0; i<this.mapMarkers.length; i++) {
+        // console.log('r');
+        this.mapMarkers[i].setMap(null);
+      }
 
-      var newMarkers = [];
+      this.mapMarkers = [];
+
+      // var newMarkers = [];
 
       for (var i=0; i<this.events.length; i++) {
         if (this.events[i].coordinateLat) {
@@ -99,18 +91,15 @@ export default {
           });
           // this.events[i].marker.setMap(this.map);
           // this.events[i].marker.show;
-          newMarkers.push(marker);
+          this.mapMarkers.push(marker);
           bounds.extend( marker.getPosition() );
         }
       }
 
-      for (var i=0; i<this.mapMarkers.length; i++) {
-        // console.log('r');
-        this.mapMarkers[i].setMap(null);
-      }
+      
 
-      this.mapMarkers = [];
-      this.mapMarkers = newMarkers;
+      // this.mapMarkers = [];
+      // this.mapMarkers = newMarkers;
 
       this.map.fitBounds(bounds);
     },

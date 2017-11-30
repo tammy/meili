@@ -1,4 +1,4 @@
-<!-- Ripped from https://tympanus.net/Tutorials/CSS3FullscreenSlideshow/ and 
+<!-- Ripped from https://tympanus.net/codrops/2012/01/02/fullscreen-background-image-slideshow-with-css3/ and
      https://forum.vuejs.org/t/full-screen-background-component/15790
 -->
 

@@ -1,19 +1,21 @@
 <template>
   <div class="full-width">
     <!-- Section for all trips -->
-    <div class="whitespace-top">
-      <h1 class="text-left">Trips</h1>
-      <div v-for="trip in tripsList">
-          <div class="col-xs-3 box">
+    <h1 class="text-left">Trips</h1>
+    <div class="whitespace-top flex-list">
+      <div class="flex-box" v-for="trip in tripsList">
+          <div class="box">
             <div class="item" v-on:click="goToTrip(trip.id)">
-            <img class="photo" v-bind:class="{ 'default-picture': !trip.picture }" :src="trip.picture"/>
+            <!-- Not sure if there's a better way to only render the source tag if the value is not null or blank -->
+            <img v-if="!trip.picture" class="photo" v-bind:class="{ 'default-picture': !trip.picture }"/>
+            <img v-else class="photo" v-bind:class="{ 'default-picture': !trip.picture }" :src="trip.picture"/>
             {{ trip.name }}
             </div>
           </div>
       </div>
-      <div class="col-xs-12" style="margin-top: 20px">
-        <button class="btn btn-success" v-on:click="showNewTripModal()">Create a new adventure</button>
-      </div>
+    </div>
+    <div class="col-xs-12" style="margin-top: 20px">
+      <button class="btn btn-success" v-on:click="showNewTripModal()">Create a new adventure</button>
     </div>
 
     <modal name="new-trip" height="auto">
@@ -96,6 +98,17 @@ hr {
 
 h1 {
   margin-left: 20px;
+}
+
+.flex-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-box {
+  flex: 0 0 345px;
+  height: 400px;
+  margin: 7px;
 }
 
 .full-width {

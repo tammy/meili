@@ -232,7 +232,9 @@ export function createStore() {
             store.commit('setCollaborators', users);
           });
         },
-        getUserPermissions: (store, tripId, userId) => {
+        getUserPermissions: (store, data) => {
+          const tripId = data.tripId;
+          const userId = data.userId;
           api.getUserPermissions(tripId, userId).then(readOnly => {
             store.commit('setUserPermission', readOnly);
           });

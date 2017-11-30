@@ -57,7 +57,14 @@ store.watch(state => state.messages, (messages) => {
       msgs.forEach(msg => {
         if (msg.new) {
           msg.new = false;
-          const data = {threadID: threadId, message: msg, tripID: store.state.trip.id};
+          const data = {
+            threadID: threadId, 
+            message: msg, 
+            tripID: store.state.trip.id
+          };
+          msg.authorId = localStorage.id_token;
+          msg.authorName = localStorage.user_name;
+          msg.authorPicture = localStorage.profile_thumbnail;
           socket.emit('addMessage', data);
         }
       });

@@ -17,10 +17,14 @@ router.get('/:cardId', (req, res) => {
 
 // Create a new thread
 router.post('/:cardId', (req, res) => {
-    var thread = JSON.parse(req.body.thread);
+    const thread = JSON.parse(req.body.thread);
+    const owner = JSON.parse(req.body.owner);
     thread['id'] = uuidv4();
     thread['cardId'] = req.params.cardId;
     thread['resolved'] = false;
+    thread['ownerId'] = owner ? owner.id : "";
+    thread['ownerName'] = owner.name ? owner.name : "";
+    thread['ownerPicture'] = owner.picture ? owner.picture : "";
     models.Thread.create(thread).then((createdThread) => {
         res.status(200).send(createdThread);
     });

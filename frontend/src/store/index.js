@@ -171,7 +171,10 @@ export function createStore() {
           api.getThreads(eventID).then(threads => {
             store.commit('setMessages', {});
             threads.forEach(thread => {
+              console.log('wat');
               api.getMessages(thread.id).then(messages => {
+                console.log("GOT MESSAGES");
+                console.log(messages);
                 return store.commit('addMessageForThread', [messages, thread.id]);
               });
             });

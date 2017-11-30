@@ -31,10 +31,14 @@ router.post('/:threadId', (req, res) => {
     const messageId = uuidv4();
     const threadId = req.params.threadId;
     const message = JSON.parse(req.body.message);
+    const owner = JSON.parse(req.body.owner);
     models.Message.findAll({where: {threadId: threadId}}).then((messages) => {
         message['id'] = messageId;
         message['threadId'] = threadId;
         message['order'] = messages.length + 1;
+        message['ownerId'] = owner.id;
+        message['ownerName'] = owner.name;
+        message['ownerPicture'] = owner.picture;
         models.Message.create(message).then((msg) => {
             res.status(200).send(msg);
         });

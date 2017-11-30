@@ -82,8 +82,6 @@ export function createStore() {
         },
         addMessageForThread: (state, [messages, threadID]) => {
           Vue.set(state.messages, threadID, messages);
-          console.log(state.messages);
-          console.log();
         },
         setThreads: (state, threads) => {
           state.threads = threads;
@@ -246,7 +244,7 @@ export function createStore() {
             store.commit('updateOnlineUsers', data['usersConnected']);
         },
         socket_updateCard: (store, newCard) => {
-            console.log('udpating cards');
+            console.log('updating cards');
             store.commit('setLocalEdit', false);
             store.commit('updateCard', newCard);
         },

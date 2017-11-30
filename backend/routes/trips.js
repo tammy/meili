@@ -61,9 +61,8 @@ router.post('/', (req, res) => {
     const newTrip = req.body.trip;
     const ownerId = req.body.owner;
     newTrip.id = tripId;
-
     models.Trip.create(newTrip).then(() => {
-        users.addUserToTripByUserId(tripId, ownerId, () => {
+        users.addUserToTripByUserId(tripId, ownerId, false, () => {
             models.Trip.findById(tripId).then((trip) => {
                 res.status(200).send(trip);
             });

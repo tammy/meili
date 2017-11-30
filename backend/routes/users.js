@@ -71,7 +71,7 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
     }).then(userInTripRelation => {
       if (userInTripRelation) {
         models.UserTrip.update(newRelation, {where: {userId: user.id, tripId: req.params.tripId}}).then(updatedRelation => {
-          res.status(200).send(`User permissions changed for ${req.params.userEmail} for trip ${req.params.tripId} to read only = ${readOnlyPermission}.`);
+          res.status(200).send(`User permissions changed for ${req.params.userEmail} for trip ${req.params.tripId} to read only = ${readOnlyPerm}.`);
         });
       } else {
         models.UserTrip.create(newRelation).then(() => {

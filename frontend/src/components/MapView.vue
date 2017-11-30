@@ -1,9 +1,6 @@
 <!-- HTML -->
 <template>
   <div>
-      <!-- <div id="locationField"> -->
-        <!-- <input id="autocomplete" placeholder="Enter a city" type="text" /> -->
-      <!-- </div>  -->
       <div id="mapview"></div>
   </div>
 </template>
@@ -20,18 +17,16 @@ export default {
   data: function () {
     return {
       map: null,
-      // bounds: null,
       mapMarkers: [],
-      // autocomplete: null,
     }
   },
   computed: {
     markers() {
       return this.$store.state.trip.markers;
     },
-    event() {
-      return this.$store.state.focusedEvent;
-    },
+    // event() {
+    //   return this.$store.state.focusedEvent;
+    // },
     events() {
       return this.$store.state.trip.events;
     },
@@ -46,8 +41,6 @@ export default {
         deep: true
     },
     markers: function() {
-      console.log('markers: ' + this.markers.length);
-      // console.log('MARKER CHANGE');
       this.fitBounds();
     },
     deep: true
@@ -71,32 +64,24 @@ export default {
       // remove oldmarkers
       
       for (var i=0; i<this.mapMarkers.length; i++) {
-        // console.log('r');
         this.mapMarkers[i].setMap(null);
       }
 
       this.mapMarkers = [];
 
-      // var newMarkers = [];
-
       for (var i=0; i<this.events.length; i++) {
         if (this.events[i].coordinateLat) {
-          // console.log("i " + this.events[i].coordinateLat);
           const position = new google.maps.LatLng(this.events[i].coordinateLat, this.events[i].coordinateLon);
           const marker = new google.maps.Marker({
             position,
             map: this.map,
             // label: 'Albert',
-            // animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP
           });
-          // this.events[i].marker.setMap(this.map);
-          // this.events[i].marker.show;
           this.mapMarkers.push(marker);
           bounds.extend( marker.getPosition() );
         }
       }
-
-      
 
       // this.mapMarkers = [];
       // this.mapMarkers = newMarkers;

@@ -1,9 +1,6 @@
 <!-- HTML -->
 <template>
   <div>
-      <!-- <div id="locationField"> -->
-        <!-- <input id="autocomplete" placeholder="Enter a city" type="text" /> -->
-      <!-- </div>  -->
       <div id="mapview"></div>
   </div>
 </template>
@@ -20,18 +17,16 @@ export default {
   data: function () {
     return {
       map: null,
-      // bounds: null,
       mapMarkers: [],
-      // autocomplete: null,
     }
   },
   computed: {
     markers() {
       return this.$store.state.trip.markers;
     },
-    event() {
-      return this.$store.state.focusedEvent;
-    },
+    // event() {
+    //   return this.$store.state.focusedEvent;
+    // },
     events() {
       return this.$store.state.trip.events;
     },
@@ -39,26 +34,16 @@ export default {
   watch: {
     events: {
         handler: function(oldValue, newValue) {
-            // console.log("deep change");
-
-            for (var i=0; i<oldValue.length; i++) {
-              // console.log(oldValue);
-              // console.log("new lat: " +newValue[i]);
-              if (oldValue[i] !== newValue[i]) {
-                // console.log('marker not eq');
-              }
+            if (oldValue != newValue) {
+              this.fitBounds();
             }
-            this.fitBounds();
         },
         deep: true
     },
     markers: function() {
-      // console.log('MARKER CHANGE');
       this.fitBounds();
-    }
-  },
-  updated() {
-    this.fitBounds();
+    },
+    deep: true
   },
   methods: {
     // focusEvent(marker) {
@@ -69,14 +54,6 @@ export default {
 
       var bounds = new google.maps.LatLngBounds();
 
-      // for (var i=0; i<this.markers.length; i++) {
-      //   if (this.markers[i]) {
-      //     console.log("i");
-      //     this.markers[i].setMap(this.map);
-      //     this.markers[i].show;
-      //     bounds.extend( this.markers[i].getPosition() );
-      //   }
-
       //   // add listener to map pins to change focused event on click
       //   // var mapThis = this;
       //   // google.maps.event.addListener(this.markers[i], 'click', function() {
@@ -86,39 +63,31 @@ export default {
 
       // remove oldmarkers
       
+      for (var i=0; i<this.mapMarkers.length; i++) {
+        this.mapMarkers[i].setMap(null);
+      }
 
-      var newMarkers = [];
+      this.mapMarkers = [];
 
       for (var i=0; i<this.events.length; i++) {
         if (this.events[i].coordinateLat) {
-          // console.log("i " + this.events[i].coordinateLat);
           const position = new google.maps.LatLng(this.events[i].coordinateLat, this.events[i].coordinateLon);
           const marker = new google.maps.Marker({
             position,
             map: this.map,
             // label: 'Albert',
-            // animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP
           });
-          // this.events[i].marker.setMap(this.map);
-          // this.events[i].marker.show;
-          newMarkers.push(marker);
+          this.mapMarkers.push(marker);
           bounds.extend( marker.getPosition() );
         }
       }
 
-      for (var i=0; i<this.mapMarkers.length; i++) {
-        // console.log('r');
-        this.mapMarkers[i].setMap(null);
-      }
-
-      this.mapMarkers = [];
-      this.mapMarkers = newMarkers;
+      // this.mapMarkers = [];
+      // this.mapMarkers = newMarkers;
 
       this.map.fitBounds(bounds);
     },
-  },
-  beforeMount() {
-    this.fitBounds();
   },
   mounted() {
     const element = document.getElementById('mapview')

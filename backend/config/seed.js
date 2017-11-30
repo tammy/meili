@@ -25,6 +25,13 @@ models.sequelize.sync({force: true}).then(function() {
   });
 
   models.User.create({
+    id: "10215367807374760",
+    name: "Yemin Local",
+    email: "yemins@email.com",
+    picture: "http://www.example.com"
+  });
+
+  models.User.create({
     id: "1860435200650659",
     name: "Tammy Prod",
     email: "hello+prod@tammyliu.me",
@@ -92,13 +99,18 @@ models.sequelize.sync({force: true}).then(function() {
     tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
   models.UserTrip.create({
-    userId: "10215703425365000", // Yemin
+    userId: "10215703425365000", // Yemin Prod
+    tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
+  });
+  models.UserTrip.create({
+    userId: "10215367807374760", // Yemin Local
     tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
   models.UserTrip.create({
     userId: "846707232167446", // Justin
     tripId: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
   });
+
 
   // Add Paul to Cali
   models.UserTrip.create({

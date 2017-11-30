@@ -83,7 +83,7 @@ export default {
         this.event.location = place.formatted_address;
 
         if (this.event.marker) {
-          this.$store.commit('removeMarker', this.event.marker);
+          this.$store.commit('removeCoord', [this.event.coordinateLat, this.event.coordinateLon]);
           this.event.marker = null;
         }
 
@@ -91,7 +91,12 @@ export default {
         this.event.coordinateLat = place.geometry.location.lat();
         this.event.coordinateLon = place.geometry.location.lng();
 
-        this.$store.commit('addMarker', this.event.marker);
+        this.$store.commit('addCoord', [this.event.coordinateLat, this.event.coordinateLon]);
+      } else {
+        if (this.event.coordinateLat)
+          this.$store.commit('removeCoord', [this.event.coordinateLat, this.event.coordinateLon]);
+        this.event.coordinateLat = null;
+        this.event.coordinateLon = null;
       }
     },
     commitDatetime() {

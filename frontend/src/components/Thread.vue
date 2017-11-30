@@ -16,13 +16,13 @@
           <div class="content">
             {{ thread.content }}
             <message :threadID="thread.id"></message>
-            <input type="text" class="textbox" placeholder="Reply..." style="margin-left: 0px;" v-if="!isReadOnly" v-model="newMessages[thread.id]"></input>
-            <button class="btn btn-default btn-reply" v-if="!isReadOnly" v-on:click="reply(thread)">Reply</button>
+            <input type="text" class="textbox" placeholder="Reply..." style="margin-left: 0px;" v-model="newMessages[thread.id]"></input>
+            <button class="btn btn-default btn-reply" v-on:click="reply(thread)">Reply</button>
           </div>
         </div>
       </div>
     </div>
-    <button v-if="!isReadOnly" class="btn btn-success" v-on:click="showCreateThreadModal()">Create Thread</button>
+    <button class="btn btn-success" v-on:click="showCreateThreadModal()">Create Thread</button>
 
     <!-- Create Thread Modal -->
     <modal name="create-thread" height="auto" @closed="closeModal">
@@ -63,9 +63,6 @@ export default {
       }
       return threads;
     },
-    isReadOnly() {
-      return this.$store.getters.getUserReadOnly;
-    }
   },
   methods: {
     // TODO: Resolving threads is currently not used, because I can't figure out a good place to put this

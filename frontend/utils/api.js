@@ -44,11 +44,6 @@ export function getCollaborators(tripId) {
   return axios.get(url).then(response => response.data);
 }
 
-export function getUserPermissions(tripId, userId) {
-  const url = `${API_URL}/users/${tripId}/${userId}/permission`;
-  return axios.get(url).then(response => response.data);
-}
-
 /**
  * Trip
  */

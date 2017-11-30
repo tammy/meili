@@ -4,7 +4,7 @@ var uuidv4 = require('uuid/v4');
 var storage = require('../utils/storage');
 
 module.exports.addUserToTripByUserId = (tripId, userId, readOnly, callback) => {
-  var readOnlyPermission = readOnly === true;
+  var readOnlyPermission = readOnly ? true : false;
   const newRelation = {
     userId: userId,
     tripId: tripId,

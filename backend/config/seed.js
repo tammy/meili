@@ -61,7 +61,7 @@ models.sequelize.sync({force: true}).then(function() {
 
   models.Trip.create({
     id: "6347f1fc-64d1-4f8b-ac79-44d59d130b6d",
-    owner: "1161676737297024",
+    author: "1161676737297024",
     name: "Paris - Grad Trip '19!'",
     description: "La vie est belle.",
     picture: "https://www.everettpotter.com/wp-content/uploads/2015/05/header.jpg"
@@ -69,7 +69,7 @@ models.sequelize.sync({force: true}).then(function() {
 
   models.Trip.create({
     id: "0049afbc-24fc-457d-8aa8-905c24dda41d",
-    owner: "1161676737297024",
+    author: "1161676737297024",
     name: "South Bay Vacay",
     description: "Zzzz"
   });
@@ -174,13 +174,13 @@ models.sequelize.sync({force: true}).then(function() {
   models.Message.create({
     id: "d3f82eb4-44f5-4969-9319-029eb6444e82",
     threadId: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
-    owner: "1161676737297024",
+    authorId: "1161676737297024",
     content: "This is a message!"
   });
   models.Message.create({
     id: "4ae498bb-fd2a-4e45-acfe-d22bfee7c415",
     threadId: "15b4c2d1-9e20-476d-9407-a4b7e80c7e83",
-    owner: "1161676737297024",
+    authorId: "1161676737297024",
     content: "This is another message!"
   });
 });

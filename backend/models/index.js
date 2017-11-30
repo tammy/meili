@@ -29,7 +29,7 @@ module.exports.User = sequelize.define('user', {
 // Trip
 module.exports.Trip = sequelize.define('trip', {
   id: { type: DataTypes.UUID, primaryKey: true  },
-  owner: { type: DataTypes.STRING  }, // not used right now, but concept makes sense so leaving it
+  author: { type: DataTypes.STRING  }, // not used right now, but concept makes sense so leaving it
   name: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
   picture: { type: DataTypes.STRING }
@@ -77,7 +77,10 @@ module.exports.Thread = sequelize.define('thread', {
   content: { type: DataTypes.STRING },
   topic: { type: DataTypes.TEXT },
   options: { type: DataTypes.TEXT },
-  answers: { type: DataTypes.TEXT }
+  answers: { type: DataTypes.TEXT },
+  authorId: { type: DataTypes.STRING },
+  authorName: { type: DataTypes.STRING },
+  authorPicture: { type: DataTypes.STRING }
 })
 
 // Message
@@ -85,7 +88,9 @@ module.exports.Message = sequelize.define('message', {
   id: { type: DataTypes.UUID, primaryKey: true },
   threadId: { type: DataTypes.UUID, primaryKey: true },
   order: { type: DataTypes.INTEGER },
-  owner:  { type: DataTypes.STRING },
+  authorId:  { type: DataTypes.STRING },
+  authorName: { type: DataTypes.STRING },
+  authorPicture: { type: DataTypes.STRING },
   content: { type: DataTypes.TEXT }
 })
 

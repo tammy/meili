@@ -52,10 +52,6 @@ router.put('/:tripId/:userId', (req, res) => {
 
 // Add a user email to a given trip
 router.put('/:tripId/email/:userEmail', (req, res) => {
-  var readOnlyPermission = false;
-  if (req.body.readOnly) {
-    readOnlyPermission = true;
-  }
   models.User.find({
     where: {email: req.params.userEmail},
     raw: true
@@ -66,7 +62,7 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
     const newRelation = {
       userId: user.id,
       tripId: req.params.tripId,
-      readOnly: readOnlyPermission
+      readOnly: req.body.readOnly ? true : false,
     };
     models.UserTrip.find({
       where: {userId: user.id, tripId: req.params.tripId}

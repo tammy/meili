@@ -9,9 +9,9 @@
           </h3>
         </div>
         <div class="panel-body text-left" v-show="showDetails">
-          <p v-show="tripEvent.location">{{ tripEvent.location }}</p>
-          <p v-show="tripEvent.startTime">{{ formatDatetime(tripEvent.startTime) }}</p>
-          <p v-show="tripEvent.description">{{ tripEvent.description }}</p>
+          <p v-if="tripEvent.location">{{ tripEvent.location }}</p>
+          <p v-if="tripEvent.startTime">{{ formatDatetime(tripEvent.startTime) }}</p>
+          <p v-if="tripEvent.description">{{ tripEvent.description }}</p>
         </div>
       </div>
       <div class="glyphicon glyphicon-remove" v-on:click="remove()"></div>

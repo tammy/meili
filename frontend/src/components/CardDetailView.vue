@@ -4,7 +4,7 @@
     <div class="panel panel-detailed">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <input type="text" class="textbox text-center" v-model="event.title" placeholder="Event">
+          <input type="text" v-bind:readonly="isReadOnly" class="textbox text-center" v-model="event.title" placeholder="Event">
             <button class="glyphicon glyphicon-search search"
               v-show="event.focused && event.name"
               v-on:click="search()"
@@ -15,16 +15,16 @@
       <div class="panel-body text-left">
         <p class="field">
           <div class="glyphicon glyphicon-pushpin"></div>
-          <input id="autocomplete" type="text" class="textbox" v-model="event.location" placeholder="Location"/>
+          <input id="autocomplete" type="text" class="textbox" v-bind:readonly="isReadOnly" v-model="event.location" placeholder="Location"/>
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-time"></div>
-          <date-picker class="textbox" v-model="event.datetime" :config="config" placeholder="Date & Time" @dp-hide="commitDatetime">
+          <date-picker class="textbox" v-bind:readonly="isReadOnly" v-model="event.datetime" :config="config" placeholder="Date & Time" @dp-hide="commitDatetime">
           </date-picker>
         </p>
         <p class="field">
           <div class="glyphicon glyphicon-pencil"></div>
-          <input type="text" class="textbox" v-model="event.description" placeholder="Notes"></input>
+          <input type="text" class="textbox" v-bind:readonly="isReadOnly" v-model="event.description" placeholder="Notes"></input>
         </p>
       </div>
     </div>
@@ -65,6 +65,9 @@ export default {
 
       ev.datetime = new Date(ev.startTime);
       return ev;
+    },
+    isReadOnly() {
+      return this.$store.getters.getUserReadOnly;
     },
   },
   methods: {

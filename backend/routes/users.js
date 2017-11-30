@@ -21,21 +21,32 @@ router.get('/:tripId', (req, res) => {
     raw: true
   }).then((users) => {
     models.UserTrip.findAll({
-      attributes: ['userId'],
+      attributes: ['userId', 'readOnly'],
       where: {tripId: req.params.tripId},
       raw: true
     }).then((userIds) => {
       uIds = userIds.map(u => u.userId);
+      uPerms = userIds.map(u => u.readOnly);
       const filtUsers = users.filter(u => uIds.indexOf(u.id) > -1);
+      filtUsers.forEach((u, idx) => u.readOnly = uPerms[idx]);
       res.status(200).send(filtUsers);
     });
   });
 });
 
+// Get the permission of a user on a specific trip
+router.get('/:tripId/:userId/permission', (req, res) => {
+    models.UserTrip.find({
+      where: {userId: req.params.userId, tripId: req.params.tripId }
+    }).then(userInTripRelation => {
+      res.status(200).send(userInTripRelation.readOnly);
+    });
+});
+
 // Add a user to a given trip
 router.put('/:tripId/:userId', (req, res) => {
-  users.addUserToTripByUserId(req.body.tripId, req.body.userId, () => {
-    res.status(200).send(`User ${req.body.userId} added to ${req.body.tripId}`);
+  users.addUserToTripByUserId(req.params.tripId, req.params.userId, req.body.readOnly, () => {
+    res.status(200).send(`User ${req.body.userId} added to ${req.body.tripId}.`);
   });
 });
 
@@ -50,10 +61,21 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
     }
     const newRelation = {
       userId: user.id,
-      tripId: req.params.tripId
+      tripId: req.params.tripId,
+      readOnly: req.body.readOnly ? true : false,
     };
-    models.UserTrip.create(newRelation).then(() => {
-      res.status(200).send(`User ${req.params.userEmail} added to ${req.params.tripId} by email address.`)
+    models.UserTrip.find({
+      where: {userId: user.id, tripId: req.params.tripId}
+    }).then(userInTripRelation => {
+      if (userInTripRelation) {
+        models.UserTrip.update(newRelation, {where: {userId: user.id, tripId: req.params.tripId}}).then(updatedRelation => {
+          res.status(200).send(`User permissions changed for ${req.params.userEmail} for trip ${req.params.tripId} to read only = ${readOnlyPermission}.`);
+        });
+      } else {
+        models.UserTrip.create(newRelation).then(() => {
+          res.status(200).send(`User ${req.params.userEmail} added to ${req.params.tripId} by email address.`)
+        });
+      }
     });
   })
 });

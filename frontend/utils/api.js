@@ -34,9 +34,12 @@ export function updateUser(userInfo) {
   return axios.post(url, {user: userInfo}).then(response => response.status);
 }
 
-export function addCollaborator(tripId, email) {
+export function addCollaborator(tripId, email, readOnly) {
+  const data = {
+    readOnly: readOnly
+  };
   const url = `${API_URL}/users/${tripId}/email/${email}`;
-  return axios.put(url).then(response => response.status);
+  return axios.put(url, data).then(response => response.status);
 }
 
 export function getCollaborators(tripId) {

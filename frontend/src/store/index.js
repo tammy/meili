@@ -218,8 +218,10 @@ export function createStore() {
         setFocusedEvent: (store, event) => {
           store.commit('setFocusedEvent', event);
         },
-        addCollaborator: (store, email) => {
-          api.addCollaborator(store.state.trip.id, email).then((status) => {
+        addCollaborator: (store, data) => {
+          const email = data.email;
+          const readOnly = data.readOnly;
+          api.addCollaborator(store.state.trip.id, email, readOnly).then((status) => {
             if (status && status == 200) {
               store.dispatch('getCollaborators');
               return true;

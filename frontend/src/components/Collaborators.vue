@@ -26,7 +26,8 @@
         </div>
 
         <input type="email" v-model="email" placeholder="name@domain.com"></input>
-        <button class="btn btn-success" v-on:click="addCollaborator()">Add</button>
+        <button class="btn btn-success" v-on:click="addCollaborator(false)">Add as Collaborator</button>
+        <button class="btn btn-success" v-on:click="addCollaborator(true)">Add as Watcher</button>
       </div>
     </modal>
   </div>
@@ -58,8 +59,8 @@ export default {
       this.$store.dispatch('getCollaborators');
       this.$modal.show('add-collaborator');
     },
-    addCollaborator() {
-      this.$store.dispatch('addCollaborator', this.email);
+    addCollaborator(readOnly) {
+      this.$store.dispatch('addCollaborator', {email: this.email, readOnly: readOnly});
     },
   },
 };

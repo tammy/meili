@@ -63,7 +63,9 @@ export default {
         return {};
       }
 
-      ev.datetime = new Date(ev.startTime);
+      if (ev.startTime) {
+        ev.datetime = new Date(ev.startTime);
+      }
       return ev;
     },
     isReadOnly() {
@@ -103,7 +105,7 @@ export default {
       this.event.startTime = this.event.datetime;
     },
   },
-  mounted: function() {
+  mounted() {
     this.autocomplete = new google.maps.places.Autocomplete(
         /** @type {!HTMLInputElement} */ (
             document.getElementById('autocomplete')), {});

@@ -11,7 +11,7 @@ Currently live at [meilitravelapp.tk](http://meilitravelapp.tk/).
 ## Setup
 1. In the home directory, run `npm run setup`.
 2. Run `npm run start` to start the frontend and backend servers concurrently.
-3. Once you see that two servers are running (there might be a compile time lag for the frontend), connect to `localhost:8080` on your browser to see the application running.
+3. Once you see that two servers are running (there might be a compile time lag for the frontend), connect to `localhost:1024` (the port is set to 80) on your browser to see the application running.
 
 ## Footnotes
 Current code based off of tutorial found [here](https://github.com/auth0-blog/vuejs2-authentication-tutorial).

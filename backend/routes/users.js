@@ -64,7 +64,7 @@ router.put('/:tripId/email/:userEmail', (req, res) => {
     const newRelation = {
       userId: user.id,
       tripId: req.params.tripId,
-      readOnly: readOnlyPermission
+      readOnly: readOnlyPerm
     };
     models.UserTrip.find({
       where: {userId: user.id, tripId: req.params.tripId}

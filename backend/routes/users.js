@@ -45,7 +45,7 @@ router.get('/:tripId/:userId/permission', (req, res) => {
 
 // Add a user to a given trip
 router.put('/:tripId/:userId', (req, res) => {
-  const userPerm = JSON.parse(req.body.readOnly) === true;
+  const userPerm = req.body.readOnly ? JSON.parse(req.body.readOnly) : false;
   users.addUserToTripByUserId(req.params.tripId, req.params.userId, userPerm, () => {
     res.status(200).send(`User ${req.body.userId} added to ${req.body.tripId}.`);
   });
@@ -53,7 +53,8 @@ router.put('/:tripId/:userId', (req, res) => {
 
 // Add a user email to a given trip
 router.put('/:tripId/email/:userEmail', (req, res) => {
-  const readOnlyPerm = JSON.parse(req.body.readOnly) === true;
+
+  const readOnlyPerm = req.body.readOnly ? JSON.parse(req.body.readOnly) : false;
   models.User.find({
     where: {email: req.params.userEmail},
     raw: true

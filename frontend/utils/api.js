@@ -66,11 +66,11 @@ export function createTrip(userId, newTrip) {
   const url = `${API_URL}/trips`;
   const data = {
     trip: {
-      name: newTrip.name || '',
-      description: newTrip.description || '',
-      picture: newTrip.picture || '',
+      name: newTrip.name,
+      description: newTrip.description || '', // TODO: If description gets added to create trip UI, remove null check
+      picture: newTrip.picture,
     },
-    owner: localStorage.id_token || '',
+    owner: localStorage.id_token || '', // TODO: Backend should throw error if owner is null
   };
 
   return axios.post(url, data).then(response => response.data);

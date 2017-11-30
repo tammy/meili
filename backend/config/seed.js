@@ -6,14 +6,14 @@ models.sequelize.sync({force: true}).then(function() {
   models.User.create({
     id: "1161676737297024",
     name: "Paul Local",
-    email: "pbardea+local@gmail.com",
+    email: "pbardea@gmail.com",
     picture: "http://www.example.com"
   });
 
   models.User.create({
     id: "1184507718347259",
     name: "Paul Prod",
-    email: "pbardea+prod@gmail.com",
+    email: "pbardea@gmail.com",
     picture: "http://www.example.com"
   });
 
@@ -27,14 +27,14 @@ models.sequelize.sync({force: true}).then(function() {
   models.User.create({
     id: "1860435200650659",
     name: "Tammy Prod",
-    email: "hello+prod@tammyliu.me",
+    email: "hello@tammyliu.me",
     picture: "http://www.example.com"
   });
 
   models.User.create({
     id: "1824104227617090",
     name: "Tammy Local",
-    email: "hello+local@tammyliu.me",
+    email: "hello@tammyliu.me",
     picture: "http://www.example.com"
   });
 
@@ -48,7 +48,7 @@ models.sequelize.sync({force: true}).then(function() {
   models.User.create({
     id: "846707232167446",
     name: "Justin Local",
-    email: "justin+local@gmail.com",
+    email: "justin@gmail.com",
     picture: "http://www.example.com"
   });
 

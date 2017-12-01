@@ -1,7 +1,7 @@
 <template>
   <div class="margin-box">
     <div class="align-left">
-      <button type="button" class="btn btn-add" v-on:click="add()">Add Event</button>
+      <button v-if="!isReadOnly" type="button" class="btn btn-add" v-on:click="add()">Add Event</button>
     </div>
     <div class="timeline">
       <div class="timeline-container">
@@ -31,6 +31,9 @@ export default {
   components: { Card, Draggable },
   props: ['trip'],
   computed: {
+    isReadOnly() {
+      return this.$store.getters.getUserReadOnly;
+    },
   },
   methods: {
     formatDate(dateStr) {
